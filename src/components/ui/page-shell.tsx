@@ -10,7 +10,7 @@ export function PageShell({ children }: Readonly<{ children: ReactNode }>) {
         </Link>
         <nav className="site-nav" aria-label="Main navigation">
           <Link href="/#workflow">The workflow</Link>
-          <Link href="/#prepare">What to prepare</Link>
+          <Link href="/events">My events</Link>
         </nav>
       </header>
       <main id="main-content" className="page-main" tabIndex={-1}>

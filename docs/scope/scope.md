@@ -4,17 +4,17 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 **Build approach:** Tracer Bullet (prove one real path through sign in, records, analysis, approval, and briefing, then broaden it).  
 **Workflow:** GA (verify the real app, add meaningful tests, request a fresh reviewer before merge, document the actual change, then sync). This is an internal rigor setting, not a claim that anything has shipped.  
-**Plan state:** Approved on 27 October 2026. T1, the runnable foundation and shared UI, is implemented and locally verified. This does not mark the complete operations loop or full release acceptance criteria complete. Continue without questions using the approved recommendations.
+**Plan state:** Approved on 27 October 2026. T1, the runnable foundation and shared UI, is implemented and locally verified. T2 accounts and event setup are also implemented and locally verified, with hosted mail and Meta access still open. This does not mark the complete operations loop or full release acceptance criteria complete. Continue without questions using the approved recommendations.
 
 ## At a glance
 
 | # | Feature | Phase | Status |
 |---|---|---|---|
-| 1 | Stack and architecture | Foundation | in-progress |
+| 1 | Stack and architecture | Foundation | done |
 | 2 | Coding standards and tooling | Foundation | done |
 | 3 | Data and approval model | Foundation | planned |
 | 4 | Design system and accessible UI foundation | Foundation | in-progress |
-| 5 | Thin complete operations loop | Slice 1 | planned |
+| 5 | Thin complete operations loop | Slice 1 | in-progress |
 | 6 | Imports and correction | Slice 2 | planned |
 | 7 | Voice and transcript review | Slice 3 | planned |
 | 8 | Review, resumption and history | Slice 4 | planned |
@@ -24,15 +24,15 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## Foundations
 
-### 1. Stack and architecture, in-progress
+### 1. Stack and architecture, done
 
-The application structure is approved and its runnable foundation is built. The real protected request belongs to T2.
+The application structure is approved and its runnable foundation is built. T2 now proves a real protected request through Supabase Auth and PostgreSQL.
 
 **Done when:** the approved architecture boots, builds, and supports a real protected request.
 
 - [x] Ratify the design (spec): approved [architecture](../specs/0001-eventops/0002-architecture.md).
 - [x] Build and verify the T1 scaffold and standalone production runtime.
-- [ ] Verify a real protected request in T2.
+- [x] Verify a real protected request in T2, including owner isolation and anonymous denial.
 
 Code in `src/app/`, `next.config.ts`, and `scripts/`. [T1 evidence](../specs/0001-eventops/0008-foundation.md).
 
@@ -74,14 +74,14 @@ Code in `src/components/ui/`, `src/styles/tokens.css`, and `design.md`.
 
 ## Slice 1: Thin complete operations loop
 
-### 5. Thin complete operations loop, planned
+### 5. Thin complete operations loop, in-progress
 
 Sign in, create an event, manually confirm a small real plan, enter a text update, inspect evidence, approve a valid revision, and read its briefing. This is the walking skeleton, not a separate disposable scaffold.
 
 **Done when:** a real user completes the whole path through actual storage and model calls; invalid or stale candidates cannot commit.
 
 - [x] Ratify the design (spec): `/architect operations loop`, approved [AI](../specs/0001-eventops/0005-ai.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
-- [ ] Build it: `/develop operations loop`.
+- [ ] Build it: `/develop operations loop`. T2 account and event setup portion is built and locally verified. T3 and T4 remain. [T2 evidence](../reviews/2026-10-27-t2-accounts-events.md).
 
 ## Slice 2: Imports and correction
 

@@ -30,8 +30,8 @@ export default function Home() {
             with a clear plan, then review each change before it becomes
             official.
           </p>
-          <Link className="button" href="#prepare">
-            What to prepare
+          <Link className="button" href="/events">
+            Open my workspace
           </Link>
         </div>
         <aside className="principles" aria-label="How your plan stays clear">
