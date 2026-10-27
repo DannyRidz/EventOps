@@ -35,3 +35,15 @@ To repeat the live checks, save `supabase status --output-format json` to a priv
 For a production build, stop the dev server, run `npm run build`, then `HOSTNAME=127.0.0.1 node --env-file=.env.local .next/standalone/server.js`. Stop local services with `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase stop`. A database reset deletes local records; use it only deliberately.
 
 Hosted readiness remains open: operator identity and complete legal notices, a mail domain, Resend SMTP, Supabase configuration and real delivery checks. Configure email confirmations, six digit codes, 600 second expiry and a 60 second resend minimum. Both signup confirmation and magic link email templates must use `supabase/templates/code.html`. No provider account was created or terms accepted. Meta model access has not been tested. The local notice permits synthetic evaluation only. Deployment remains a separate authorization.
+
+## T3 plan integrity
+
+T3 adds the backend for operational plans. Authenticated APIs can stage all six record types, capture immutable manual evidence, confirm revision 1, create a checked manual proposal and approve it transactionally. The server and PostgreSQL both validate the whole plan. Replays return immutable receipts, while stale generations, conflicting heads, invalid constraints and bad evidence cannot commit. Setup edits preserve staged records and require fresh staging before confirmation. Approved event pages and lists read the current revision.
+
+The manual plan editor, proposal review controls, AI interpretation and briefing flow belong to T4. T3 APIs are not a claim that those screens exist.
+
+Apply migrations locally with `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase migration up --local`. Start the local services and application using the T2 instructions. Run `node scripts/verify-t3.mjs` for real Auth, database, source, approval race and fault checks. It requires local `psql`, creates synthetic records, inserts deliberately damaged test candidates with administrative local SQL, temporarily injects a receipt failure scoped to a synthetic event, and restores test lifecycle flags. It never targets hosted services. Use `T3_APP_URL` and `T3_STATUS_FILE` to override the loopback defaults.
+
+`node scripts/verify-t3-migrations.mjs` rehearses every migration in a temporary local database, supplies only the referenced managed Auth schema contract, and drops that temporary database afterward. It does not reset the running project. The real-service harness separately verifies managed Auth and row policies in the running Supabase database.
+
+The immutable v1 plan contract lives in `src/features/plans/schema.ts`. Its JSON Schema is embedded in the migration and checked for drift by tests. Supabase's pg_jsonschema extension enforces the same field shape in PostgreSQL. Future schema changes need a new version and migration; do not rewrite already applied migrations. The [T3 specification](docs/specs/0001-eventops/0010-plan-integrity.md) records input and patch formats. The [verification record](docs/reviews/2026-10-27-t3-plan-integrity.md) records the actual checks and remaining boundaries.

@@ -1,14 +1,15 @@
 import { endpoint, json } from "@/lib/http";
-import { readPlan } from "@/features/events/data";
+import { officialPlan } from "@/features/plans/data";
 export async function GET(
-  _request: Request,
+  request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   return endpoint(async () =>
-    json({
-      status: "draft",
-      approved_revision: null,
-      draft: await readPlan((await context.params).id),
-    }),
+    json(
+      await officialPlan(
+        (await context.params).id,
+        new URL(request.url).searchParams.get("revision") ?? undefined,
+      ),
+    ),
   );
 }

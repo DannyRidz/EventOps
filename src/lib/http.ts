@@ -20,7 +20,7 @@ export function checkOrigin(request: Request) {
   if (request.headers.get("origin") !== new URL(expected).origin)
     throw new ApiError(403, "ORIGIN_REJECTED", "Please submit from EventOps.");
 }
-export async function readJson(request: Request) {
+export async function readJson(request: Request, maximumBytes = 16384) {
   checkOrigin(request);
   if (!request.headers.get("content-type")?.startsWith("application/json"))
     throw new ApiError(415, "JSON_REQUIRED", "Send JSON data.");
@@ -33,7 +33,7 @@ export async function readJson(request: Request) {
     const { done, value } = await reader.read();
     if (done) break;
     size += value.length;
-    if (size > 16384) {
+    if (size > maximumBytes) {
       await reader.cancel();
       throw new ApiError(413, "TOO_LARGE", "The form is too large.");
     }

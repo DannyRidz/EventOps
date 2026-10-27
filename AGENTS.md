@@ -18,6 +18,7 @@ Tracer Bullet (prove one real path through sign in, records, analysis, approval,
 - `npm run format`: format application and root configuration; planning documents are excluded.
 - Local accounts require APP_URL and the Supabase URL and publishable key in private `.env.local`. The application never uses a service role key.
 - `node scripts/verify-t2.mjs`: live loopback Auth, mail and database checks, including local psql expiry fixtures. Read README setup before running.
+- `node scripts/verify-t3.mjs`: loopback plan parity, approval races, damaged evidence and transaction rollback checks using synthetic local SQL fixtures. `node scripts/verify-t3-migrations.mjs` rehearses DDL in a temporary database without resetting the running project.
 
 ## Rules
 
@@ -27,6 +28,7 @@ Tracer Bullet (prove one real path through sign in, records, analysis, approval,
 - Validate untrusted inputs at boundaries. No client secret or model controlled official write.
 - Official event writes must follow the approved evidence, validation and transactional approval contract.
 - Account and setup writes use owner scoped PostgreSQL functions, never direct table writes. Save drafts with an expected generation; keep the immutable creation receipt separate from the mutable draft.
+- Plan schema v1 is shared with the embedded PostgreSQL JSON Schema and guarded by a drift test. New versions require additive migrations. Approval recomputes and checks the whole candidate, evidence values and request coverage inside its transaction; browser validation is not authority.
 - Do not fabricate live records, working integrations, or capability claims. No unfinished product or competition language in customer surfaces.
 - Use semantic HTML, keyboard behavior and described errors. Follow [design.md](design.md); values live in `src/styles/tokens.css`.
 - Tests cover observable behavior, including error and access boundaries. Vitest is the current runner; browser verification supplements it.
@@ -43,7 +45,7 @@ ESLint, Prettier, strict TypeScript, Vitest and Testing Library. CI runs equival
 
 ## Specs
 
-[Plan](docs/specs/0001-eventops/index.md), [scope](docs/scope/scope.md), [delivery](docs/specs/0001-eventops/0007-delivery.md). T1 is foundation. T2 accounts and event setup are locally verified; hosted configuration and the full operational loop remain separate tasks.
+[Plan](docs/specs/0001-eventops/index.md), [scope](docs/scope/scope.md), [delivery](docs/specs/0001-eventops/0007-delivery.md). T1 is foundation. T2 accounts and event setup and T3 plan integrity are locally verified; hosted configuration and the T4 editor/AI/briefing loop remain separate tasks.
 
 ## Agent skills
 

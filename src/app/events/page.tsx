@@ -26,18 +26,27 @@ export default async function Events() {
           {events.map((event) => (
             <li key={event.event_id}>
               <div>
-                <p className="eyebrow">Setup draft · {event.snapshot.date}</p>
+                <p className="eyebrow">
+                  {event.status === "active" ? "Approved plan" : "Setup draft"}{" "}
+                  · {event.snapshot.date}
+                </p>
                 <h2>
                   <Link href={`/events/${event.event_id}/plan`}>
                     {event.snapshot.name}
                   </Link>
                 </h2>
                 <p>
-                  {event.snapshot.timezone} · Saved version {event.generation}
+                  {event.snapshot.timezone}
+                  {event.status !== "active" &&
+                    ` · Saved setup version ${event.generation}`}
                 </p>
               </div>
-              <Link href={`/events/${event.event_id}/edit`}>
-                Continue setup
+              <Link
+                href={`/events/${event.event_id}/${event.status === "active" ? "plan" : "edit"}`}
+              >
+                {event.status === "active"
+                  ? "View approved plan"
+                  : "Continue setup"}
               </Link>
             </li>
           ))}

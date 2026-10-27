@@ -9,16 +9,46 @@ export type EventDraft = {
   generation: number;
   saved_at: string;
   snapshot: Snapshot;
+  status?: string;
 };
 export async function listEvents() {
-  const { data, error } = await (
-    await authenticatedClient()
-  )
+  const client = await authenticatedClient();
+  const { data, error } = await client
     .from("plan_drafts")
-    .select("event_id,workspace_id,generation,saved_at,snapshot")
+    .select(
+      "event_id,workspace_id,generation,saved_at,snapshot,events!inner(name,status,current_revision_id)",
+    )
     .order("saved_at", { ascending: false });
   if (error) throw new Error("SERVICE_UNAVAILABLE");
-  return data as EventDraft[];
+  type EventHead = {
+    name: string;
+    status: string;
+    current_revision_id: string | null;
+  };
+  const heads = data
+    .map((row) => (row.events as unknown as EventHead).current_revision_id)
+    .filter((id): id is string => id !== null);
+  const approved = new Map<string, Snapshot>();
+  if (heads.length) {
+    const revisions = await client
+      .from("revisions")
+      .select("event_id,snapshot")
+      .in("id", heads);
+    if (revisions.error) throw new Error("SERVICE_UNAVAILABLE");
+    for (const row of revisions.data)
+      approved.set(row.event_id, row.snapshot.event);
+  }
+  return data.map((row) => {
+    const event = row.events as unknown as EventHead;
+    return {
+      ...row,
+      snapshot: approved.get(row.event_id) ?? {
+        ...row.snapshot,
+        name: event.name,
+      },
+      status: event.status,
+    };
+  }) as EventDraft[];
 }
 export async function readPlan(id: string) {
   if (!z.uuid().safeParse(id).success)
@@ -76,11 +106,13 @@ export async function saveEvent(input: unknown, id?: string) {
       throw new ApiError(
         409,
         "CONFLICT",
-        error.message === "Draft changed"
-          ? "This draft changed in another tab. Reload the saved draft before editing again."
-          : error.message === "Event limit reached"
-            ? "Your workspace has reached its ten event limit."
-            : "This request has already been used. Reload your event list.",
+        error.message === "Use a proposal for approved plans"
+          ? "Use a reviewed proposal to change an approved plan."
+          : error.message === "Draft changed"
+            ? "This draft changed in another tab. Reload the saved draft before editing again."
+            : error.message === "Event limit reached"
+              ? "Your workspace has reached its ten event limit."
+              : "This request has already been used. Reload your event list.",
       );
     throw new Error("SERVICE_UNAVAILABLE");
   }

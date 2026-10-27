@@ -10,3 +10,12 @@ export async function pageDraft(id: string) {
     throw error;
   }
 }
+
+export async function pageOfficialPlan(id: string) {
+  try {
+    return await (await import("@/features/plans/data")).officialPlan(id);
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) notFound();
+    throw error;
+  }
+}

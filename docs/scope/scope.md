@@ -4,7 +4,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 **Build approach:** Tracer Bullet (prove one real path through sign in, records, analysis, approval, and briefing, then broaden it).  
 **Workflow:** GA (verify the real app, add meaningful tests, request a fresh reviewer before merge, document the actual change, then sync). This is an internal rigor setting, not a claim that anything has shipped.  
-**Plan state:** Approved on 27 October 2026. T1, the runnable foundation and shared UI, is implemented and locally verified. T2 accounts and event setup are also implemented and locally verified, with hosted mail and Meta access still open. This does not mark the complete operations loop or full release acceptance criteria complete. Continue without questions using the approved recommendations.
+**Plan state:** Approved on 27 October 2026. T1, the runnable foundation and shared UI, is implemented and locally verified. T2 accounts and event setup are also implemented and locally verified, with hosted mail and Meta access still open. T3 plan integrity is also built and locally verified. This does not mark the complete operations loop or full release acceptance criteria complete. Continue without questions using the approved recommendations.
 
 ## At a glance
 
@@ -12,7 +12,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 |---|---|---|---|
 | 1 | Stack and architecture | Foundation | done |
 | 2 | Coding standards and tooling | Foundation | done |
-| 3 | Data and approval model | Foundation | planned |
+| 3 | Data and approval model | Foundation | done |
 | 4 | Design system and accessible UI foundation | Foundation | in-progress |
 | 5 | Thin complete operations loop | Slice 1 | in-progress |
 | 6 | Imports and correction | Slice 2 | planned |
@@ -50,14 +50,14 @@ Capture real conventions once an approved scaffold exists. Then add the appropri
 
 Code in `AGENTS.md`, `package.json`, test configuration and `.github/workflows/ci.yml`. GitHub execution is not claimed before pushing.
 
-### 3. Data and approval model, planned
+### 3. Data and approval model, done
 
 Keep event ownership, source evidence, revisions and guarded approval consistent.
 
 **Done when:** all official writes use the validated, isolated, version checked transaction with durable receipts.
 
 - [x] Ratify the design (spec): `/architect data and approval`, approved [data contract](../specs/0001-eventops/0004-data.md).
-- [ ] Build it: `/develop data and approval`.
+- [x] Build and locally verify T3 immutable sources, complete candidate constraints, restricted approval functions, evidence, receipts, races and rollback. [T3 evidence](../reviews/2026-10-27-t3-plan-integrity.md).
 
 ### 4. Design system and accessible UI foundation, in-progress
 
@@ -81,7 +81,7 @@ Sign in, create an event, manually confirm a small real plan, enter a text updat
 **Done when:** a real user completes the whole path through actual storage and model calls; invalid or stale candidates cannot commit.
 
 - [x] Ratify the design (spec): `/architect operations loop`, approved [AI](../specs/0001-eventops/0005-ai.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
-- [ ] Build it: `/develop operations loop`. T2 account and event setup portion is built and locally verified. T3 and T4 remain. [T2 evidence](../reviews/2026-10-27-t2-accounts-events.md).
+- [ ] Build it: `/develop operations loop`. T2 account and event setup portion is built and locally verified. T3 integrity is built and locally verified. T4 editor, text/model path and briefing remain. [T2 evidence](../reviews/2026-10-27-t2-accounts-events.md).
 
 ## Slice 2: Imports and correction
 

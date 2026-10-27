@@ -23,6 +23,7 @@ The plan was approved on 27 October 2026. Implementation is now authorized, star
 | [Acceptance and verification](verify.md) | Canonical acceptance criteria, test mapping, AI evaluation cases, release gates |
 | [T1 foundation](0008-foundation.md) | First milestone boundary, implementation and actual verification evidence |
 | [T2 accounts and events](0009-accounts-events.md) | Local accounts, tenant isolation, event setup and verification boundary |
+| [T3 plan integrity](0010-plan-integrity.md) | Immutable sources, constraint validation, guarded approval and backend verification |
 | [Rationale and evidence](rationale.md) | Workspace inspection, research, decision register, assumptions, unresolved dependencies |
 | [Living scope](../../scope/scope.md) | Ordered feature boundary, status, later phases |
 
