@@ -4,16 +4,16 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 **Build approach:** Tracer Bullet (prove one real path through sign in, records, analysis, approval, and briefing, then broaden it).  
 **Workflow:** GA (verify the real app, add meaningful tests, request a fresh reviewer before merge, document the actual change, then sync). This is an internal rigor setting, not a claim that anything has shipped.  
-**Plan state:** Proposed. All features remain `planned`; no application work has started. Your instruction to proceed without questions is applied as recommended defaults. Explicit plan approval is still required before building.
+**Plan state:** Approved on 27 October 2026. T1, the runnable foundation and shared UI, is implemented and locally verified. This does not mark the complete operations loop or full release acceptance criteria complete. Continue without questions using the approved recommendations.
 
 ## At a glance
 
 | # | Feature | Phase | Status |
 |---|---|---|---|
-| 1 | Stack and architecture | Foundation | planned |
-| 2 | Coding standards and tooling | Foundation | planned |
+| 1 | Stack and architecture | Foundation | in-progress |
+| 2 | Coding standards and tooling | Foundation | done |
 | 3 | Data and approval model | Foundation | planned |
-| 4 | Design system and accessible UI foundation | Foundation | planned |
+| 4 | Design system and accessible UI foundation | Foundation | in-progress |
 | 5 | Thin complete operations loop | Slice 1 | planned |
 | 6 | Imports and correction | Slice 2 | planned |
 | 7 | Voice and transcript review | Slice 3 | planned |
@@ -24,21 +24,31 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## Foundations
 
-### 1. Stack and architecture, planned
+### 1. Stack and architecture, in-progress
 
-Choose the application structure and create the runnable foundation only after you approve the plan.
+The application structure is approved and its runnable foundation is built. The real protected request belongs to T2.
 
 **Done when:** the approved architecture boots, builds, and supports a real protected request.
 
-- [ ] Ratify the proposed design (spec): `/architect stack and architecture`, proposed [architecture](../specs/0001-eventops/0002-architecture.md).
+- [x] Ratify the design (spec): approved [architecture](../specs/0001-eventops/0002-architecture.md).
+- [x] Build and verify the T1 scaffold and standalone production runtime.
+- [ ] Verify a real protected request in T2.
 
-### 2. Coding standards and tooling, planned
+Code in `src/app/`, `next.config.ts`, and `scripts/`. [T1 evidence](../specs/0001-eventops/0008-foundation.md).
+
+### 2. Coding standards and tooling, done
 
 Capture real conventions once an approved scaffold exists. Then add the appropriate enforcement.
 
 **Done when:** actual repository guidance, type checks, formatting, lint and CI describe and check the real project.
 
-- [ ] Capture conventions from the approved scaffold: `/audit`.
+- [x] Capture conventions from the approved scaffold: `/audit`.
+- [x] Build tooling and CI configuration.
+- [x] Verify local clean install, lint, format, types, tests and production build.
+- [x] Complete fresh review before merge, final verdict Approve with no outstanding findings.
+- [x] Document the actual changes in `CHANGELOG.md` and synchronize repository guidance.
+
+Code in `AGENTS.md`, `package.json`, test configuration and `.github/workflows/ci.yml`. GitHub execution is not claimed before pushing.
 
 ### 3. Data and approval model, planned
 
@@ -46,15 +56,21 @@ Keep event ownership, source evidence, revisions and guarded approval consistent
 
 **Done when:** all official writes use the validated, isolated, version checked transaction with durable receipts.
 
-- [ ] Ratify the proposed design (spec): `/architect data and approval`, proposed [data contract](../specs/0001-eventops/0004-data.md).
+- [x] Ratify the design (spec): `/architect data and approval`, approved [data contract](../specs/0001-eventops/0004-data.md).
+- [ ] Build it: `/develop data and approval`.
 
-### 4. Design system and accessible UI foundation, planned
+### 4. Design system and accessible UI foundation, in-progress
 
 Set readable schedules, consistent forms, source views and review controls.
 
 **Done when:** shared components follow the proposed visual system and support keyboard, mobile and error states.
 
-- [ ] Ratify the proposed design (spec): `/architect experience`, proposed [experience](../specs/0001-eventops/0003-experience.md).
+- [x] Ratify the design (spec): approved [experience](../specs/0001-eventops/0003-experience.md).
+- [x] Build T1 tokens, page shell, form controls and shared empty/loading/error states.
+- [x] Verify T1 desktop/mobile, focus, described errors, keyboard recovery and automated accessibility.
+- [ ] Extend and verify the design across the event and proposal screens in later slices.
+
+Code in `src/components/ui/`, `src/styles/tokens.css`, and `design.md`.
 
 ## Slice 1: Thin complete operations loop
 
@@ -64,7 +80,8 @@ Sign in, create an event, manually confirm a small real plan, enter a text updat
 
 **Done when:** a real user completes the whole path through actual storage and model calls; invalid or stale candidates cannot commit.
 
-- [ ] Ratify the proposed design (spec): `/architect operations loop`, proposed [AI](../specs/0001-eventops/0005-ai.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
+- [x] Ratify the design (spec): `/architect operations loop`, approved [AI](../specs/0001-eventops/0005-ai.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
+- [ ] Build it: `/develop operations loop`.
 
 ## Slice 2: Imports and correction
 
@@ -74,7 +91,8 @@ Add supported file entry, actionable validation, explicit duplicate handling and
 
 **Done when:** schedule, room, roster, availability and optional assignment/dependency CSVs can be reviewed and corrected before one starting plan confirmation; errors never partly change the official plan.
 
-- [ ] Ratify the proposed design (spec): `/architect imports`, proposed [data contract](../specs/0001-eventops/0004-data.md).
+- [x] Ratify the design (spec): `/architect imports`, approved [data contract](../specs/0001-eventops/0004-data.md).
+- [ ] Build it: `/develop imports`.
 
 ## Slice 3: Voice and transcript review
 
@@ -84,7 +102,8 @@ Add short recordings to the same confirmed text and analysis flow.
 
 **Done when:** supported desktop and mobile recordings transcribe, permit correction and require confirmation; denied permission or service failure offers the complete text path.
 
-- [ ] Ratify the proposed design (spec): `/architect voice updates`, proposed [AI contract](../specs/0001-eventops/0005-ai.md).
+- [x] Ratify the design (spec): `/architect voice updates`, approved [AI contract](../specs/0001-eventops/0005-ai.md).
+- [ ] Build it: `/develop voice updates`.
 
 ## Slice 4: Review, resumption and history
 
@@ -94,7 +113,8 @@ Broaden the loop with saved unresolved questions, edited alternatives, rejected 
 
 **Done when:** you can return to acknowledged work, inspect prior revisions and restore through a new validated proposal without erasing later history.
 
-- [ ] Ratify the proposed design (spec): `/architect revision review`, proposed [experience](../specs/0001-eventops/0003-experience.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
+- [x] Ratify the design (spec): `/architect revision review`, approved [experience](../specs/0001-eventops/0003-experience.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
+- [ ] Build it: `/develop revision review`.
 
 ## Slice 5: Briefing and exports
 
@@ -104,7 +124,8 @@ Make the saved revision easy to use at the event.
 
 **Done when:** the approved plan produces a labeled briefing, print view, text download and safe CSV exports with no draft data or invented claims.
 
-- [ ] Ratify the proposed design (spec): `/architect briefing`, proposed [experience](../specs/0001-eventops/0003-experience.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
+- [x] Ratify the design (spec): `/architect briefing`, approved [experience](../specs/0001-eventops/0003-experience.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
+- [ ] Build it: `/develop briefing`.
 
 ## Slice 6: Privacy, retention and recovery
 
@@ -114,7 +135,8 @@ Provide settings, private data export, controlled deletion, background cleanup a
 
 **Done when:** retention and deletion actually run, provider processing is disclosed, backups can be restored, and expired or deleted sources are labeled honestly.
 
-- [ ] Ratify the proposed design (spec): `/architect operations`, proposed [operations contract](../specs/0001-eventops/0006-operations.md).
+- [x] Ratify the design (spec): `/architect operations`, approved [operations contract](../specs/0001-eventops/0006-operations.md).
+- [ ] Build it: `/develop operations`.
 
 ## Release
 
@@ -124,7 +146,8 @@ Prove the complete journey and prepare a truthful submission and maintainable re
 
 **Done when:** acceptance, evaluation, browser, isolation, recovery and operational gates have evidence, and authorized delivery uses working accessible links.
 
-- [ ] Ratify the proposed design (spec): `/architect delivery`, proposed [delivery](../specs/0001-eventops/0007-delivery.md) and [verification](../specs/0001-eventops/verify.md) contracts.
+- [x] Ratify the design (spec): `/architect delivery`, approved [delivery](../specs/0001-eventops/0007-delivery.md) and [verification](../specs/0001-eventops/verify.md) contracts.
+- [ ] Build it: `/develop delivery`.
 
 ## Explicit release boundary
 
@@ -151,6 +174,6 @@ Later phase 2 should prioritize invitations and viewer access, then a carefully 
 
 ## Legend and next step
 
-All statuses describe implementation, not whether a planning document exists. The linked designs are drafted but unratified, so execution boxes remain absent. After approval, `/architect` can capture ratification and expand each feature to build, verify, test, review and document boxes. Atomic tasks and effort ranges remain only in the delivery specification.
+All statuses describe implementation. The plan and linked designs were ratified on 27 October 2026. T1 verification applies only to its built surfaces. The broader foundation features stay in progress where later work remains. Atomic tasks and effort ranges remain in the delivery specification; T1 evidence is in its child specification.
 
-Do not begin the first unticked workflow command until the master prompt's explicit approval boundary is met. Scope is tool agnostic; implementing tools are chosen only in the architecture specification.
+The plan approval boundary has been met. The next delivery milestone is T2, real sign in, private workspace and event setup. External legal acceptance, paid provisioning, publication and deployment still require their existing authorization boundaries. Scope is tool agnostic; implementing tools are chosen only in the architecture specification.

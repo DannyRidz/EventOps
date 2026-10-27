@@ -1,0 +1,49 @@
+# EventOps
+
+## Stack
+
+TypeScript strict, Node 24 LTS, Next.js App Router, React, CSS variables, npm. The approved [architecture](docs/specs/0001-eventops/0002-architecture.md) also selects Supabase and Meta APIs for later slices; they are not connected in T1. Versions are pinned in package-lock.json.
+
+## Build approach
+
+Tracer Bullet (prove one real path through sign in, records, analysis, approval, and briefing, then broaden it).
+
+## Commands
+
+- `nvm use` then `npm ci`: use the pinned runtime and dependencies.
+- `npm run dev`: local application.
+- `npm run check`: lint, formatting, generated route types, strict typecheck and tests.
+- `npm run build` then `npm start`: production build and local production server.
+- `EVENTOPS_INTERNAL_UI=1 npm run dev`: enable `/internal/foundation` in development only.
+- `npm run format`: format application and root configuration; planning documents are excluded.
+
+## Rules
+
+- Prefer pure functions and immutable data. Keep I/O at explicit boundaries.
+- Organize by feature with shared UI in `src/components/ui`; server components by default.
+- Use named exports except required Next.js route/page conventions and configuration defaults.
+- Validate untrusted inputs at boundaries. No client secret or model controlled official write.
+- Official event writes must follow the approved evidence, validation and transactional approval contract.
+- Do not fabricate live records, working integrations, or capability claims. No unfinished product or competition language in customer surfaces.
+- Use semantic HTML, keyboard behavior and described errors. Follow [design.md](design.md); values live in `src/styles/tokens.css`.
+- Tests cover observable behavior, including error and access boundaries. Vitest is the current runner; browser verification supplements it.
+- No broad reformatting of planning documents. Preserve existing work.
+- Read relevant version matched Next.js guides in `node_modules/next/dist/docs/` before changing framework behavior. `agentRules: false` keeps dev startup from rewriting repository guidance.
+
+## Git
+
+- integration: off. Leave commits, pushes and repository visibility to the user unless explicitly requested.
+
+## Tooling
+
+ESLint, Prettier, strict TypeScript, Vitest and Testing Library. CI runs equivalent checks and production build. No implicit hook installation or extra skill/connector discovery.
+
+## Specs
+
+[Plan](docs/specs/0001-eventops/index.md), [scope](docs/scope/scope.md), [delivery](docs/specs/0001-eventops/0007-delivery.md). T1 is foundation only. Authentication and the full operational loop remain separate tasks.
+
+## Agent skills
+
+- [frontend-design](/Users/asmasalleh/.codex/skills/frontend-design/SKILL.md): approved visual system and content discipline.
+
+_Drafted by /audit from the repo, worth a quick human pass. Edit freely: once a line stops matching this draft, later runs treat it as curated and will flag rather than overwrite it._

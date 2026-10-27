@@ -1,13 +1,13 @@
 # 0001. EventOps planning package
 
 **Date**: 2026-10-27  
-**Status**: Proposed
+**Status**: In Progress
 
 ## Summary
 
 EventOps helps you keep a small event's schedule, rooms, volunteers, and briefing consistent as plans change. You confirm a starting plan, give an update by text or voice, review a practical revision with its evidence, and approve it before it becomes official. The recommended first release serves one organizer per workspace and events held on one local date.
 
-This is a planning deliverable. No application, dependencies, provider resources, or deployment have been created. The plan is ready for your review. Building starts only after your explicit approval.
+The plan was approved on 27 October 2026. Implementation is now authorized, starting with T1, the runnable foundation and shared UI. Provider resources, publication and deployment remain separate authorization boundaries.
 
 ## Structure
 
@@ -21,10 +21,11 @@ This is a planning deliverable. No application, dependencies, provider resources
 | [Security and operations](0006-operations.md) | Privacy, accessibility, environments, monitoring, backup, recovery |
 | [Delivery and submission](0007-delivery.md) | Implementation tasks, estimates, dates, release process, submission checklist |
 | [Acceptance and verification](verify.md) | Canonical acceptance criteria, test mapping, AI evaluation cases, release gates |
+| [T1 foundation](0008-foundation.md) | First milestone boundary, implementation and actual verification evidence |
 | [Rationale and evidence](rationale.md) | Workspace inspection, research, decision register, assumptions, unresolved dependencies |
 | [Living scope](../../scope/scope.md) | Ordered feature boundary, status, later phases |
 
-Child documents are governed by this umbrella. They have no separate lifecycle status. All recommendations remain proposed until you ratify the plan. Provider documentation establishes published capability, not access by your account or measured application behavior.
+Child documents are governed by this umbrella. They have no separate lifecycle status. The recommendations were ratified by your approval. Provider documentation establishes published capability, not access by your account or measured application behavior.
 
 ## Requirements
 
@@ -61,6 +62,6 @@ See [Rationale and evidence](rationale.md) for the alternatives, verified source
 
 ## Follow-up
 
-1. Await explicit plan approval before scaffolding or installing anything.
+1. Plan approval received. Build and verify the authorized milestones in delivery order.
 2. Resolve the external launch dependencies recorded in the decision register through account checks and official evidence, without inventing answers.
 3. After an approved scaffold exists, capture actual conventions with `/audit`. Preserve this plan and any later curated repository guidance.

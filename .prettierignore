@@ -1,0 +1,8 @@
+node_modules
+.next
+coverage
+output
+.playwright-cli
+package-lock.json
+next-env.d.ts
+docs

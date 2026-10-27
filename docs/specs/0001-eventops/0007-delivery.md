@@ -2,7 +2,7 @@
 
 ## Summary
 
-Build one real text based operations loop first, then add import and voice breadth. Reserve the last two days for verification, recovery, recording and submission. The schedule is conditional on explicit plan approval and working provider access; no build has started.
+Build one real text based operations loop first, then add import and voice breadth. Reserve the last two days for verification, recovery, recording and submission. Plan approval was received on 27 October 2026. T1 is implemented and locally verified, with evidence in [T1 foundation](0008-foundation.md). T2 and later work remain unbuilt; the original effort ranges below are planning estimates, not completed work claims.
 
 ## Ordered implementation plan
 
