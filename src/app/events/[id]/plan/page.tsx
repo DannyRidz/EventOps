@@ -92,6 +92,11 @@ export default async function Plan({
         </section>
       )}
       <div className="actions">
+        {!approved && (
+          <Link className="button" href={`/events/${draft.event_id}/imports`}>
+            Import CSV files
+          </Link>
+        )}
         <Link className="button" href={`/events/${draft.event_id}/records`}>
           {approved ? "Propose manual changes" : "Enter starting plan"}
         </Link>

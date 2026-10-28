@@ -4,6 +4,11 @@
 
 ### Added
 
+- Private CSV imports for rooms, schedule, volunteers, availability, assignments and dependencies, with downloadable templates.
+- Saved column mappings, cell corrections, exclusions, explicit duplicate choices and repeated-time offsets before starting plan confirmation.
+- Immutable original cell evidence, exact correction receipts and private original downloads with verified recovery copies.
+- Loopback CSV and Storage verification, including maximum record counts, tenant isolation, correction races and transaction rollback.
+
 - Gated typed Meta adapter and deterministic request, impact and option tools, verified locally with controlled responses.
 - Restricted durable analysis worker with lease fencing, stale result rejection, cancellation, bounded retries and safe usage metadata.
 - Atomic model cost reservations, workspace/global budgets, concurrency and generation limits.
@@ -29,6 +34,8 @@
 - Development only state and server recovery exercises, rejected before rendering in production.
 
 ### Fixed
+
+- Whole plan validation and evidence checks handle the full imported record limits without repeated timezone catalog scans or quadratic coverage joins.
 
 - Text creation receipts remain replayable after later draft corrections.
 - Approved proposals expose their saved revision after a lost response and reload; historical briefings identify the current plan.

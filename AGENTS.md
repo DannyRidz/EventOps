@@ -16,6 +16,7 @@ Tracer Bullet (prove one real path through sign in, records, analysis, approval,
 - `npm run build` then `npm start`: production build and local production server.
 - `EVENTOPS_INTERNAL_UI=1 npm run dev`: enable `/internal/foundation` in development only.
 - `node scripts/verify-t4.mjs`: loopback manual editor input, confirmed text, blocked jobs, immutable creation receipts, tenant isolation and transaction rollback checks. Live Meta execution remains disabled.
+- `T5_BOUNDARIES=1 node scripts/verify-t5.mjs`: loopback CSV, private Storage, corrections, source integrity, isolation, rollback and maximum collection checks. Local Supabase must include Storage; see README.
 - `npm run worker`: separate restricted analysis process, using private worker environment only. `node scripts/verify-t4-worker.mjs` exercises it with controlled responses on loopback services.
 - `npm run format`: format application and root configuration; planning documents are excluded.
 - Local accounts require APP_URL and the Supabase URL and publishable key in private `.env.local`. The application never uses a service role key.
@@ -35,6 +36,7 @@ Tracer Bullet (prove one real path through sign in, records, analysis, approval,
 - Use semantic HTML, keyboard behavior and described errors. Follow [design.md](design.md); values live in `src/styles/tokens.css`.
 - Tests cover observable behavior, including error and access boundaries. Vitest is the current runner; browser verification supplements it.
 - The worker uses only `eventops_worker` claim/stage/finish functions, never owner or service role credentials. Model output requires organizer interpretation/fact confirmation before proposal creation; approval recomputes that contract. Keep live access gates disabled until operator prerequisites are verified.
+- CSV originals use private Storage plus immutable database byte receipts. Download only hash verified bytes; preserve exact original cell and correction generation links. Import corrections must fence earlier staged confirmation.
 - No broad reformatting of planning documents. Preserve existing work.
 - Read relevant version matched Next.js guides in `node_modules/next/dist/docs/` before changing framework behavior. `agentRules: false` keeps dev startup from rewriting repository guidance.
 
@@ -55,3 +57,7 @@ ESLint, Prettier, strict TypeScript, Vitest and Testing Library. CI runs equival
 - [frontend-design](/Users/asmasalleh/.codex/skills/frontend-design/SKILL.md): approved visual system and content discipline.
 
 _Drafted by /audit from the repo, worth a quick human pass. Edit freely: once a line stops matching this draft, later runs treat it as curated and will flag rather than overwrite it._
+
+## Context files
+
+- [src/features/imports/AGENTS.md](src/features/imports/AGENTS.md): CSV parsing, saved corrections, source integrity and verification boundaries. T5 is locally verified; [completion evidence](docs/reviews/2026-10-28-t5-imports-completion.md).

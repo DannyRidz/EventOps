@@ -15,7 +15,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 | 3 | Data and approval model | Foundation | done |
 | 4 | Design system and accessible UI foundation | Foundation | in-progress |
 | 5 | Thin complete operations loop | Slice 1 | in-progress |
-| 6 | Imports and correction | Slice 2 | planned |
+| 6 | Imports and correction | Slice 2 | done |
 | 7 | Voice and transcript review | Slice 3 | planned |
 | 8 | Review, resumption and history | Slice 4 | planned |
 | 9 | Briefing and exports | Slice 5 | planned |
@@ -85,14 +85,14 @@ Sign in, create an event, manually confirm a small real plan, enter a text updat
 
 ## Slice 2: Imports and correction
 
-### 6. Imports and correction, planned
+### 6. Imports and correction, done
 
 Add supported file entry, actionable validation, explicit duplicate handling and saved corrections to the already working loop.
 
 **Done when:** schedule, room, roster, availability and optional assignment/dependency CSVs can be reviewed and corrected before one starting plan confirmation; errors never partly change the official plan.
 
 - [x] Ratify the design (spec): `/architect imports`, approved [data contract](../specs/0001-eventops/0004-data.md).
-- [ ] Build it: `/develop imports`.
+- [x] Build it: `/develop imports`. CSV templates, private uploads, saved mapping/corrections, duplicate decisions, immutable sources and exact starting plan confirmation are built and locally verified. [T5 evidence](../reviews/2026-10-28-t5-imports-completion.md). Code in `src/features/imports/`, the import routes, additive migrations and `scripts/verify-t5.mjs`.
 
 ## Slice 3: Voice and transcript review
 

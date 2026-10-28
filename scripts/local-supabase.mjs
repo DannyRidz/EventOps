@@ -37,7 +37,7 @@ for (const args of [
     "--runtime",
     "native",
     "--exclude",
-    "studio,realtime,storage,functions,analytics,pooler",
+    "studio,realtime,functions,analytics,pooler",
     "--eager",
   ],
 ]) {

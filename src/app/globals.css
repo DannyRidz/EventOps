@@ -559,3 +559,23 @@ summary {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.import-table {
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-5);
+  min-width: 0;
+}
+.import-table summary {
+  cursor: pointer;
+  padding-block: var(--space-3);
+  overflow-wrap: anywhere;
+}
+.import-table input,
+.import-table select {
+  max-width: 100%;
+  min-width: 0;
+}
+.import-table .field p,
+.import-table li {
+  overflow-wrap: anywhere;
+}
