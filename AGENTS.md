@@ -18,6 +18,7 @@ Tracer Bullet (prove one real path through sign in, records, analysis, approval,
 - `node scripts/verify-t4.mjs`: loopback manual editor input, confirmed text, blocked jobs, immutable creation receipts, tenant isolation and transaction rollback checks. Live Meta execution remains disabled.
 - `T5_BOUNDARIES=1 node scripts/verify-t5.mjs`: loopback CSV, private Storage, corrections, source integrity, isolation, rollback and maximum collection checks. Local Supabase must include Storage; see README.
 - `npm run worker`: separate restricted analysis process, using private worker environment only. `node scripts/verify-t4-worker.mjs` exercises it with controlled responses on loopback services.
+- `npm run worker:voice`: restricted transcription and independent audio cleanup process. `EVENTOPS_FFMPEG_PATH=/absolute/path/to/ffmpeg node scripts/verify-t6.mjs` verifies loopback audio and controlled transcription; live AI stays disabled.
 - `npm run format`: format application and root configuration; planning documents are excluded.
 - Local accounts require APP_URL and the Supabase URL and publishable key in private `.env.local`. The application never uses a service role key.
 - `node scripts/verify-t2.mjs`: live loopback Auth, mail and database checks, including local psql expiry fixtures. Read README setup before running.
@@ -59,5 +60,7 @@ ESLint, Prettier, strict TypeScript, Vitest and Testing Library. CI runs equival
 _Drafted by /audit from the repo, worth a quick human pass. Edit freely: once a line stops matching this draft, later runs treat it as curated and will flag rather than overwrite it._
 
 ## Context files
+
+- [src/features/voice/AGENTS.md](src/features/voice/AGENTS.md): private audio jobs, conversion, transcript confirmation, shared budgets and independent cleanup. [T6 evidence](docs/reviews/2026-10-28-t6-voice-completion.md) records local verification and outstanding device/provider checks.
 
 - [src/features/imports/AGENTS.md](src/features/imports/AGENTS.md): CSV parsing, saved corrections, source integrity and verification boundaries. T5 is locally verified; [completion evidence](docs/reviews/2026-10-28-t5-imports-completion.md).

@@ -798,7 +798,7 @@ try {
     other,
   );
   await admin.query(
-    "insert into public.model_runs(workspace_id,event_id,job_id,attempt) select $1,$2,$3,100000+n from generate_series(1,greatest(0,(select floor((10-coalesce(sum(charged_usd),0)-0.15)/0.15)::integer from public.model_runs))) n",
+    "insert into public.model_runs(workspace_id,event_id,job_id,attempt) select $1,$2,$3,100000+n from generate_series(1,greatest(0,(select floor((10-coalesce(sum(charged_usd),0)-(select coalesce(sum(reserved_usd),0) from public.voice_jobs where (created_at at time zone 'UTC')::date=(now() at time zone 'UTC')::date)-0.15)/0.15)::integer from public.model_runs))) n",
     [workspace, id, budgetJob.body.id],
   );
   let blockedTarget, blockedClient, blockedSession;
@@ -819,7 +819,7 @@ try {
       Number(
         (
           await admin.query(
-            "select sum(charged_usd) as cost from public.model_runs where (created_at at time zone 'UTC')::date=(now() at time zone 'UTC')::date",
+            "select sum(charged_usd)+(select coalesce(sum(reserved_usd),0) from public.voice_jobs where (created_at at time zone 'UTC')::date=(now() at time zone 'UTC')::date) as cost from public.model_runs where (created_at at time zone 'UTC')::date=(now() at time zone 'UTC')::date",
           )
         ).rows[0].cost,
       ) <= 10,

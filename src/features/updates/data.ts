@@ -10,8 +10,16 @@ export async function saveText(id: string, input: unknown, draftId?: string) {
     throw new ApiError(404, "NOT_FOUND", "Update not found.");
   const value = z
     .strictObject({
-      raw_text: z.string().trim().min(1).max(10000),
-      corrected_text: z.string().trim().min(1).max(10000),
+      raw_text: z
+        .string()
+        .min(1)
+        .max(10000)
+        .refine((value) => !!value.trim()),
+      corrected_text: z
+        .string()
+        .min(1)
+        .max(10000)
+        .refine((value) => !!value.trim()),
       idempotency_key: z.uuid(),
       expected_generation: z.number().int().positive().optional(),
     })
@@ -51,6 +59,24 @@ export async function confirmText(id: string, draftId: string, input: unknown) {
     p_confirmed_text: value.confirmed_text,
     p_confirmed: true,
   });
+  // Deletion is due in the confirmation transaction. A worker retries failed cleanup.
+  const { client } = await ownedEvent(id);
+  const audio = await client
+    .from("voice_jobs")
+    .select("id,object_key")
+    .eq("event_id", id)
+    .eq("draft_id", draftId);
+  if (audio.data?.length) {
+    const removed = await client.storage
+      .from("event-audio")
+      .remove(audio.data.map((row) => row.object_key));
+    if (!removed.error)
+      for (const row of audio.data)
+        await client.rpc("ack_voice_deleted", {
+          p_event_id: id,
+          p_job_id: row.id,
+        });
+  }
   if (analysisRequestsEnabled() && ["blocked", "failed"].includes(job.state))
     return planRpc("queue_analysis_job", { p_event_id: id, p_job_id: job.id });
   return job;

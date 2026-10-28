@@ -14,11 +14,13 @@ export function UpdateForm({
   baseId,
   initial,
   analysisEnabled = false,
+  transcript = false,
 }: {
   eventId: string;
   baseId: string;
   initial?: TextDraft | null;
   analysisEnabled?: boolean;
+  transcript?: boolean;
 }) {
   const [draft, setDraft] = useState(initial ?? null);
   const [text, setText] = useState(initial?.corrected_text ?? "");
@@ -137,7 +139,9 @@ export function UpdateForm({
       {draft && (
         <>
           <details>
-            <summary>Original saved text</summary>
+            <summary>
+              {transcript ? "Original transcript" : "Original saved text"}
+            </summary>
             <p className="preserve-text">{draft.raw_text}</p>
           </details>
           <label className="check-label">

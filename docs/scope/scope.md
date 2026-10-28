@@ -16,7 +16,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 | 4 | Design system and accessible UI foundation | Foundation | in-progress |
 | 5 | Thin complete operations loop | Slice 1 | in-progress |
 | 6 | Imports and correction | Slice 2 | done |
-| 7 | Voice and transcript review | Slice 3 | planned |
+| 7 | Voice and transcript review | Slice 3 | in-progress |
 | 8 | Review, resumption and history | Slice 4 | planned |
 | 9 | Briefing and exports | Slice 5 | planned |
 | 10 | Privacy, retention and recovery | Slice 6 | planned |
@@ -96,14 +96,14 @@ Add supported file entry, actionable validation, explicit duplicate handling and
 
 ## Slice 3: Voice and transcript review
 
-### 7. Voice and transcript review, planned
+### 7. Voice and transcript review, in-progress
 
 Add short recordings to the same confirmed text and analysis flow.
 
 **Done when:** supported desktop and mobile recordings transcribe, permit correction and require confirmation; denied permission or service failure offers the complete text path.
 
 - [x] Ratify the design (spec): `/architect voice updates`, approved [AI contract](../specs/0001-eventops/0005-ai.md).
-- [ ] Build it: `/develop voice updates`.
+- [x] Build it: `/develop voice updates`. Recording, private audio jobs, bounded conversion, controlled transcription, immutable originals, saved corrections, explicit confirmation, text fallback and raw audio cleanup are implemented and locally verified. [T6 evidence](../reviews/2026-10-28-t6-voice-completion.md). Code in `src/features/voice/`, the voice routes, additive migrations and `scripts/verify-t6.mjs`. Native Safari and physical desktop/mobile recording, hosted worker isolation and actual provider acceptance remain open, so the feature stays in progress. Live AI remains disabled.
 
 ## Slice 4: Review, resumption and history
 

@@ -1,3 +1,6 @@
+import { VoiceRecorder } from "@/features/voice/voice-recorder";
+import { listVoice } from "@/features/voice/data";
+import { voiceEnabled } from "@/features/voice/contracts";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { pageOfficialPlan } from "@/features/events/page-data";
@@ -19,6 +22,7 @@ export default async function Update({
     if (e instanceof ApiError && e.status === 404) notFound();
     throw e;
   }
+  const recordings = await listVoice(id);
   return (
     <section className="workspace-page stack">
       <EventNav id={id} />
@@ -30,10 +34,16 @@ export default async function Update({
             {revision.snapshot.event.timezone} · Current revision{" "}
             {revision.revision_number}
           </p>
+          <VoiceRecorder
+            eventId={id}
+            enabled={voiceEnabled()}
+            jobs={recordings.filter((job) => job.draft_id === update)}
+          />
           <UpdateForm
             eventId={id}
             baseId={revision.id}
             initial={data.draft}
+            transcript={recordings.some((job) => job.draft_id === update)}
             analysisEnabled={data.enabled}
           />
         </>

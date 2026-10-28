@@ -1,0 +1,49 @@
+# T6 voice recording and transcript review, local implementation
+
+Date: 28 October 2026, Asia/Brunei. T6 is implemented and its controlled local service flow is verified. Live AI remains disabled. Native Safari, physical desktop and mobile microphones, hosted worker isolation and actual provider acceptance remain unverified. The voice scope stays in progress for these release checks; this record does not claim full AC-10 or release acceptance.
+
+## Implemented flow
+
+Updates provides recording, stop, local playback, discard and the complete existing text path. The pre recording notice names Meta processing, spoken names, supported formats and retention. Feature detection selects WebM with Opus or MP4 with AAC. Capture stops at 120 seconds, bounds accumulated bytes at 10 MiB, releases tracks and object URLs, and warns before losing local work. Permission or codec failure preserves typed input. Unsaved local playback remains possible while transcription is disabled, and uploading is disabled explicitly.
+
+An authenticated upload streams bounded bytes, checks type and container signature, creates a durable owner scoped byte receipt, uploads to private `event-audio` Storage without overwrite and queues the job. Lost responses reuse the original key. An incomplete upload can retry its retained local blob, retry a saved object, or be discarded before recording again. After acknowledgement, browser closure does not own execution. Returning to Updates shows persisted state and the saved transcript link.
+
+The separate worker uses restricted claim, completion and cleanup functions. Its database login has only `eventops_worker` membership and no direct application table or approval access. Its separately scoped Storage JWT can read registered EventOps audio and delete only due objects. A restrictive row policy also denies access to other buckets even if a later permissive policy broadens. Worker uploads and overwrites are denied. Local verification mints only a ten minute synthetic Storage token from the isolated native stack signing fixture, in memory, without a provider key or service role credential in the worker.
+
+The worker verifies the exact original hash and byte length, then runs ffmpeg with fixed arguments, local file protocols, allowed containers and codecs, one thread, bounded allocation and a 20 second deadline. Conversion produces mono 16 bit PCM WAV at 24 kHz. Decoded duration must be positive and no greater than 120 seconds. Private temporary files are removed in a finally block. A real locally installed ffmpeg 7.1.1 was used for Opus and AAC conversion tests. The production process still needs the approved container isolation and an operator reviewed binary; command bounds alone are not a production operating system sandbox.
+
+The transcription adapter follows the current [Meta speech guide](https://dev.meta.ai/docs/speech-to-text), using JSON `request` and WAV `audio` multipart parts, fixed model `muse-voice-transcribe-1.0`, push to talk mode and the returned `transcript` field. It bounds connection headers to ten seconds, the complete response to 45 seconds and the body to 64,000 bytes. Empty, malformed and overlong text fails. HTTP failure does not automatically retry. Expired worker leases permit at most three processing attempts, with late results fenced by token and expiry. No provider response text, error body or raw audio is logged as telemetry.
+
+Successful completion atomically saves an immutable original transcript source, byte/hash/model metadata and a text draft. Original whitespace is preserved. Organizer corrections use the existing expected generation contract, keep the original distinct and can resume after refresh. Analysis requires separate confirmation of the exact saved text against the current approved revision. Confirmation retains the voice input kind, draft ID, original source ID and recording link. No transcript alone creates a proposal or official revision. The established T4 interpretation review and separate transactional approval remain the authority.
+
+## Cost, cleanup and access
+
+Recording attempts are limited to twenty per workspace per UTC day, one active recording per event and two active provider jobs per workspace across voice and text. Each recording conservatively reserves USD 0.018 for three maximum duration calls, with no speculative refund for unknown usage. Audio and analysis serialize through the same budget lock and share the USD 2 workspace/day, USD 10 global/day and USD 50 lifetime development allowance. These are application bounds, not proof of provider billing or available credits.
+
+Confirmation or discard makes raw audio immediately due. The owner attempts deletion and acknowledges it only after Storage metadata is absent. Otherwise success or final failure schedules deletion within 24 hours, with a seven day absolute maximum from creation. Incomplete uploads expire after ten minutes. The independent worker cleanup sweep remains available without provider credentials, ffmpeg or enabled transcription. Failed deletion stays pending and retries. Original transcript sources survive raw audio cleanup. Broader account export, retention and purge are T8 work.
+
+A stopped cleanup service cannot enforce wall clock deletion. Hosted cleanup scheduling, scoped credential rotation, monitoring and outage response must pass before enabling ingestion. Hosted Storage role support and container isolation are operator prerequisites. No hosted resources or credentials were provisioned here.
+
+## Verification
+
+- `npm run check`: lint, format, generated routes, strict TypeScript and 137 tests across 22 files pass.
+- `npm run build`: production build, route generation and standalone packaging pass.
+- `node scripts/verify-t3-migrations.mjs`: all 31 migrations rehearse in a temporary database, which is dropped afterward. All 31 are applied locally.
+- `EVENTOPS_FFMPEG_PATH=/absolute/path/to/ffmpeg node scripts/verify-t6.mjs`: 15 loopback groups pass through real Auth, mail, PostgreSQL, private Storage, restricted worker identity and real conversion, with controlled transcription responses.
+- Existing T4 manual suite: 12 groups pass. Restricted analysis worker: 16 groups pass. T5 import regression: 22 groups pass. The T4 global budget fixture now includes the new audio ledger. The previously verified T5 maximum collection run was not repeated because T6 does not alter collection parsing or validation.
+
+The T6 suite proves disabled web access; both recording conversions; decoded duration limits; malformed and disguised byte rejection; temporary cleanup; owner/anonymous denial; direct result write denial; original receipts; concurrent leases and expiry fencing; controlled multipart provider shape; saved original and corrected generations; stale confirmation rejection; blocked analysis; immediate owner deletion receipts; failure preservation; cleanup with transcription disabled; discard fencing; restricted Storage reads, upload denial and early deletion denial; cross bucket denial; twenty daily attempts; concurrent upload serialization; shared budget exhaustion; and rollback of draft, source and job completion after an injected source failure.
+
+Production Chrome verification on loopback port 3002 opens the saved transcript, distinguishes original from corrected text, simulates permission denial without losing typed work, records a controlled Web Audio stream through the real MediaRecorder, starts actual local playback, confirms upload remains disabled, and discards the recording. Desktop and 320 CSS pixel captures are in ignored `output/playwright/t6-transcript-*`. The 320 pixel page has no horizontal overflow. The transcript review surface reports zero axe WCAG A, AA and 2.1 AA violations and zero production page errors. This proves a controlled Chromium capture path, not a physical microphone or Safari/mobile device pass. An earlier development run showed stale server/client text during hot refresh; the clean production run has no hydration error. Native screen reader work remains a release check.
+
+Fresh review ends at Approve with no outstanding findings. It identified cleanup gating, recovery, deletion feedback and budget issues during implementation, which were corrected and covered. The reviewer inspected code but did not independently rerun the reported commands. Author identity is not reliable, so a different model family cannot be guaranteed. See [review](2026-10-28-t6-review.md).
+
+## Boundaries and handoff
+
+The local private database voice and analysis gates are false after verification. Checked in configuration defaults remain disabled, and private application/provider credentials were not provisioned or changed. No live Meta call or spend occurred. The USD 150 credit claim and billing support ticket remain submitted with credits unconfirmed. Payment setup, API key provisioning, terms acceptance and actual provider verification remain blocked. No deployment, commit or push occurred.
+
+The full native browser and physical device portion of AC-10 and hosted/service portions of AC-24 and AC-27 remain open. Other retention, deletion, recovery and account lifecycle acceptance remains T8. The umbrella plan stays In Progress. Earlier delivery prose describing T5 as unbuilt or pointing to T2 as next remains historical planning text; the local completion records are the current implementation evidence.
+
+## Durable handoff
+
+The living scope marks the T6 Build it box complete and advances the voice row from planned to in progress. Device and real provider checks keep its overall acceptance open. Root guidance adds the voice worker verification command and a pointer to the new voice area guidance. README, environment examples and the changelog describe the implemented local behavior and disabled access boundary. The umbrella specification status and prior planning prose were preserved.

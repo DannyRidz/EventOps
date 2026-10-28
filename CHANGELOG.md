@@ -4,6 +4,10 @@
 
 ### Added
 
+- Local voice recording, playback, transcript correction and exact text confirmation with a complete text fallback.
+- Private audio jobs, bounded Opus/AAC conversion, restricted transcription worker, shared budgets and verified raw audio deletion receipts.
+- Controlled T6 service, HTTP, failure and browser verification with live AI disabled. Native device and provider acceptance remain open.
+
 - Private CSV imports for rooms, schedule, volunteers, availability, assignments and dependencies, with downloadable templates.
 - Saved column mappings, cell corrections, exclusions, explicit duplicate choices and repeated-time offsets before starting plan confirmation.
 - Immutable original cell evidence, exact correction receipts and private original downloads with verified recovery copies.

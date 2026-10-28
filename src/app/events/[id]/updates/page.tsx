@@ -1,3 +1,6 @@
+import { VoiceRecorder } from "@/features/voice/voice-recorder";
+import { listVoice } from "@/features/voice/data";
+import { voiceEnabled } from "@/features/voice/contracts";
 import Link from "next/link";
 import { pageOfficialPlan } from "@/features/events/page-data";
 import { updateData } from "@/features/updates/data";
@@ -11,6 +14,7 @@ export default async function Updates({
   const { id } = await params;
   const { approved_revision: revision } = await pageOfficialPlan(id);
   const data = await updateData(id);
+  const recordings = await listVoice(id);
   return (
     <section className="workspace-page stack">
       <EventNav id={id} />
@@ -22,6 +26,11 @@ export default async function Updates({
             {revision.snapshot.event.timezone} · Approved revision{" "}
             {revision.revision_number}
           </p>
+          <VoiceRecorder
+            eventId={id}
+            enabled={voiceEnabled()}
+            jobs={recordings}
+          />
           <UpdateForm
             eventId={id}
             baseId={revision.id}
