@@ -11,9 +11,11 @@ export async function pageDraft(id: string) {
   }
 }
 
-export async function pageOfficialPlan(id: string) {
+export async function pageOfficialPlan(id: string, revisionId?: string) {
   try {
-    return await (await import("@/features/plans/data")).officialPlan(id);
+    return await (
+      await import("@/features/plans/data")
+    ).officialPlan(id, revisionId);
   } catch (error) {
     if (error instanceof ApiError && error.status === 404) notFound();
     throw error;

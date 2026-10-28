@@ -24,6 +24,7 @@ The plan was approved on 27 October 2026. Implementation is now authorized, star
 | [T1 foundation](0008-foundation.md) | First milestone boundary, implementation and actual verification evidence |
 | [T2 accounts and events](0009-accounts-events.md) | Local accounts, tenant isolation, event setup and verification boundary |
 | [T3 plan integrity](0010-plan-integrity.md) | Immutable sources, constraint validation, guarded approval and backend verification |
+| [T4 text analysis worker](0011-text-analysis-worker.md) | Typed interpretation, deterministic options, restricted jobs, cost controls and local/provider boundary |
 | [Rationale and evidence](rationale.md) | Workspace inspection, research, decision register, assumptions, unresolved dependencies |
 | [Living scope](../../scope/scope.md) | Ordered feature boundary, status, later phases |
 

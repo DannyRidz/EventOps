@@ -290,3 +290,15 @@ export async function evidence(id: string, sourceId: string) {
   if (artifact.error) throw new Error("SERVICE_UNAVAILABLE");
   return { source: data, artifact: artifact.data };
 }
+
+export async function proposalRevision(id: string, proposalId: string) {
+  const { client } = await ownedEvent(id);
+  const { data, error } = await client
+    .from("revisions")
+    .select("id,revision_number,approved_at")
+    .eq("event_id", id)
+    .eq("proposal_id", proposalId)
+    .maybeSingle();
+  if (error) throw new Error("SERVICE_UNAVAILABLE");
+  return data;
+}

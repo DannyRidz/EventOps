@@ -2,7 +2,7 @@
 
 ## Summary
 
-Build one real text based operations loop first, then add import and voice breadth. Reserve the last two days for verification, recovery, recording and submission. Plan approval was received on 27 October 2026. T1 is implemented and locally verified, with evidence in [T1 foundation](0008-foundation.md). T2 accounts and event setup are built and locally verified, with evidence in [T2 review](../../reviews/2026-10-27-t2-accounts-events.md). Hosted mail, operator notices and Meta account access remain open. T3 plan integrity is built and locally verified, with evidence in [T3 review](../../reviews/2026-10-27-t3-plan-integrity.md). T4 and later work remain unbuilt; the original effort ranges below are planning estimates, not completed work claims.
+Build one real text based operations loop first, then add import and voice breadth. Reserve the last two days for verification, recovery, recording and submission. Plan approval was received on 27 October 2026. T1 is implemented and locally verified, with evidence in [T1 foundation](0008-foundation.md). T2 accounts and event setup are built and locally verified, with evidence in [T2 review](../../reviews/2026-10-27-t2-accounts-events.md). Hosted mail, operator notices and Meta account access remain open. T3 plan integrity is built and locally verified, with evidence in [T3 review](../../reviews/2026-10-27-t3-plan-integrity.md). T4 is implemented and locally verified with controlled provider responses, with evidence in [T4 completion](../../reviews/2026-10-28-t4-worker-completion.md). Live Meta access and real model verification remain blocked. T5 and later work remain unbuilt; the original effort ranges below are planning estimates, not completed work claims.
 
 ## Ordered implementation plan
 

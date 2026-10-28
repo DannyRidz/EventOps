@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EventNav } from "@/features/plans/event-nav";
 import { pageOfficialPlan } from "@/features/events/page-data";
 export default async function Plan({
   params,
@@ -11,6 +12,7 @@ export default async function Plan({
     setup = approved?.snapshot.event ?? draft.snapshot;
   return (
     <section className="workspace-page stack">
+      <EventNav id={draft.event_id} />
       <p className="eyebrow">
         {approved
           ? `Approved plan · Revision ${approved.revision_number}`
@@ -90,6 +92,9 @@ export default async function Plan({
         </section>
       )}
       <div className="actions">
+        <Link className="button" href={`/events/${draft.event_id}/records`}>
+          {approved ? "Propose manual changes" : "Enter starting plan"}
+        </Link>
         {!approved && (
           <Link className="button" href={`/events/${draft.event_id}/edit`}>
             Edit setup

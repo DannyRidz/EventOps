@@ -19,7 +19,8 @@ a {
   text-underline-offset: 0.22em;
 }
 button,
-input {
+input,
+select {
   font: inherit;
 }
 :focus-visible {
@@ -320,7 +321,8 @@ p {
 .field label {
   font-weight: 600;
 }
-.field input {
+.field input,
+.field select {
   min-height: var(--target);
   padding: var(--space-3);
   border: 1px solid var(--line-control);
@@ -328,6 +330,7 @@ p {
   background: var(--surface);
   color: var(--text);
   width: 100%;
+  min-width: 0;
 }
 .field input[aria-invalid="true"] {
   border-color: var(--danger);
@@ -519,4 +522,40 @@ summary {
   .setup-details > div {
     grid-template-columns: 1fr;
   }
+}
+
+.record-editor {
+  border: 1px solid var(--line);
+  padding: var(--space-4);
+  min-width: 0;
+}
+.comparison-row {
+  border-top: 1px solid var(--line);
+  padding-block: 16px;
+  overflow-wrap: anywhere;
+}
+.comparison-row dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.comparison-row dd {
+  margin: 0;
+  white-space: pre-wrap;
+}
+.comparison-row dt {
+  font-weight: 600;
+}
+.break-text {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .comparison-row dl {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+.preserve-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }

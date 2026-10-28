@@ -40,10 +40,40 @@ Hosted readiness remains open: operator identity and complete legal notices, a m
 
 T3 adds the backend for operational plans. Authenticated APIs can stage all six record types, capture immutable manual evidence, confirm revision 1, create a checked manual proposal and approve it transactionally. The server and PostgreSQL both validate the whole plan. Replays return immutable receipts, while stale generations, conflicting heads, invalid constraints and bad evidence cannot commit. Setup edits preserve staged records and require fresh staging before confirmation. Approved event pages and lists read the current revision.
 
-The manual plan editor, proposal review controls, AI interpretation and briefing flow belong to T4. T3 APIs are not a claim that those screens exist.
+T4 now adds the local manual editor, proposal review and briefing screens described below. Live Meta access remains disabled pending provider prerequisites.
 
 Apply migrations locally with `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase migration up --local`. Start the local services and application using the T2 instructions. Run `node scripts/verify-t3.mjs` for real Auth, database, source, approval race and fault checks. It requires local `psql`, creates synthetic records, inserts deliberately damaged test candidates with administrative local SQL, temporarily injects a receipt failure scoped to a synthetic event, and restores test lifecycle flags. It never targets hosted services. Use `T3_APP_URL` and `T3_STATUS_FILE` to override the loopback defaults.
 
 `node scripts/verify-t3-migrations.mjs` rehearses every migration in a temporary local database, supplies only the referenced managed Auth schema contract, and drops that temporary database afterward. It does not reset the running project. The real-service harness separately verifies managed Auth and row policies in the running Supabase database.
 
 The immutable v1 plan contract lives in `src/features/plans/schema.ts`. Its JSON Schema is embedded in the migration and checked for drift by tests. Supabase's pg_jsonschema extension enforces the same field shape in PostgreSQL. Future schema changes need a new version and migration; do not rewrite already applied migrations. The [T3 specification](docs/specs/0001-eventops/0010-plan-integrity.md) records input and patch formats. The [verification record](docs/reviews/2026-10-27-t3-plan-integrity.md) records the actual checks and remaining boundaries.
+
+## T4 local operations loop
+
+Open an event and choose **Enter starting plan**. Add rooms, sessions, volunteers, availability, assignments and dependencies as needed. New record references use their entered identifiers. Save for checks, inspect the whole starting plan and frozen field evidence, then explicitly confirm revision 1. For approved events, **Propose manual changes** creates a checked candidate. Review before/proposed/evidence rows and use **Review approval** before saving a new official revision. Invalid and stale candidates remain blocked. Rejection preserves the official plan.
+
+**Updates** saves text before it can be confirmed. Original text and corrections remain distinct. Confirming exact saved text records a durable **Awaiting model access** job. No analysis runs and no text goes to a provider. You can reload acknowledged text, or prepare exact manual changes. **Briefing** uses only the selected approved revision; older briefings are explicitly historical.
+
+Apply all additive T4 migrations with the same local migration command above. `node scripts/verify-t4.mjs` runs loopback only synthetic service checks, including a temporary scoped SQL failure trigger removed afterward. It requires local `psql`. Use `T4_APP_URL` and `T4_STATUS_FILE` to override the application and private status file defaults. Keep sessions and mail out of source control. The browser keeps only retry operation UUIDs in tab scoped session storage, never private plan text.
+
+T4 implementation is complete locally, including typed Meta interpretation, deterministic options, a restricted durable worker, retries, cancellation and cost controls. The model path is verified with controlled responses only. Live provider execution remains disabled and unverified. Required terms, account/model/billing/retention access, hosted mail, operator notices and deployment readiness remain external gates. See the [T4 completion record](docs/reviews/2026-10-28-t4-worker-completion.md) for evidence and the acceptance boundary. No deployment, terms acceptance, live model call or paid resource creation occurred.
+
+## Analysis worker
+
+`npm run worker` starts the separate Node worker when its environment is already supplied. You can also use `node --env-file=.env.worker.local scripts/analysis-worker.mjs`. Copy `worker.env.example` to that ignored private file when configuring it deliberately. Keep `MODEL_API_KEY` and `WORKER_DATABASE_URL` only in the worker environment, never the web or browser configuration. The worker uses the same pinned Node runtime and source checkout.
+
+The database login must have only `eventops_worker` membership. The worker sets that restricted role and invokes only its claim, stage and finish functions. It cannot approve, read arbitrary application tables or use an owner JWT. An operator can prepare the login using administrative SQL, then set its password privately with psql's `\password` command:
+
+```sql
+create role eventops_worker_login login noinherit;
+grant eventops_worker to eventops_worker_login;
+\password eventops_worker_login
+```
+
+Do not enable live processing until the user has handled required provider terms and the operator has verified authorized access, Standard model availability, billing bounds and privacy/retention behavior. The three `EVENTOPS_MODEL_ENABLED`, `EVENTOPS_META_ACCESS_VERIFIED` and `EVENTOPS_META_BILLING_BOUND_VERIFIED` flags default to `0` in the examples. Web and worker must receive the verified flags deliberately, and an administrator must separately enable `eventops_private.analysis_budget_lock.enabled`. These settings are attestations, not an automatic legal acceptance or proof of access. They remain disabled in this implementation session.
+
+When enabled, confirming text queues a reserved analysis. You can close the browser, return to **Updates**, open the saved analysis and review the original text, every interpreted request, affected records and validated choices. Confirm that the interpretation covers the complete update and confirms any new facts before creating a proposal. Approval remains a separate action. Corrected text or a changed head blocks the older result. Questions and unsupported requests remain unresolved and offer correction or the manual editor. Queued or running work can be cancelled.
+
+Each attempt reserves USD 0.15. Limits are one active job per event, two per workspace, ten per workspace/hour, ten across all generations of an update, USD 2 per workspace/UTC day, USD 10 globally/UTC day and USD 50 lifetime development allowance. Unknown and abandoned attempts retain their reservation; only known usage or queued work that never started is reconciled. Provider retries and repair share a three call, 90 second envelope. A failed job offers explicit retry within those quotas. Operator/provider notices and actual hosted measurements remain required before launch.
+
+`node scripts/verify-t4-worker.mjs` runs the real local database/worker path with controlled responses, not Meta. It requires loopback services and local PostgreSQL client tools, creates only synthetic accounts/records, uses a disposable restricted login, temporarily adjusts synthetic ledger/attempt fixtures and restores the local database gate afterward. Use `T4_WORKER_APP_URL` and `T4_WORKER_STATUS_FILE` for overrides. It tests lease fences, exact SQL/TypeScript request parity, schema drift, UTC budgets and concurrent reservation limits, generation limits, cancellation, safe telemetry, organizer confirmation and approval. No live provider key is needed.

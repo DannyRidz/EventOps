@@ -4,7 +4,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 **Build approach:** Tracer Bullet (prove one real path through sign in, records, analysis, approval, and briefing, then broaden it).  
 **Workflow:** GA (verify the real app, add meaningful tests, request a fresh reviewer before merge, document the actual change, then sync). This is an internal rigor setting, not a claim that anything has shipped.  
-**Plan state:** Approved on 27 October 2026. T1, the runnable foundation and shared UI, is implemented and locally verified. T2 accounts and event setup are also implemented and locally verified, with hosted mail and Meta access still open. T3 plan integrity is also built and locally verified. This does not mark the complete operations loop or full release acceptance criteria complete. Continue without questions using the approved recommendations.
+**Plan state:** Approved on 27 October 2026. T1, the runnable foundation and shared UI, is implemented and locally verified. T2 accounts and event setup are also implemented and locally verified, with hosted mail and Meta access still open. T3 plan integrity is also built and locally verified. T4 implementation is complete locally, including the gated interpreter, deterministic options, restricted worker and cost controls, verified with controlled provider responses. Live Meta and hosted-service verification remain blocked. [T4 evidence](../reviews/2026-10-28-t4-worker-completion.md). This does not mark the complete operations loop or full release acceptance criteria complete. Continue without questions using the approved recommendations.
 
 ## At a glance
 
@@ -81,7 +81,7 @@ Sign in, create an event, manually confirm a small real plan, enter a text updat
 **Done when:** a real user completes the whole path through actual storage and model calls; invalid or stale candidates cannot commit.
 
 - [x] Ratify the design (spec): `/architect operations loop`, approved [AI](../specs/0001-eventops/0005-ai.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
-- [ ] Build it: `/develop operations loop`. T2 account and event setup portion is built and locally verified. T3 integrity is built and locally verified. T4 editor, text/model path and briefing remain. [T2 evidence](../reviews/2026-10-27-t2-accounts-events.md).
+- [ ] Build it: `/develop operations loop`. T2 account and event setup portion is built and locally verified. T3 integrity is built and locally verified. T4 is implemented and locally verified, including model request contracts, deterministic options, a restricted leased worker, budgets, interpretation confirmation, guarded approval and briefing. Controlled provider responses prove the local path; the actual model-call acceptance criterion remains open because provider terms, authorized access and live probes remain external gates. [T4 evidence](../reviews/2026-10-28-t4-worker-completion.md). [T2 evidence](../reviews/2026-10-27-t2-accounts-events.md).
 
 ## Slice 2: Imports and correction
 

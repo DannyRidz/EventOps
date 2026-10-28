@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { authenticatedClient } from "@/lib/supabase/server";
@@ -21,9 +22,9 @@ export default async function EventsLayout({
           <section className="state-page">
             <h1>Workspace temporarily unavailable</h1>
             <p>Please try again shortly.</p>
-            <a className="button" href="/events">
+            <Link className="button" href="/events">
               Try again
-            </a>
+            </Link>
           </section>
         </PageShell>
       );
@@ -32,7 +33,7 @@ export default async function EventsLayout({
   return (
     <PageShell>
       <div className="workspace-bar">
-        <a href="/events">My events</a>
+        <Link href="/events">My events</Link>
         <SignOut />
       </div>
       {children}
