@@ -8,7 +8,9 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## At a glance
 
-29 October provider readiness update: signed in billing confirms USD 150 active free credits and a product improvement notice. Payment remains required, Create API key is disabled and no private model key is available. Synthetic live verification is blocked with USD 0 spend; controlled worker and manual flows pass again. Live gates remain disabled. T7 and T8 now have local completion evidence below; T9 verification remains incomplete. [Readiness evidence](../reviews/2026-10-29-live-ai-readiness.md).
+Later 29 October check: native public Safari keyboard/200 percent zoom, physical desktop microphone capture/playback in Safari and Chrome, and fresh recovery with 42 migrations pass. Meta now reports a failed payment hold restriction; no API key is available. The 90 live runs remain unexecuted. VoiceOver inspection timed out and its original off state was restored. [Native and live readiness evidence](../reviews/2026-10-29-t9-native-readiness.md).
+
+Earlier 29 October provider readiness update: signed in billing confirms USD 150 active free credits and a product improvement notice. Payment remains required, Create API key is disabled and no private model key is available. Synthetic live verification is blocked with USD 0 spend; controlled worker and manual flows pass again. Live gates remain disabled. T7 and T8 now have local completion evidence below; T9 verification remains incomplete. [Readiness evidence](../reviews/2026-10-29-live-ai-readiness.md).
 
 | # | Feature | Phase | Status |
 |---|---|---|---|

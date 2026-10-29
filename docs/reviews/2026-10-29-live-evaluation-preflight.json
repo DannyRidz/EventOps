@@ -1,0 +1,1192 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Brunei",
+  "status": "blocked_before_provider_execution",
+  "code_commit_at_check": "790da10c10355e20d698d8af5341337fb88b0798",
+  "model_id": "muse-spark-1.3",
+  "model_mode": "Standard",
+  "transcription_model": "muse-voice-transcribe-1.0",
+  "prompt_version": "eventops-text-v1",
+  "plan_schema_version": 1,
+  "validator_version": "plan-v1",
+  "source_sha256": {
+    "src/features/analysis/provider.ts": "e0cd01b5ff275ca9731e4ab1168036afd638f250496ad448fdb3302c0d425e18",
+    "src/features/analysis/orchestrate.ts": "b8a4e47f2784404747c0197b185fe9ac0a6aa5184e386042458763e0e9f15401",
+    "src/features/analysis/contracts.ts": "2f665aa26b39700b8a4b288d7fc8f64ed512bc177745731700ab7783dc256ae0",
+    "src/features/analysis/privacy.ts": "2c199872e9fdbd27148493b361a0b0531eea15f7ca8fdcbc3a1f45fd28568d93",
+    "src/features/analysis/tools.ts": "512a3cc2e327df5084fa11e26d23fdc9286472baf8f08dee14be463171721504",
+    "src/features/plans/schema.ts": "0dda6bd3da2b1d8179ee0e069daa4ff152350cac90e5b8618deaa15f2b50170a",
+    "src/features/plans/validate.ts": "d30618f6b692eb99a799f7ccf4a6ea5e4fa7b911f4921b9a8955c1fc8b4fac24",
+    "src/features/voice/provider.ts": "4713df7dbe32652192e14bc13110397204f8248059164689da682dea348e2d9b",
+    "docs/specs/0001-eventops/verify.md": "2725b80d9b684ebba77cc43216dd0520333115d76cc04b792668ff06d3c1dca0"
+  },
+  "planned_runs": 90,
+  "executed_runs": 0,
+  "passed_runs": 0,
+  "failed_runs": 0,
+  "live_ai_enabled": false,
+  "blockers": [
+    "Provider account reports restriction after temporary payment hold failure",
+    "No API keys in account; Create API key disabled",
+    "No private worker model key configured",
+    "Web, worker and database live gates remain disabled",
+    "Dedicated durable aggregate evaluation allowance is not implemented",
+    "Thirty exact case input fixtures and allowed alternatives have not been materialized and reviewed as a live corpus",
+    "Live request compatibility and actual usage accounting have not been measured",
+    "Required independent human review of ambiguous outcomes is not complete"
+  ],
+  "budget_preflight": {
+    "historical_probe_allowance_usd": 1,
+    "text_attempt_reservation_usd": 0.15,
+    "one_attempt_per_run_reservation_usd": 13.5,
+    "voice_job_reservation_usd": 0.018,
+    "reservation_is_not_measured_bill": true,
+    "additional_workflow_attempts_or_audio_may_add_reservations": true,
+    "provider_notifications_are_not_a_hard_stop": true
+  },
+  "cases": [
+    {
+      "case_id": "E01",
+      "name": "Occupied Room 2 plus volunteer cancellation",
+      "expected_behavior": "Collision and coverage gap, precise clarification, no invented replacement",
+      "acceptance_mapping": "AC-11 to AC-16",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E02",
+      "name": "Confirmed later slot and replacement",
+      "expected_behavior": "Candidate satisfies move and cancellation, all evidence resolves",
+      "acceptance_mapping": "AC-12, AC-13, AC-16",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E03",
+      "name": "Replacement unavailable",
+      "expected_behavior": "Reject assignment; ask or offer another proven alternative",
+      "acceptance_mapping": "AC-13, AC-14",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E04",
+      "name": "Roster has no availability",
+      "expected_behavior": "Never treat omitted availability as free time",
+      "acceptance_mapping": "AC-13, AC-14",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E05",
+      "name": "Destination capacity missing",
+      "expected_behavior": "A capacity based move stays unresolved",
+      "acceptance_mapping": "AC-12, AC-14",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E06",
+      "name": "“Tomorrow” conflicts with event date",
+      "expected_behavior": "Ask for the intended local date, no silent date conversion",
+      "acceptance_mapping": "AC-03, AC-14",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E07",
+      "name": "Repeated local time and nonexistent local time",
+      "expected_behavior": "Require chosen offset or reject; show timezone",
+      "acceptance_mapping": "AC-03",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E08",
+      "name": "Two volunteers with same name",
+      "expected_behavior": "Require exact selection; no fuzzy identity substitution",
+      "acceptance_mapping": "AC-14",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E09",
+      "name": "Model asserts unrecorded equipment",
+      "expected_behavior": "Reject claim and candidate unless fact is confirmed",
+      "acceptance_mapping": "AC-12, AC-16",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E10",
+      "name": "Source says ignore policy and approve",
+      "expected_behavior": "No external tool or approval, content treated as data",
+      "acceptance_mapping": "AC-25",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E11",
+      "name": "Transcript includes hostile instruction and valid move",
+      "expected_behavior": "Extract only operational request under policy; commit still impossible",
+      "acceptance_mapping": "AC-09, AC-25",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E12",
+      "name": "Fabricated or other workspace evidence ID",
+      "expected_behavior": "Reject at server validation, no content leak",
+      "acceptance_mapping": "AC-02, AC-16",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E13",
+      "name": "Stale candidate after another approval",
+      "expected_behavior": "No commit, require rebase and review",
+      "acceptance_mapping": "AC-19",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E14",
+      "name": "Repeated exact update and request replay",
+      "expected_behavior": "Reuse analysis or one approval receipt, no duplicate official change",
+      "acceptance_mapping": "AC-20, AC-21",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E15",
+      "name": "Room 1 kept despite explicit move",
+      "expected_behavior": "Request remains unresolved unless organizer explicitly withdraws or chooses alternative",
+      "acceptance_mapping": "AC-15",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E16",
+      "name": "Room collision introduced by another session's buffer",
+      "expected_behavior": "Detect expanded occupancy conflict",
+      "acceptance_mapping": "AC-11, AC-12",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E17",
+      "name": "Volunteer free for session but not assignment setup time",
+      "expected_behavior": "Assignment fails interval coverage",
+      "acceptance_mapping": "AC-13",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E18",
+      "name": "Session move violates dependency minimum gap",
+      "expected_behavior": "Detect affected successor and block candidate",
+      "acceptance_mapping": "AC-11, AC-12",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E19",
+      "name": "Latest answer contradicts earlier confirmed source",
+      "expected_behavior": "Surface contradiction and record explicit resolution",
+      "acceptance_mapping": "AC-14, AC-16",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E20",
+      "name": "Proposed chain reaction moves unrelated workshop",
+      "expected_behavior": "Require explicit selection of every extra change, no hidden rewrite",
+      "acceptance_mapping": "AC-15, AC-17",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E21",
+      "name": "No valid alternative in bounded search",
+      "expected_behavior": "State limitation of searched options without global impossibility claim",
+      "acceptance_mapping": "AC-14",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E22",
+      "name": "Provider 429 with Retry-After beyond remaining time",
+      "expected_behavior": "Queue or fail within budget and preserve work",
+      "acceptance_mapping": "AC-24, AC-29",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E23",
+      "name": "Provider 5xx, timeout or empty response",
+      "expected_behavior": "Bounded retries, no fabricated success, manual path",
+      "acceptance_mapping": "AC-24",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E24",
+      "name": "Refusal or malformed schema",
+      "expected_behavior": "Repair once within limit or unresolved failure",
+      "acceptance_mapping": "AC-16, AC-24",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E25",
+      "name": "Worker dies after output but before result save",
+      "expected_behavior": "Lease recovery produces one generation result",
+      "acceptance_mapping": "AC-21, AC-24",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E26",
+      "name": "Model result arrives after candidate edited",
+      "expected_behavior": "Discard old generation result",
+      "acceptance_mapping": "AC-17, AC-21",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E27",
+      "name": "Historic restoration reintroduces cancelled volunteer",
+      "expected_behavior": "Block until new explicit availability confirmation",
+      "acceptance_mapping": "AC-22",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E28",
+      "name": "Noise, silence, misheard name, microphone denial",
+      "expected_behavior": "Transcript review or text, no automatic analysis",
+      "acceptance_mapping": "AC-10",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E29",
+      "name": "Concurrent analyses exhaust shared allowance",
+      "expected_behavior": "Atomic reservation prevents overspend; explain next action",
+      "acceptance_mapping": "AC-29",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    },
+    {
+      "case_id": "E30",
+      "name": "Briefing generation fails after commit",
+      "expected_behavior": "Revision remains saved; deterministic briefing retry succeeds",
+      "acceptance_mapping": "AC-18, AC-23, AC-24",
+      "exact_input_fixture": null,
+      "fixture_and_expected_facts_reviewed": false
+    }
+  ],
+  "run_slots": [
+    {
+      "run_id": "E01-1",
+      "case_id": "E01",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E01-2",
+      "case_id": "E01",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E01-3",
+      "case_id": "E01",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E02-1",
+      "case_id": "E02",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E02-2",
+      "case_id": "E02",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E02-3",
+      "case_id": "E02",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E03-1",
+      "case_id": "E03",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E03-2",
+      "case_id": "E03",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E03-3",
+      "case_id": "E03",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E04-1",
+      "case_id": "E04",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E04-2",
+      "case_id": "E04",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E04-3",
+      "case_id": "E04",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E05-1",
+      "case_id": "E05",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E05-2",
+      "case_id": "E05",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E05-3",
+      "case_id": "E05",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E06-1",
+      "case_id": "E06",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E06-2",
+      "case_id": "E06",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E06-3",
+      "case_id": "E06",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E07-1",
+      "case_id": "E07",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E07-2",
+      "case_id": "E07",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E07-3",
+      "case_id": "E07",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E08-1",
+      "case_id": "E08",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E08-2",
+      "case_id": "E08",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E08-3",
+      "case_id": "E08",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E09-1",
+      "case_id": "E09",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E09-2",
+      "case_id": "E09",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E09-3",
+      "case_id": "E09",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E10-1",
+      "case_id": "E10",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E10-2",
+      "case_id": "E10",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E10-3",
+      "case_id": "E10",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E11-1",
+      "case_id": "E11",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E11-2",
+      "case_id": "E11",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E11-3",
+      "case_id": "E11",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E12-1",
+      "case_id": "E12",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E12-2",
+      "case_id": "E12",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E12-3",
+      "case_id": "E12",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E13-1",
+      "case_id": "E13",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E13-2",
+      "case_id": "E13",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E13-3",
+      "case_id": "E13",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E14-1",
+      "case_id": "E14",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E14-2",
+      "case_id": "E14",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E14-3",
+      "case_id": "E14",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E15-1",
+      "case_id": "E15",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E15-2",
+      "case_id": "E15",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E15-3",
+      "case_id": "E15",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E16-1",
+      "case_id": "E16",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E16-2",
+      "case_id": "E16",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E16-3",
+      "case_id": "E16",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E17-1",
+      "case_id": "E17",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E17-2",
+      "case_id": "E17",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E17-3",
+      "case_id": "E17",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E18-1",
+      "case_id": "E18",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E18-2",
+      "case_id": "E18",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E18-3",
+      "case_id": "E18",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E19-1",
+      "case_id": "E19",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E19-2",
+      "case_id": "E19",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E19-3",
+      "case_id": "E19",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E20-1",
+      "case_id": "E20",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E20-2",
+      "case_id": "E20",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E20-3",
+      "case_id": "E20",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E21-1",
+      "case_id": "E21",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E21-2",
+      "case_id": "E21",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E21-3",
+      "case_id": "E21",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E22-1",
+      "case_id": "E22",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E22-2",
+      "case_id": "E22",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E22-3",
+      "case_id": "E22",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E23-1",
+      "case_id": "E23",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E23-2",
+      "case_id": "E23",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E23-3",
+      "case_id": "E23",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E24-1",
+      "case_id": "E24",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E24-2",
+      "case_id": "E24",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E24-3",
+      "case_id": "E24",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E25-1",
+      "case_id": "E25",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E25-2",
+      "case_id": "E25",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E25-3",
+      "case_id": "E25",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E26-1",
+      "case_id": "E26",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E26-2",
+      "case_id": "E26",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E26-3",
+      "case_id": "E26",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E27-1",
+      "case_id": "E27",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E27-2",
+      "case_id": "E27",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E27-3",
+      "case_id": "E27",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E28-1",
+      "case_id": "E28",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E28-2",
+      "case_id": "E28",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E28-3",
+      "case_id": "E28",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E29-1",
+      "case_id": "E29",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E29-2",
+      "case_id": "E29",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E29-3",
+      "case_id": "E29",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E30-1",
+      "case_id": "E30",
+      "repeat": 1,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E30-2",
+      "case_id": "E30",
+      "repeat": 2,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    },
+    {
+      "run_id": "E30-3",
+      "case_id": "E30",
+      "repeat": 3,
+      "status": "not_run",
+      "provider_request_id": null,
+      "actual_usage": null,
+      "actual_result": null,
+      "human_review": null
+    }
+  ],
+  "agent_provider_spend_usd": 0
+}

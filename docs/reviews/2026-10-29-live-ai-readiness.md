@@ -1,5 +1,7 @@
 # Bounded live AI readiness check
 
+Later update: [native checks and live evaluation readiness](2026-10-29-t9-native-readiness.md) records the newly observed payment hold restriction, disabled key creation and 90 unexecuted run slots. Account credit details below are historical observations, not a fresh reconfirmation.
+
 Date: 29 October 2026, Asia/Brunei. Verdict: live verification is blocked before provider execution. No live text or transcription request was sent. Actual provider spend for this check is USD 0. T7 was not started.
 
 The user authorized synthetic event text and synthetic audio only, at most USD 1 total, with temporary live gates and restoration afterward. Payment details, new terms acceptance, deployment, commits and pushes were excluded. Architecture, AI, operations/privacy/billing contracts, living scope, root/voice guidance and T4 through T6 completion evidence were read before activation decisions.
