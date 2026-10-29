@@ -579,3 +579,65 @@ summary {
 .import-table li {
   overflow-wrap: anywhere;
 }
+
+@media print {
+  @page {
+    margin: 15mm;
+  }
+  header,
+  footer,
+  nav,
+  .no-print,
+  button,
+  .skip-link,
+  .workspace-bar {
+    display: none !important;
+  }
+  body,
+  main,
+  .workspace-page {
+    background: white;
+    color: black;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  .briefing-page {
+    display: block;
+  }
+  .briefing-page li,
+  .comparison-row {
+    break-inside: avoid;
+  }
+  .briefing-page h2,
+  .briefing-page h3 {
+    break-after: avoid;
+  }
+  .briefing-page details {
+    display: none;
+  }
+  .briefing-page p,
+  .briefing-page dd,
+  .briefing-page li {
+    overflow-wrap: anywhere;
+  }
+  .briefing-page a {
+    color: black;
+    text-decoration: none;
+  }
+  thead {
+    display: table-header-group;
+  }
+}
+
+@media print {
+  .briefing-page h1,
+  .briefing-page h2,
+  .briefing-page h3 {
+    margin-block: 4mm 2mm;
+  }
+  .briefing-page p {
+    margin-bottom: 2mm;
+  }
+}

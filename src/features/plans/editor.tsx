@@ -43,6 +43,8 @@ export function PlanEditor({
   base,
   digest,
   report,
+  editing,
+  patchBase,
 }: {
   eventId: string;
   initial: Plan | null;
@@ -50,6 +52,14 @@ export function PlanEditor({
   base?: { id: string; number: number };
   digest?: string | null;
   report?: Issue[];
+  patchBase?: Plan;
+  editing?: {
+    id: string;
+    generation: number;
+    interpreted: boolean;
+    restores: boolean;
+    contextDigest?: string;
+  };
 }) {
   const router = useRouter();
   const [records, setRecords] = useState(() => editableRecords(initial));
@@ -57,6 +67,7 @@ export function PlanEditor({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [confirmed, setConfirmed] = useState(false);
+  const [withdraw, setWithdraw] = useState(false);
   const [reason, setReason] = useState("");
   const [saved, setSaved] = useState<{
     snapshot: Plan;
@@ -99,14 +110,27 @@ export function PlanEditor({
     setError("");
     try {
       if (base && initial) {
-        const p = await planRequest(`/api/events/${eventId}/proposals`, {
-          mode: "manual",
-          expected_head: base.id,
-          patch: manualPatch(initial, records),
-          confirmed: true,
-          reason,
-          idempotency_key: key,
-        });
+        const p = await planRequest(
+          editing
+            ? `/api/events/${eventId}/proposals/${editing.id}`
+            : `/api/events/${eventId}/proposals`,
+          {
+            ...(editing
+              ? {
+                  generation: editing.generation,
+                  withdraw_interpreted_requests: withdraw,
+                  ...(editing.contextDigest
+                    ? { context_digest: editing.contextDigest }
+                    : {}),
+                }
+              : { mode: "manual", expected_head: base.id }),
+            patch: manualPatch(patchBase ?? initial, records),
+            confirmed: true,
+            reason,
+            idempotency_key: key,
+          },
+          editing ? "PUT" : "POST",
+        );
         setDirty(false);
         router.push(`/events/${eventId}/proposals/${p.id}`);
       } else {
@@ -163,6 +187,30 @@ export function PlanEditor({
         default to yes. Enter assignment times explicitly. UTC offsets are
         needed when a local time repeats.
       </p>
+      {editing && (
+        <p>
+          Saving creates generation {editing.generation + 1} and preserves this
+          candidate as an earlier rejected generation.
+        </p>
+      )}
+      {editing?.restores && (
+        <p role="status">
+          This candidate restores a historical revision. Confirming exact
+          changes also reconfirms its historical availability, activity and
+          reinstated sessions after reviewing current updates.
+        </p>
+      )}
+      {editing?.interpreted && (
+        <label className="check-label">
+          <input
+            type="checkbox"
+            checked={withdraw}
+            onChange={(e) => setWithdraw(e.target.checked)}
+          />
+          I explicitly withdraw every interpreted request in the original
+          proposal and replace them with the exact manual changes entered here.
+        </label>
+      )}
       <fieldset disabled={pending} className="stack">
         <legend>Plan records</legend>
         {collections.map((c) => (
@@ -306,7 +354,12 @@ export function PlanEditor({
         I confirm these manually entered facts and exact changes.
       </label>
       <Button
-        disabled={pending || !confirmed || (!!base && !reason.trim())}
+        disabled={
+          pending ||
+          (editing?.interpreted && !withdraw) ||
+          !confirmed ||
+          (!!base && !reason.trim())
+        }
         onClick={save}
       >
         {pending

@@ -1,4 +1,11 @@
 import Link from "next/link";
+import { PrintButton } from "@/features/plans/print-button";
+import { collections } from "@/features/plans/schema";
+import {
+  comparePlans,
+  displayValue,
+  recordName,
+} from "@/features/plans/comparison";
 import { pageOfficialPlan } from "@/features/events/page-data";
 import { PlanEvidence } from "@/features/plans/plan-evidence";
 import { PlanRecords } from "@/features/plans/plan-records";
@@ -19,8 +26,14 @@ export default async function Briefing({
     status === "historical"
       ? (await pageOfficialPlan(id)).approved_revision
       : revision;
+  const parent = revision?.parent_revision_id
+    ? (await pageOfficialPlan(id, revision.parent_revision_id))
+        .approved_revision
+    : null;
+  const changes =
+    revision && parent ? comparePlans(parent.snapshot, revision.snapshot) : [];
   return (
-    <section className="workspace-page stack">
+    <section className="workspace-page stack briefing-page">
       <EventNav id={id} />
       <h1>Event briefing</h1>
       {revision ? (
@@ -52,6 +65,47 @@ export default async function Briefing({
             ({revision.snapshot.event.timezone}). This briefing uses only this
             approved revision. Pending updates are excluded.
           </p>
+          <div className="actions no-print">
+            <PrintButton />
+            <a
+              className="button"
+              href={`/api/events/${id}/briefing?revision=${revision.id}&format=text`}
+            >
+              Download text briefing
+            </a>
+          </div>
+          <details className="no-print">
+            <summary>Export approved plan CSV</summary>
+            <ul>
+              {collections.map((c) => (
+                <li key={c}>
+                  <a
+                    href={`/api/events/${id}/briefing?revision=${revision.id}&format=csv&collection=${c}`}
+                  >
+                    Download {c} CSV
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+          <section>
+            <h2>Changes since previous revision</h2>
+            {parent ? (
+              <ul>
+                {changes.map((c, i) => (
+                  <li key={i}>
+                    {recordName(revision.snapshot, c.record_id) ??
+                      recordName(parent.snapshot, c.record_id) ??
+                      c.record_id}{" "}
+                    · {c.field}: {displayValue(c.before)} →{" "}
+                    {displayValue(c.after)}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>Initial approved plan.</p>
+            )}
+          </section>
           <PlanRecords plan={revision.snapshot} />
           <PlanEvidence plan={revision.snapshot} eventId={id} />
         </>

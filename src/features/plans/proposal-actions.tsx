@@ -25,6 +25,7 @@ export function ProposalActions({
   const [review, setReview] = useState(false),
     [pending, setPending] = useState(false),
     [error, setError] = useState("");
+  const [reason, setReason] = useState("");
   const [key] = useState(() =>
     operationKey(`approve:${eventId}:${proposalId}:${generation}`),
   );
@@ -41,7 +42,7 @@ export function ProposalActions({
               candidate_digest: digest,
               idempotency_key: key,
             }
-          : { generation },
+          : { generation, reason },
       );
       router.push(
         `/events/${eventId}/${action === "approve" ? "briefing" : "updates"}`,
@@ -55,6 +56,14 @@ export function ProposalActions({
   }
   return (
     <section className="stack">
+      <label className="field">
+        Optional rejection reason
+        <textarea
+          maxLength={2000}
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+        />
+      </label>
       {review ? (
         <>
           <h2>Confirm approval</h2>

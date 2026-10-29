@@ -195,12 +195,16 @@ export async function rejectProposal(
 ) {
   await readProposal(id, proposalId);
   const value = z
-    .strictObject({ generation: z.number().int().positive() })
+    .strictObject({
+      generation: z.number().int().positive(),
+      reason: z.string().max(2000).optional(),
+    })
     .parse(input);
-  return planRpc("reject_proposal", {
+  return planRpc("reject_proposal_with_reason", {
     p_event_id: id,
     p_proposal_id: proposalId,
     p_generation: value.generation,
+    p_reason: value.reason ?? "",
   });
 }
 export type Revision = {
@@ -210,6 +214,10 @@ export type Revision = {
   sha256: string;
   approved_at: string;
   parent_revision_id: string | null;
+  approved_by: string;
+  reason: string;
+  proposal_id: string | null;
+  restores_revision_id: string | null;
 };
 export async function officialPlan(id: string, revisionId?: string) {
   const { client, event } = await ownedEvent(id);
@@ -232,7 +240,9 @@ export async function officialPlan(id: string, revisionId?: string) {
     throw new ApiError(404, "NOT_FOUND", "Revision not found.");
   const revision = await client
     .from("revisions")
-    .select("id,revision_number,snapshot,sha256,approved_at,parent_revision_id")
+    .select(
+      "id,revision_number,snapshot,sha256,approved_at,parent_revision_id,approved_by,reason,proposal_id,restores_revision_id",
+    )
     .eq("event_id", id)
     .eq("id", selected)
     .maybeSingle();
@@ -255,7 +265,9 @@ export async function revisions(id: string, cursor?: string) {
     : 501;
   const { data, error } = await client
     .from("revisions")
-    .select("id,revision_number,approved_at,reason,parent_revision_id,sha256")
+    .select(
+      "id,revision_number,approved_at,reason,parent_revision_id,sha256,approved_by,proposal_id,restores_revision_id",
+    )
     .eq("event_id", id)
     .lt("revision_number", before)
     .order("revision_number", { ascending: false })

@@ -4,6 +4,11 @@
 
 ### Added
 
+- Saved organizer answers with immutable evidence and clarified text resumption.
+- Immutable proposal edit generations, explicit interpreted request withdrawal and persisted rejection reasons.
+- Historical revision comparison and reviewed restoration with current context fences and fresh organizer evidence.
+- Approved revision print, text and formula safe CSV briefing outputs, with local T7 service verification.
+
 - Local voice recording, playback, transcript correction and exact text confirmation with a complete text fallback.
 - Private audio jobs, bounded Opus/AAC conversion, restricted transcription worker, shared budgets and verified raw audio deletion receipts.
 - Controlled T6 service, HTTP, failure and browser verification with live AI disabled. Native device and provider acceptance remain open.

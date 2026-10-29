@@ -13,6 +13,7 @@ The plan was approved on 27 October 2026. Implementation is now authorized, star
 
 | Document | What it owns |
 |---|---|
+| [T7 review, history and exports](0012-review-history-exports.md) | Concrete answer, proposal generation, restore and output contracts |
 | [Product brief](0001-product.md) | Audience, value, success measures, product principles |
 | [Architecture](0002-architecture.md) | Stack, boundaries, deployment shape, alternatives |
 | [Experience and visual system](0003-experience.md) | Complete journey, screen inventory, navigation, wireframes, design tokens |

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { reviewDetails } from "@/features/plans/review-data";
 import { notFound } from "next/navigation";
 import {
   officialPlan,
@@ -33,6 +34,7 @@ export default async function Proposal({
     proposal.state === "approved"
       ? await proposalRevision(id, proposalId)
       : null;
+  const details = await reviewDetails(id, proposalId);
   const current = await officialPlan(id);
   const base = await officialPlan(id, proposal.base_revision_id);
   if (!base.approved_revision) notFound();
@@ -81,6 +83,49 @@ export default async function Proposal({
       {proposal.analysis_job_id && (
         <Link href={`/events/${id}/analysis/${proposal.analysis_job_id}`}>
           Open confirmed interpretation and original text
+        </Link>
+      )}
+      <p>Saved candidate generation {proposal.generation}.</p>
+      {proposal.parent_proposal_id && (
+        <p>
+          <Link href={`/events/${id}/proposals/${proposal.parent_proposal_id}`}>
+            View previous candidate and original requests
+          </Link>
+        </p>
+      )}
+      {proposal.review_assertions?.original_interpreted_requests_withdrawn && (
+        <p>
+          The organizer explicitly withdrew all interpreted requests from the
+          previous proposal and replaced them with these manual field changes.
+        </p>
+      )}
+      {proposal.restores_revision_id && (
+        <p>
+          The organizer explicitly reconfirmed historical facts for this
+          restoration.{" "}
+          <Link
+            href={`/events/${id}/history?revision=${proposal.restores_revision_id}`}
+          >
+            View historical origin
+          </Link>
+          .
+        </p>
+      )}
+      {details.successor && (
+        <p>
+          <Link href={`/events/${id}/proposals/${details.successor.id}`}>
+            Open latest edited generation {details.successor.generation}
+          </Link>
+        </p>
+      )}
+      {details.rejection && (
+        <p>
+          Rejection reason: {details.rejection.reason || "No reason supplied."}
+        </p>
+      )}
+      {open && !stale && (
+        <Link href={`/events/${id}/proposals/${proposalId}/edit`}>
+          Edit this candidate
         </Link>
       )}
       {savedRevision && (

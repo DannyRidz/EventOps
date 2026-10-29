@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { AnswerForm } from "@/features/analysis/answer-form";
+import { savedAnswers } from "@/features/plans/review-data";
 import { notFound } from "next/navigation";
 import { readAnalysis } from "@/features/analysis/data";
 import { analysisResultSchema } from "@/features/analysis/contracts";
@@ -37,6 +39,7 @@ export default async function Analysis({
     current.approved_revision?.id !== base.id ||
     data.current_generation !== job.draft_generation;
   const result = job.result ? analysisResultSchema.parse(job.result) : null;
+  const answers = await savedAnswers(id, jobId);
   const query = await searchParams;
   const selected = result?.options.find(
     (o) => o.id === (query.option ?? result.selected_option_id),
@@ -59,6 +62,27 @@ export default async function Analysis({
       <Link href={`/events/${id}/evidence/${data.source_id}`}>
         Open frozen confirmed text
       </Link>
+      {answers.length > 0 && (
+        <section>
+          <h2>Saved organizer answers</h2>
+          <ul>
+            {answers.map((a) => (
+              <li key={a.id}>
+                <p>
+                  {a.question}: {a.answer_json.value}
+                </p>
+                <Link href={`/events/${id}/evidence/${a.source_record_id}`}>
+                  Answer evidence
+                </Link>{" "}
+                ·{" "}
+                <Link href={`/events/${id}/updates/${a.draft_id}`}>
+                  Resume clarified text
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       {stale && (
         <p role="alert">
           The plan or update text has changed. This result cannot create a new
@@ -112,6 +136,15 @@ export default async function Analysis({
                   <li key={i}>{q}</li>
                 ))}
               </ul>
+              {!stale && job.state === "completed" && job.result_digest && (
+                <AnswerForm
+                  eventId={id}
+                  jobId={jobId}
+                  digest={job.result_digest}
+                  generation={data.current_generation}
+                  questions={result.questions}
+                />
+              )}
               <Link href={`/events/${id}/updates/${job.draft_id}`}>
                 Correct or clarify saved text
               </Link>
@@ -223,6 +256,17 @@ export default async function Analysis({
             digest={job.result_digest ?? undefined}
           />
         )
+      )}
+      <Link href={`/events/${id}/updates/${job.draft_id}`}>
+        Clarify text or request a different alternative
+      </Link>
+      {result?.status === "unresolved" && (
+        <>
+          <p>This unresolved result and its questions are already saved.</p>
+          <Link href={`/events/${id}/updates`}>
+            Leave unresolved and return to Updates
+          </Link>
+        </>
       )}
       <Link href={`/events/${id}/records`}>Prepare manual changes</Link>
     </section>

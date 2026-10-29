@@ -17,6 +17,7 @@ Tracer Bullet (prove one real path through sign in, records, analysis, approval,
 - `EVENTOPS_INTERNAL_UI=1 npm run dev`: enable `/internal/foundation` in development only.
 - `node scripts/verify-t4.mjs`: loopback manual editor input, confirmed text, blocked jobs, immutable creation receipts, tenant isolation and transaction rollback checks. Live Meta execution remains disabled.
 - `T5_BOUNDARIES=1 node scripts/verify-t5.mjs`: loopback CSV, private Storage, corrections, source integrity, isolation, rollback and maximum collection checks. Local Supabase must include Storage; see README.
+- `node scripts/verify-t7.mjs`: synthetic loopback answer, candidate editing, restoration context, approval, history, safe outputs, isolation and rollback checks. Live provider gates remain disabled.
 - `npm run worker`: separate restricted analysis process, using private worker environment only. `node scripts/verify-t4-worker.mjs` exercises it with controlled responses on loopback services.
 - `npm run worker:voice`: restricted transcription and independent audio cleanup process. `EVENTOPS_FFMPEG_PATH=/absolute/path/to/ffmpeg node scripts/verify-t6.mjs` verifies loopback audio and controlled transcription; live AI stays disabled.
 - `npm run format`: format application and root configuration; planning documents are excluded.
@@ -58,6 +59,8 @@ ESLint, Prettier, strict TypeScript, Vitest and Testing Library. CI runs equival
 - [frontend-design](/Users/asmasalleh/.codex/skills/frontend-design/SKILL.md): approved visual system and content discipline.
 
 _Drafted by /audit from the repo, worth a quick human pass. Edit freely: once a line stops matching this draft, later runs treat it as curated and will flag rather than overwrite it._
+
+- T7 restoration compares every pending confirmed candidate, including other restorations, excluding only the candidate itself. New context requires fresh review; immutable receipts still replay. [T7 evidence](docs/reviews/2026-10-29-t7-completion.md).
 
 ## Context files
 

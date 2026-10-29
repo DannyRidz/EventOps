@@ -115,3 +115,13 @@ EVENTOPS_FFMPEG_PATH=/absolute/path/to/ffmpeg node scripts/verify-t6.mjs
 ```
 
 This harness uses loopback Auth, mail, Storage and PostgreSQL, a disposable restricted database login, real conversion and controlled transcription responses. It reads the local native stack JWT signing fixture only to mint a ten minute test Storage identity in memory, never a provider key. Override `T6_APP_URL`, `T6_STATUS_FILE` and `T6_LOCAL_STATE_FILE` for another loopback setup. Synthetic quota rows and the database voice gate are restored in finally blocks. Browser fixtures are private files under `/private/tmp`; captures stay in ignored `output/playwright/`. Native Safari, physical mobile microphones and real service acceptance remain separate release checks.
+
+## T7 review, history and briefing
+
+Updates and analysis review retain saved questions and organizer answers. Saving an answer appends immutable evidence and a clarified text generation; confirm its exact text before another budgeted analysis. Candidate edits create a new generation. Replacing an interpreted candidate requires explicit withdrawal of its original requests. Optional rejection reasons remain inspectable.
+
+History compares approved revisions and prepares restoration as a new checked proposal. Explicitly reconfirm historical availability and reinstated sessions after reviewing all pending statements. Changes to that context block approval until reviewed again. Approval remains separate and retains the current parent plus historical origin.
+
+Briefing downloads text and CSV for the selected approved revision, and Print briefing opens the browser print surface (including Save as PDF). Drafts and pending updates are excluded. All six CSV collections carry date, timezone and revision labels and escape formula triggers.
+
+Apply the additive migrations with the existing local migration command. `node scripts/verify-t7.mjs` uses synthetic loopback Auth/database flows and controlled analysis results, temporarily injects a scoped final write failure, and removes that trigger in a finally block. It defaults to port 3001; override `T7_APP_URL`, `T7_STATUS_FILE` or `T7_PSQL` for another loopback setup. Private browser fixtures stay under `/private/tmp`. Live provider gates remain disabled. [T7 evidence](docs/reviews/2026-10-29-t7-completion.md).

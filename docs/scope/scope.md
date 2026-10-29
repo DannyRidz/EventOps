@@ -19,8 +19,8 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 | 5 | Thin complete operations loop | Slice 1 | in-progress |
 | 6 | Imports and correction | Slice 2 | done |
 | 7 | Voice and transcript review | Slice 3 | in-progress |
-| 8 | Review, resumption and history | Slice 4 | planned |
-| 9 | Briefing and exports | Slice 5 | planned |
+| 8 | Review, resumption and history | Slice 4 | done |
+| 9 | Briefing and exports | Slice 5 | done |
 | 10 | Privacy, retention and recovery | Slice 6 | planned |
 | 11 | Release verification and delivery | Release | planned |
 
@@ -109,25 +109,25 @@ Add short recordings to the same confirmed text and analysis flow.
 
 ## Slice 4: Review, resumption and history
 
-### 8. Review, resumption and history, planned
+### 8. Review, resumption and history, done
 
 Broaden the loop with saved unresolved questions, edited alternatives, rejected proposals, history comparisons and reviewed restoration.
 
 **Done when:** you can return to acknowledged work, inspect prior revisions and restore through a new validated proposal without erasing later history.
 
 - [x] Ratify the design (spec): `/architect revision review`, approved [experience](../specs/0001-eventops/0003-experience.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
-- [ ] Build it: `/develop revision review`.
+- [x] Build it: `/develop revision review`. T7 answers, immutable candidate edits, rejection reasons, history comparison and context fenced restoration are built and locally verified. [Completion evidence](../reviews/2026-10-29-t7-completion.md). Code in `src/features/plans/`, `src/features/analysis/answer-form.tsx`, history/review routes and additive T7 migrations.
 
 ## Slice 5: Briefing and exports
 
-### 9. Briefing and exports, planned
+### 9. Briefing and exports, done
 
 Make the saved revision easy to use at the event.
 
 **Done when:** the approved plan produces a labeled briefing, print view, text download and safe CSV exports with no draft data or invented claims.
 
 - [x] Ratify the design (spec): `/architect briefing`, approved [experience](../specs/0001-eventops/0003-experience.md) and [data](../specs/0001-eventops/0004-data.md) contracts.
-- [ ] Build it: `/develop briefing`.
+- [x] Build it: `/develop briefing`. Approved revision print, text and six safe CSV outputs are built and locally verified. [Completion evidence](../reviews/2026-10-29-t7-completion.md). Code in `src/features/plans/briefing.ts`, the briefing page/API and print styles.
 
 ## Slice 6: Privacy, retention and recovery
 

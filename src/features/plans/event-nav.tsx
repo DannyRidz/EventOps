@@ -6,6 +6,7 @@ export function EventNav({ id }: { id: string }) {
       <Link href={`/events/${id}/imports`}>Imports</Link>
       <Link href={`/events/${id}/updates`}>Updates</Link>
       <Link href={`/events/${id}/briefing`}>Briefing</Link>
+      <Link href={`/events/${id}/history`}>History</Link>
     </nav>
   );
 }
