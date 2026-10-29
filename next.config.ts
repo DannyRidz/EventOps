@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   agentRules: false,
   turbopack: { root: process.cwd() },
   poweredByHeader: false,
+  // Avoid persistent build-cache writes on storage-constrained runners.
+  experimental: { turbopackFileSystemCacheForBuild: false },
   async headers() {
     return [
       {

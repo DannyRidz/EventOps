@@ -1,9 +1,8 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { navigateAccount } from "./account-navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 export function SignOut() {
-  const router = useRouter();
   const [pending, setPending] = useState(false),
     [error, setError] = useState("");
   return (
@@ -21,8 +20,7 @@ export function SignOut() {
               body: "{}",
             });
             if (!response.ok) throw new Error();
-            router.push("/sign-in");
-            router.refresh();
+            navigateAccount("/sign-in");
           } catch {
             setError("Could not sign out. Please try again.");
             setPending(false);

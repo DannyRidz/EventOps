@@ -45,6 +45,7 @@ afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
   vi.clearAllMocks();
+  vi.restoreAllMocks();
 });
 describe("recording and text fallback, AC-10", () => {
   it("denied permission retains the complete text path", async () => {
@@ -84,6 +85,42 @@ describe("recording and text fallback, AC-10", () => {
     expect(
       screen.getByRole("button", { name: "Save recording for transcription" }),
     ).toBeDisabled();
+    expect(trackStop).toHaveBeenCalled();
+  });
+  it("reports empty capture without broken playback and preserves typed work", async () => {
+    vi.spyOn(FakeRecorder.prototype, "stop").mockImplementation(function (
+      this: FakeRecorder,
+    ) {
+      this.state = "inactive";
+      queueMicrotask(() => {
+        this.ondataavailable?.({ data: new Blob([]) });
+        this.onstop?.();
+      });
+    });
+    const user = userEvent.setup();
+    render(
+      <>
+        <VoiceRecorder eventId="event" />
+        <UpdateForm eventId="event" baseId="revision" />
+      </>,
+    );
+    await user.type(
+      screen.getByLabelText("Organizer update"),
+      "Keep the typed plan",
+    );
+    await user.click(screen.getByRole("button", { name: "Start recording" }));
+    await user.click(
+      await screen.findByRole("button", { name: "Stop recording" }),
+    );
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "No audio was captured",
+    );
+    expect(
+      screen.queryByLabelText("Play your recording"),
+    ).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Organizer update")).toHaveValue(
+      "Keep the typed plan",
+    );
     expect(trackStop).toHaveBeenCalled();
   });
   it("discard while recording does not restore a blob in onstop", async () => {

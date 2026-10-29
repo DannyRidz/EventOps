@@ -126,6 +126,12 @@ export function VoiceRecorder({
         if (alive.current) {
           setRecording(false);
           if (!oversized && !discarded.current) {
+            if (!size) {
+              setError(
+                "No audio was captured. Record again or type your update below.",
+              );
+              return;
+            }
             replaceRecording(new Blob(chunks, { type: capture.mimeType }));
             key.current = crypto.randomUUID();
           }

@@ -4,6 +4,12 @@
 
 ### Added
 
+- T9 fixes for maximum CSV staging, fresh account navigation, explicit empty recording errors and blank print page removal.
+- Verified maximum stored collection counts, synthetic local browser playback, empty event recovery, sign out and full size print content audit.
+
+- Local release smoke and bounded private read load verification, with T9 results and explicit remaining release gates.
+- T6 regression assertions for immediate read denial followed by independent physical audio cleanup under T8 retention policies.
+
 - Privacy settings with retention previews, archive/trash recovery, account deletion and a bounded private workspace ZIP.
 - Restricted file cleanup, independent deletion identifiers, database readiness and a synthetic encrypted recovery drill. Hosted recovery and privacy release gates remain open.
 

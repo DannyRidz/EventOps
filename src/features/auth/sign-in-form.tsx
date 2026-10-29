@@ -1,11 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { navigateAccount } from "./account-navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { TextField } from "@/components/ui/text-field";
 import { Button } from "@/components/ui/button";
 export function SignInForm() {
-  const router = useRouter();
   const [email, setEmail] = useState(""),
     [code, setCode] = useState(""),
     [attested, setAttested] = useState(false),
@@ -51,8 +50,7 @@ export function SignInForm() {
         );
       }
       if (action === "verify" || action === "bootstrap") {
-        router.push("/events");
-        router.refresh();
+        navigateAccount("/events");
         return;
       }
       setSent(true);

@@ -603,7 +603,8 @@ summary {
     margin: 0;
     padding: 0;
   }
-  .briefing-page {
+  .briefing-page,
+  .briefing-page .stack {
     display: block;
   }
   .briefing-page li,

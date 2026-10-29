@@ -510,13 +510,25 @@ try {
     "1",
   );
   assert.equal(
+    sql("select delete_after<=now() from public.voice_jobs where id=:'id'", {
+      id: job.id,
+    }),
+    "t",
+  );
+  // T8 denies owner reads immediately, including Storage DELETE's SELECT phase.
+  // Byte cleanup is independently retried, never relax the expired-read fence.
+  assert.equal(
+    (await one.request(`/api/events/${id}/voice/${job.id}/audio`)).status,
+    410,
+  );
+  await cleanupVoice(worker, store);
+  assert.equal(
     sql(
       "select audio_deleted_at is not null from public.voice_jobs where id=:'id'",
       { id: job.id },
     ),
     "t",
   );
-  await cleanupVoice(worker, store);
   assert.equal(
     (await one.request(`/api/events/${id}/voice/${job.id}/audio`)).status,
     410,
@@ -637,7 +649,11 @@ try {
     "DELETE",
   );
   assert.equal(deletedByOwner.status, 200);
-  assert.equal(deletedByOwner.body.audio_deleted, true);
+  assert.equal(
+    (await one.request(`/api/events/${id}/voice/${job.id}/audio`)).status,
+    410,
+  );
+  await cleanupVoice(worker, store);
   assert.equal(
     sql(
       "select audio_deleted_at is not null from public.voice_jobs where id=:'id'",
@@ -646,7 +662,7 @@ try {
     "t",
   );
   pass(
-    "owner deletion immediately returns a verified receipt without waiting for a worker sweep",
+    "owner deletion denies access immediately and restricted cleanup verifies byte removal",
   );
   job = await queue();
   const rollbackClaim = (

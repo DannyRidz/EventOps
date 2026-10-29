@@ -8,7 +8,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## At a glance
 
-29 October provider readiness update: signed in billing confirms USD 150 active free credits and a product improvement notice. Payment remains required, Create API key is disabled and no private model key is available. Synthetic live verification is blocked with USD 0 spend; controlled worker and manual flows pass again. Live gates remain disabled and T7 has not started. [Readiness evidence](../reviews/2026-10-29-live-ai-readiness.md).
+29 October provider readiness update: signed in billing confirms USD 150 active free credits and a product improvement notice. Payment remains required, Create API key is disabled and no private model key is available. Synthetic live verification is blocked with USD 0 spend; controlled worker and manual flows pass again. Live gates remain disabled. T7 and T8 now have local completion evidence below; T9 verification remains incomplete. [Readiness evidence](../reviews/2026-10-29-live-ai-readiness.md).
 
 | # | Feature | Phase | Status |
 |---|---|---|---|
@@ -22,7 +22,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 | 8 | Review, resumption and history | Slice 4 | done |
 | 9 | Briefing and exports | Slice 5 | done |
 | 10 | Privacy, retention and recovery | Slice 6 | in-progress |
-| 11 | Release verification and delivery | Release | planned |
+| 11 | Release verification and delivery | Release | in-progress |
 
 ## Foundations
 
@@ -142,14 +142,14 @@ Provide settings, private data export, controlled deletion, background cleanup a
 
 ## Release
 
-### 11. Release verification and delivery, planned
+### 11. Release verification and delivery, in-progress
 
 Prove the complete journey and prepare a truthful submission and maintainable release.
 
 **Done when:** acceptance, evaluation, browser, isolation, recovery and operational gates have evidence, and authorized delivery uses working accessible links.
 
 - [x] Ratify the design (spec): `/architect delivery`, approved [delivery](../specs/0001-eventops/0007-delivery.md) and [verification](../specs/0001-eventops/verify.md) contracts.
-- [ ] Build it: `/develop delivery`.
+- [ ] Build it: `/develop delivery`. T9 local release verification is in progress. Core service suites, controlled audio, recovery, browser import/empty/recording/sign out, maximum CSV confirmation, 136 page print audit and bounded read load pass. All 158 tests and final production build pass. Browser sign in retest is blocked by the no terms boundary; live evaluation, complete native device/screen reader/zoom and hosted operations remain open. [Final T9 evidence](../reviews/2026-10-29-t9-followup.md).
 
 ## Explicit release boundary
 
@@ -178,4 +178,4 @@ Later phase 2 should prioritize invitations and viewer access, then a carefully 
 
 All statuses describe implementation. The plan and linked designs were ratified on 27 October 2026. T1 verification applies only to its built surfaces. The broader foundation features stay in progress where later work remains. Atomic tasks and effort ranges remain in the delivery specification; T1 evidence is in its child specification.
 
-The plan approval boundary has been met. The next delivery milestone is T2, real sign in, private workspace and event setup. External legal acceptance, paid provisioning, publication and deployment still require their existing authorization boundaries. Scope is tool agnostic; implementing tools are chosen only in the architecture specification.
+The plan approval boundary has been met. The current milestone is T9, full release verification, with local failures resolved and the remaining authority, device, live provider and hosted gates recorded in the T9 evidence. External legal acceptance, paid provisioning, publication and deployment still require their existing authorization boundaries. Scope is tool agnostic; implementing tools are chosen only in the architecture specification.
