@@ -8,6 +8,10 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## At a glance
 
+30 October controlled continuation: the executable SQL/orchestration runner passes 90 local repeats, the durable campaign guard passes concurrency/restart checks, and four supported synthetic audio files pass conversion. Both AI gates remain off and all 90 live slots remain not run. Manual accessibility/device, blocked sign in, actual provider and hosted gates remain open. [Local execution evidence](../reviews/2026-10-30-t9-local-execution.md).
+
+29 October local continuation: the 30 case offline evaluation corpus is materialized as a draft, with valid starting plans, expected facts, 15 constraint probes, four DST variants and corruption checks. Fresh repository checks and loopback smoke results are recorded in the [local preparation evidence](../reviews/2026-10-29-t9-local-preparation.md). All 90 live runs remain not run. Audio materialization, execution adapters, aggregate campaign allowance and independent semantic approval remain open.
+
 Later 29 October check: native public Safari keyboard/200 percent zoom, physical desktop microphone capture/playback in Safari and Chrome, and fresh recovery with 42 migrations pass. Meta now reports a failed payment hold restriction; no API key is available. The 90 live runs remain unexecuted. VoiceOver inspection timed out and its original off state was restored. [Native and live readiness evidence](../reviews/2026-10-29-t9-native-readiness.md).
 
 Earlier 29 October provider readiness update: signed in billing confirms USD 150 active free credits and a product improvement notice. Payment remains required, Create API key is disabled and no private model key is available. Synthetic live verification is blocked with USD 0 spend; controlled worker and manual flows pass again. Live gates remain disabled. T7 and T8 now have local completion evidence below; T9 verification remains incomplete. [Readiness evidence](../reviews/2026-10-29-live-ai-readiness.md).

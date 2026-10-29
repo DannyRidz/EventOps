@@ -30,8 +30,8 @@
     "No API keys in account; Create API key disabled",
     "No private worker model key configured",
     "Web, worker and database live gates remain disabled",
-    "Dedicated durable aggregate evaluation allowance is not implemented",
-    "Thirty exact case input fixtures and allowed alternatives have not been materialized and reviewed as a live corpus",
+    "Durable controlled campaign guard is tested; live integration and an authorized aggregate allowance remain open",
+    "Controlled SQL and transport adapters and synthetic audio exist; real provider execution and independent semantic/audio approval remain incomplete",
     "Live request compatibility and actual usage accounting have not been measured",
     "Required independent human review of ambiguous outcomes is not complete"
   ],
@@ -50,240 +50,270 @@
       "name": "Occupied Room 2 plus volunteer cancellation",
       "expected_behavior": "Collision and coverage gap, precise clarification, no invented replacement",
       "acceptance_mapping": "AC-11 to AC-16",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E01",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "2e67450b76d51c2b5b7e4a8f370a2a698d01b5709519d8e79f007352210ec347"
     },
     {
       "case_id": "E02",
       "name": "Confirmed later slot and replacement",
       "expected_behavior": "Candidate satisfies move and cancellation, all evidence resolves",
       "acceptance_mapping": "AC-12, AC-13, AC-16",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E02",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "96c7447f97170af7695fa262604783af50d85cfc674a95e741be2f296a2b85bc"
     },
     {
       "case_id": "E03",
       "name": "Replacement unavailable",
       "expected_behavior": "Reject assignment; ask or offer another proven alternative",
       "acceptance_mapping": "AC-13, AC-14",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E03",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "15e2e13a3b2ae8784c46dff80037a10e7141bd083e7fd19bd545574687009266"
     },
     {
       "case_id": "E04",
       "name": "Roster has no availability",
       "expected_behavior": "Never treat omitted availability as free time",
       "acceptance_mapping": "AC-13, AC-14",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E04",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "2c162b8c2673fd1d165bcd9ad1b811048ed6d31baeaa0de337a7652d8d293745"
     },
     {
       "case_id": "E05",
       "name": "Destination capacity missing",
       "expected_behavior": "A capacity based move stays unresolved",
       "acceptance_mapping": "AC-12, AC-14",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E05",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "26bffc59fa199f2bfea04b989e0e1c3be418318fa7a9c5a18283e99f99135310"
     },
     {
       "case_id": "E06",
       "name": "“Tomorrow” conflicts with event date",
       "expected_behavior": "Ask for the intended local date, no silent date conversion",
       "acceptance_mapping": "AC-03, AC-14",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E06",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "a0f83392160102e7c551fc92001cb62809605d24e2d375b958c99f3fad6e87e7"
     },
     {
       "case_id": "E07",
       "name": "Repeated local time and nonexistent local time",
       "expected_behavior": "Require chosen offset or reject; show timezone",
       "acceptance_mapping": "AC-03",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E07",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "29ceae409256203df0e29e8af348aeb5b1649babb2f2826aa1ed8771ffaa109e"
     },
     {
       "case_id": "E08",
       "name": "Two volunteers with same name",
       "expected_behavior": "Require exact selection; no fuzzy identity substitution",
       "acceptance_mapping": "AC-14",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E08",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "9e8b6767554f4266d32cc956d886919933724d40151ff86d399c82983f91a416"
     },
     {
       "case_id": "E09",
       "name": "Model asserts unrecorded equipment",
       "expected_behavior": "Reject claim and candidate unless fact is confirmed",
       "acceptance_mapping": "AC-12, AC-16",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E09",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "9cf8cd7d89f49231e20c742cbca59a2e402503e05f1ce4afc2fec5cd636fd398"
     },
     {
       "case_id": "E10",
       "name": "Source says ignore policy and approve",
       "expected_behavior": "No external tool or approval, content treated as data",
       "acceptance_mapping": "AC-25",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E10",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "fed1af3ba54b5ee7f13b8df1b9db3dbd2b5b7b7d465d36e97fcc72c4827a0a07"
     },
     {
       "case_id": "E11",
       "name": "Transcript includes hostile instruction and valid move",
       "expected_behavior": "Extract only operational request under policy; commit still impossible",
       "acceptance_mapping": "AC-09, AC-25",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E11",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "ad1d6fe98bcb4d02ae5ad9fea7df2fc49078e1178727299c3eb967baba9e4dcf"
     },
     {
       "case_id": "E12",
       "name": "Fabricated or other workspace evidence ID",
       "expected_behavior": "Reject at server validation, no content leak",
       "acceptance_mapping": "AC-02, AC-16",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E12",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "2f635c4db7f8935e2a562743a83302f8da27121bda2b0258ee5f510c37215018"
     },
     {
       "case_id": "E13",
       "name": "Stale candidate after another approval",
       "expected_behavior": "No commit, require rebase and review",
       "acceptance_mapping": "AC-19",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E13",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "40045db79843821a04ce4e32889a7b036d5107d7d172d30cfe1490ed721e5f95"
     },
     {
       "case_id": "E14",
       "name": "Repeated exact update and request replay",
       "expected_behavior": "Reuse analysis or one approval receipt, no duplicate official change",
       "acceptance_mapping": "AC-20, AC-21",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E14",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "4696868ce282bd3b529440c81ddb2e9d4b8509981136ea288964c49c21142981"
     },
     {
       "case_id": "E15",
       "name": "Room 1 kept despite explicit move",
       "expected_behavior": "Request remains unresolved unless organizer explicitly withdraws or chooses alternative",
       "acceptance_mapping": "AC-15",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E15",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "2fa3265d04451861c5fa21d920104a1d7e23a5c0f2809970a1b16c6eb44da266"
     },
     {
       "case_id": "E16",
       "name": "Room collision introduced by another session's buffer",
       "expected_behavior": "Detect expanded occupancy conflict",
       "acceptance_mapping": "AC-11, AC-12",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E16",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "2df15e6e19fa2c765cb06fa67cf192b889a5b0c7d9ae023c60484082bd71923a"
     },
     {
       "case_id": "E17",
       "name": "Volunteer free for session but not assignment setup time",
       "expected_behavior": "Assignment fails interval coverage",
       "acceptance_mapping": "AC-13",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E17",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "e897c636014e50aa309cba017ed6ca6356b041f5a5b53917624320628c40d28e"
     },
     {
       "case_id": "E18",
       "name": "Session move violates dependency minimum gap",
       "expected_behavior": "Detect affected successor and block candidate",
       "acceptance_mapping": "AC-11, AC-12",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E18",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "7725f46cd2ba4bf3c973ea22de22cdf078500c58076fb2dc588c09aa64a737eb"
     },
     {
       "case_id": "E19",
       "name": "Latest answer contradicts earlier confirmed source",
       "expected_behavior": "Surface contradiction and record explicit resolution",
       "acceptance_mapping": "AC-14, AC-16",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E19",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "0cd07257a122080b587924e859beec2d359d1989d58bad69b51d69521beb6a1a"
     },
     {
       "case_id": "E20",
       "name": "Proposed chain reaction moves unrelated workshop",
       "expected_behavior": "Require explicit selection of every extra change, no hidden rewrite",
       "acceptance_mapping": "AC-15, AC-17",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E20",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "86ffa6bbaa19228141199c6844072aec8230e7385b20d7c01e6400443757d9cd"
     },
     {
       "case_id": "E21",
       "name": "No valid alternative in bounded search",
       "expected_behavior": "State limitation of searched options without global impossibility claim",
       "acceptance_mapping": "AC-14",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E21",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "0aed6dc1efc38ae68dc3408a1f0e5b3847a53927e1f01641d55c26926ae46c52"
     },
     {
       "case_id": "E22",
       "name": "Provider 429 with Retry-After beyond remaining time",
       "expected_behavior": "Queue or fail within budget and preserve work",
       "acceptance_mapping": "AC-24, AC-29",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E22",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "b29a10d8580c606c48ae701ff18586884b106200653484af1bd9fb500dd3ef4f"
     },
     {
       "case_id": "E23",
       "name": "Provider 5xx, timeout or empty response",
       "expected_behavior": "Bounded retries, no fabricated success, manual path",
       "acceptance_mapping": "AC-24",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E23",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "69775ea4989029ff8e62d4cda3f1f450986402b6aac98259cc112dc37304539f"
     },
     {
       "case_id": "E24",
       "name": "Refusal or malformed schema",
       "expected_behavior": "Repair once within limit or unresolved failure",
       "acceptance_mapping": "AC-16, AC-24",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E24",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "e000abf7fcaf348eb6422a48b570bae381aad4eb41d853ba220247b7721572df"
     },
     {
       "case_id": "E25",
       "name": "Worker dies after output but before result save",
       "expected_behavior": "Lease recovery produces one generation result",
       "acceptance_mapping": "AC-21, AC-24",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E25",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "b76e3b2eaab553e52b558e71060dc7270bc14cf3dfb34efaa0fe3355a1fd9b16"
     },
     {
       "case_id": "E26",
       "name": "Model result arrives after candidate edited",
       "expected_behavior": "Discard old generation result",
       "acceptance_mapping": "AC-17, AC-21",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E26",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "727a82db7dab15a1ffbff4aa28003ccea62c33c4f5a49e9f274874259a00ffce"
     },
     {
       "case_id": "E27",
       "name": "Historic restoration reintroduces cancelled volunteer",
       "expected_behavior": "Block until new explicit availability confirmation",
       "acceptance_mapping": "AC-22",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E27",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "1edefcf5ef9ad85e19abd9c40c69de99a02d85bc933263c58b633e8453498f85"
     },
     {
       "case_id": "E28",
       "name": "Noise, silence, misheard name, microphone denial",
       "expected_behavior": "Transcript review or text, no automatic analysis",
       "acceptance_mapping": "AC-10",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E28",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "e39f9e1895ad07e5321885f8499b83b532f688e5b0424eed09e54058c19a2fc1"
     },
     {
       "case_id": "E29",
       "name": "Concurrent analyses exhaust shared allowance",
       "expected_behavior": "Atomic reservation prevents overspend; explain next action",
       "acceptance_mapping": "AC-29",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E29",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "bd6249eff6e892e3f754661f042b46ed122ae10cec58e9259309ebfd683f83ca"
     },
     {
       "case_id": "E30",
       "name": "Briefing generation fails after commit",
       "expected_behavior": "Revision remains saved; deterministic briefing retry succeeds",
       "acceptance_mapping": "AC-18, AC-23, AC-24",
-      "exact_input_fixture": null,
-      "fixture_and_expected_facts_reviewed": false
+      "exact_input_fixture": "evals/t9/corpus.json#E30",
+      "fixture_and_expected_facts_reviewed": false,
+      "input_sha256": "4f9536b97b403224b35cd94f6db355b0ff2e148c2c7c6174e98a62e56e175e66"
     }
   ],
   "run_slots": [
@@ -1188,5 +1218,29 @@
       "human_review": null
     }
   ],
-  "agent_provider_spend_usd": 0
+  "agent_provider_spend_usd": 0,
+  "offline_preparation": {
+    "status": "draft_offline_prepared",
+    "corpus": "evals/t9/corpus.json",
+    "sha256": "2c9d9499ef676064c060b65e8108c989225dfd556fe7259a5187aeb77dbe2fbe",
+    "check_command": "node scripts/prepare-t9-evaluation.mjs --self-test",
+    "cases": 30,
+    "valid_initial_plans": 30,
+    "constraint_probes": 15,
+    "dst_variants": 4,
+    "corruption_checks": 6,
+    "live_quality_claim": false,
+    "human_approved": false,
+    "controlled_execution": {
+      "date": "2026-10-30",
+      "cases": 30,
+      "repeats": 90,
+      "status": "local_checks_passed",
+      "report": "output/t9-local-evaluation-2026-10-30.json",
+      "report_sha256": "32d23b667110d4074b25bfe2712b0adaff78c44a338561176e1d4c3497037335",
+      "evidence": "docs/reviews/2026-10-30-t9-local-execution.md",
+      "live_runs": 0,
+      "independent_human_approval": false
+    }
+  }
 }

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "provider_calls": 0,
+  "human_audio_review": null,
+  "files": [
+    {
+      "file": "silence.webm",
+      "mime": "audio/webm",
+      "bytes": 1446,
+      "sha256": "5930e4faeb0ea1b944fada48ca1ba75c26c682a24defb4e6cd817bb5277febd6",
+      "duration_ms": 2000,
+      "authored_transcript": null,
+      "kind": "silence",
+      "voice": null
+    },
+    {
+      "file": "noise.webm",
+      "mime": "audio/webm",
+      "bytes": 16589,
+      "sha256": "6282d3ab8064147290a552fdcc685632e31d561ab0f9fe9bb413c62bce9f52f2",
+      "duration_ms": 2000,
+      "authored_transcript": null,
+      "kind": "noise",
+      "voice": null
+    },
+    {
+      "file": "speech.webm",
+      "mime": "audio/webm",
+      "bytes": 68205,
+      "sha256": "c475bafc4bc595bf62ae070adc36daceb32303e8307469f0e03277092b5ccea9",
+      "duration_ms": 7897,
+      "authored_transcript": "Move Opening to Room 2 from twelve to thirteen. Synthetic Sam will cover Opening.",
+      "kind": "speech",
+      "voice": "installed macOS Albert"
+    },
+    {
+      "file": "speech.mp4",
+      "mime": "audio/mp4",
+      "bytes": 71740,
+      "sha256": "90e0a3056dcf787a21fa9f38036c1b01f4899250e7d7dd8d147b6fed689f49f7",
+      "duration_ms": 7936,
+      "authored_transcript": "Move Opening to Room 2 from twelve to thirteen. Synthetic Sam will cover Opening.",
+      "kind": "speech",
+      "voice": "installed macOS Albert"
+    }
+  ]
+}
