@@ -32,7 +32,7 @@ try {
   // Supabase Storage is managed externally too. Supply its referenced table contract.
   run(
     url,
-    "create schema storage; create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]); create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text,name text); alter table storage.objects enable row level security;",
+    "create schema storage; create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]); create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text,name text,created_at timestamptz default now()); alter table storage.objects enable row level security;",
   );
   for (const file of readdirSync("supabase/migrations")
     .filter((n) => n.endsWith(".sql"))

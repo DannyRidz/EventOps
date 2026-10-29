@@ -67,3 +67,5 @@ _Drafted by /audit from the repo, worth a quick human pass. Edit freely: once a 
 - [src/features/voice/AGENTS.md](src/features/voice/AGENTS.md): private audio jobs, conversion, transcript confirmation, shared budgets and independent cleanup. [T6 evidence](docs/reviews/2026-10-28-t6-voice-completion.md) records local verification and outstanding device/provider checks.
 
 - [src/features/imports/AGENTS.md](src/features/imports/AGENTS.md): CSV parsing, saved corrections, source integrity and verification boundaries. T5 is locally verified; [completion evidence](docs/reviews/2026-10-28-t5-imports-completion.md).
+
+- [src/features/privacy/AGENTS.md](src/features/privacy/AGENTS.md): owner lifecycle functions, bounded private exports, restricted retention and independent deletion replay. [T8 evidence](docs/reviews/2026-10-29-t8-completion.md).

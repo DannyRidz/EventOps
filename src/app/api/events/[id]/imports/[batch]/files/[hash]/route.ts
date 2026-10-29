@@ -10,18 +10,31 @@ export async function GET(
     const { client } = await ownedEvent(id);
     if (!/^[a-f0-9]{64}$/.test(hash) || !/^[a-f0-9-]{36}$/.test(batch))
       throw new ApiError(404, "NOT_FOUND", "File not found.");
-    const { data, error } = await client
-      .from("import_files")
-      .select("artifact_id,original_bytes")
-      .eq("event_id", id)
-      .eq("batch_id", batch)
-      .eq("sha256", hash)
-      .maybeSingle();
+    const { data, error } = await client.rpc("csv_original_receipt", {
+      p_event_id: id,
+      p_batch_id: batch,
+      p_hash: hash,
+    });
     if (error) throw new Error("SERVICE_UNAVAILABLE");
-    if (!data) throw new ApiError(404, "NOT_FOUND", "File not found.");
+    if (!data)
+      throw new ApiError(
+        410,
+        "ORIGINAL_DELETED",
+        "Original CSV deleted or unavailable. Frozen imported values remain available.",
+      );
     // The byte-bound database receipt is authoritative even if a Storage object
     // is missing or an authenticated direct caller associated unrelated bytes.
-    let bytes = Buffer.from(data.original_bytes.slice(2), "hex");
+    const available = await client.rpc("csv_original_available", {
+      p_id: data.artifact_id,
+    });
+    if (available.error) throw new Error("SERVICE_UNAVAILABLE");
+    if (!available.data || !data.original_bytes)
+      throw new ApiError(
+        410,
+        "ORIGINAL_DELETED",
+        "Original CSV deleted. Frozen imported values remain available.",
+      );
+    let bytes = Buffer.from(data.original_bytes, "hex");
     if (createHash("sha256").update(bytes).digest("hex") !== hash)
       throw new Error("SERVICE_UNAVAILABLE");
     const artifact = await client

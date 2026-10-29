@@ -34,6 +34,7 @@ export default async function EventsLayout({
     <PageShell>
       <div className="workspace-bar">
         <Link href="/events">My events</Link>
+        <Link href="/events/settings">Privacy and recovery</Link>
         <SignOut />
       </div>
       {children}

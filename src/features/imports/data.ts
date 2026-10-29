@@ -32,7 +32,18 @@ export async function importBatch(id: string, batch: string) {
     .eq("event_id", id)
     .eq("batch_id", batch);
   if (files.error) throw new Error("SERVICE_UNAVAILABLE");
-  return { ...result.data, originals: files.data };
+  const status = await client.rpc("csv_original_status");
+  if (status.error) throw new Error("SERVICE_UNAVAILABLE");
+  return {
+    ...result.data,
+    originals: files.data.map((file) => ({
+      ...file,
+      available:
+        (status.data as { artifact_id: string; available: boolean }[]).find(
+          (s) => s.artifact_id === file.artifact_id,
+        )?.available ?? false,
+    })),
+  };
 }
 export async function listImports(id: string) {
   const { client } = await ownedEvent(id);

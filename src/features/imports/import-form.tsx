@@ -121,7 +121,11 @@ export function ImportCorrection({
   generation: number;
   draftGeneration: number;
   initial: ImportTable[];
-  originals: { artifact_id: string; original_table: ImportTable }[];
+  originals: {
+    artifact_id: string;
+    original_table: ImportTable;
+    available?: boolean;
+  }[];
   setup: Setup;
   locked: boolean;
 }) {
@@ -251,14 +255,21 @@ export function ImportCorrection({
                   plan fields.
                 </p>
               </details>
-              {original && (
+              {original?.available === false ? (
                 <p>
-                  <Link
-                    href={`/api/events/${eventId}/imports/${batchId}/files/${t.sha256}`}
-                  >
-                    Download unchanged original
-                  </Link>
+                  Original CSV deleted or expired. Frozen imported values remain
+                  below.
                 </p>
+              ) : (
+                original && (
+                  <p>
+                    <Link
+                      href={`/api/events/${eventId}/imports/${batchId}/files/${t.sha256}`}
+                    >
+                      Download unchanged original
+                    </Link>
+                  </p>
+                )
               )}
               <p>
                 {t.rows.length

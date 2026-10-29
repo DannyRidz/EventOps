@@ -21,7 +21,7 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 | 7 | Voice and transcript review | Slice 3 | in-progress |
 | 8 | Review, resumption and history | Slice 4 | done |
 | 9 | Briefing and exports | Slice 5 | done |
-| 10 | Privacy, retention and recovery | Slice 6 | planned |
+| 10 | Privacy, retention and recovery | Slice 6 | in-progress |
 | 11 | Release verification and delivery | Release | planned |
 
 ## Foundations
@@ -131,14 +131,14 @@ Make the saved revision easy to use at the event.
 
 ## Slice 6: Privacy, retention and recovery
 
-### 10. Privacy, retention and recovery, planned
+### 10. Privacy, retention and recovery, in-progress
 
 Provide settings, private data export, controlled deletion, background cleanup and tested operational recovery.
 
 **Done when:** retention and deletion actually run, provider processing is disclosed, backups can be restored, and expired or deleted sources are labeled honestly.
 
 - [x] Ratify the design (spec): `/architect operations`, approved [operations contract](../specs/0001-eventops/0006-operations.md).
-- [ ] Build it: `/develop operations`.
+- [x] Build it: `/develop operations`. T8 local lifecycle controls, private ZIP, raw file expiry, restricted cleanup and encrypted isolated recovery are built and verified with synthetic services. [Completion evidence](../reviews/2026-10-29-t8-completion.md). Code in `src/features/privacy/`, workspace routes, migrations 004 through 009 and T8 verification scripts. Hosted schedules, independent deletion history reconciliation, actual provider object restoration, monitoring, geography and operator notices remain release gates, so the feature stays in progress.
 
 ## Release
 

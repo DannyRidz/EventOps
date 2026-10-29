@@ -4,6 +4,9 @@
 
 ### Added
 
+- Privacy settings with retention previews, archive/trash recovery, account deletion and a bounded private workspace ZIP.
+- Restricted file cleanup, independent deletion identifiers, database readiness and a synthetic encrypted recovery drill. Hosted recovery and privacy release gates remain open.
+
 - Saved organizer answers with immutable evidence and clarified text resumption.
 - Immutable proposal edit generations, explicit interpreted request withdrawal and persisted rejection reasons.
 - Historical revision comparison and reviewed restoration with current context fences and fresh organizer evidence.
