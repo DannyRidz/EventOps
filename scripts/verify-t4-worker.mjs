@@ -677,7 +677,9 @@ try {
   );
   const workspace = saved.job.workspace_id;
   await admin.query(
-    "insert into public.model_runs(workspace_id,event_id,job_id,attempt,created_at) select $1,$2,$3,10000+n,now()-interval '2 hours' from generate_series(1,14) n",
+    // Keep the fixture in today's UTC ledger, including the first two hours.
+    // Near midnight the hourly quota can also deny these synthetic attempts.
+    "insert into public.model_runs(workspace_id,event_id,job_id,attempt,created_at) select $1,$2,$3,10000+n,greatest(now()-interval '2 hours',date_trunc('day',now() at time zone 'UTC') at time zone 'UTC') from generate_series(1,14) n",
     [workspace, id, budgetJob.body.id],
   );
   try {
@@ -798,7 +800,7 @@ try {
     other,
   );
   await admin.query(
-    "insert into public.model_runs(workspace_id,event_id,job_id,attempt) select $1,$2,$3,100000+n from generate_series(1,greatest(0,(select floor((10-coalesce(sum(charged_usd),0)-(select coalesce(sum(reserved_usd),0) from public.voice_jobs where (created_at at time zone 'UTC')::date=(now() at time zone 'UTC')::date)-0.15)/0.15)::integer from public.model_runs))) n",
+    "insert into public.model_runs(workspace_id,event_id,job_id,attempt) select $1,$2,$3,100000+n from generate_series(1,greatest(0,(select floor((10-coalesce(sum(charged_usd),0)-(select coalesce(sum(reserved_usd),0) from public.voice_jobs where (created_at at time zone 'UTC')::date=(now() at time zone 'UTC')::date)-0.15)/0.15)::integer from public.model_runs where (created_at at time zone 'UTC')::date=(now() at time zone 'UTC')::date))) n",
     [workspace, id, budgetJob.body.id],
   );
   let blockedTarget, blockedClient, blockedSession;

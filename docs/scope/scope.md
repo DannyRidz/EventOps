@@ -8,6 +8,8 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## At a glance
 
+29 October provider readiness update: signed in billing confirms USD 150 active free credits and a product improvement notice. Payment remains required, Create API key is disabled and no private model key is available. Synthetic live verification is blocked with USD 0 spend; controlled worker and manual flows pass again. Live gates remain disabled and T7 has not started. [Readiness evidence](../reviews/2026-10-29-live-ai-readiness.md).
+
 | # | Feature | Phase | Status |
 |---|---|---|---|
 | 1 | Stack and architecture | Foundation | done |

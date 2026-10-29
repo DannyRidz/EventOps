@@ -60,6 +60,8 @@ T4 implementation is complete locally, including typed Meta interpretation, dete
 
 ## Analysis worker
 
+The [29 October live readiness check](docs/reviews/2026-10-29-live-ai-readiness.md) confirms USD 150 active free credits, with a product improvement notice, but payment remains required and key creation is disabled. No live request or spend occurred. The record supersedes earlier unconfirmed credit statements, gives private key storage instructions and lists the remaining gates for the authorized USD 1 synthetic verification.
+
 `npm run worker` starts the separate Node worker when its environment is already supplied. You can also use `node --env-file=.env.worker.local scripts/analysis-worker.mjs`. Copy `worker.env.example` to that ignored private file when configuring it deliberately. Keep `MODEL_API_KEY` and `WORKER_DATABASE_URL` only in the worker environment, never the web or browser configuration. The worker uses the same pinned Node runtime and source checkout.
 
 The database login must have only `eventops_worker` membership. The worker sets that restricted role and invokes only its claim, stage and finish functions. It cannot approve, read arbitrary application tables or use an owner JWT. An operator can prepare the login using administrative SQL, then set its password privately with psql's `\password` command:
