@@ -8,6 +8,8 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## At a glance
 
+30 October accessibility continuation: native Chrome public keyboard and skip link focus checks pass. VoiceOver could be enabled but reliable spoken/caption output was not observable; it was restored to off and task utilities were closed. Full screen reader and protected/device checks remain open. [Actual attempt and cleanup](../reviews/2026-10-30-t9-screen-reader-attempt.md).
+
 30 October controlled continuation: the executable SQL/orchestration runner passes 90 local repeats, the durable campaign guard passes concurrency/restart checks, and four supported synthetic audio files pass conversion. Both AI gates remain off and all 90 live slots remain not run. Manual accessibility/device, blocked sign in, actual provider and hosted gates remain open. [Local execution evidence](../reviews/2026-10-30-t9-local-execution.md).
 
 29 October local continuation: the 30 case offline evaluation corpus is materialized as a draft, with valid starting plans, expected facts, 15 constraint probes, four DST variants and corruption checks. Fresh repository checks and loopback smoke results are recorded in the [local preparation evidence](../reviews/2026-10-29-t9-local-preparation.md). All 90 live runs remain not run. Audio materialization, execution adapters, aggregate campaign allowance and independent semantic approval remain open.
