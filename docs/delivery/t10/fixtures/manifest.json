@@ -1,0 +1,25 @@
+{
+  "synthetic": true,
+  "purpose": "Local T10 rehearsal, not customer records or live AI results",
+  "source": "evals/t9/corpus.json E01 baseline",
+  "expected_rules": {
+    "baseline.json": [],
+    "blocked-candidate.json": [
+      "AVAILABILITY",
+      "ROOM_OVERLAP"
+    ],
+    "corrected-candidate.json": []
+  },
+  "files": {
+    "assignments.csv": "f6f928dde9ce3ae74036dbaf01a6f8fc55c986a5b92ab201c2d05c042ced8989",
+    "availability.csv": "a9a076de953d709767e69638a28db70792d45435c1fb7817d9c4fc0cfdd2aeac",
+    "baseline.json": "2b3467864eadcdc657464111b8a489555be7aa8517f7003dae91aa14052ba706",
+    "blocked-candidate.json": "3b9a9bdeefbc4449205f8cd47501f714e8cecb83ad87d2385a43151f9662ef1f",
+    "corrected-candidate.json": "6d27e2db6212883d9703598b460258ba5655a279574d299099db53da2ad932ee",
+    "dependencies.csv": "8d2cf3c4300efb4cecb21983d06c4fc4c7869b1e5f3ab6e66cac8a332d73a6f2",
+    "rooms.csv": "ccaec2332f1a01db6d212633aa7cee401eba8610716b5ef345755d5354442fec",
+    "schedule.csv": "16fa752d5a20d84979f67092c9903297b0f3e528777a2a638779cf9b5f1f029f",
+    "setup.json": "ae52c3e49c2007242d96251e09168ece1d059762f8febc0f34ac119582ac2095",
+    "volunteers.csv": "7cab1d5a2f63c4bfdcb5914727a51579b26d8e25f6885ae2f00ad8a5ade9327a"
+  }
+}

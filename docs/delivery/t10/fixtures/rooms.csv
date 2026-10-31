@@ -1,0 +1,3 @@
+room_id,name,location,capacity,feature_tags
+hall,Room 1,Main hall,40,projector
+side,Room 2,Side hall,40,projector

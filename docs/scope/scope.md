@@ -8,6 +8,8 @@ EventOps helps you keep a small event's schedule, rooms, volunteer assignments, 
 
 ## At a glance
 
+31 October local T10 preparation: an accurate submission draft, timed manual rehearsal script, conditional live outline, recording checklist and validated synthetic CSV/reference fixtures are prepared. No video, publication, deployment or submission occurred. T9 and full T10 remain incomplete. [Local package](../delivery/t10/README.md).
+
 30 October accessibility continuation: native Chrome public keyboard and skip link focus checks pass. VoiceOver could be enabled but reliable spoken/caption output was not observable; it was restored to off and task utilities were closed. Full screen reader and protected/device checks remain open. [Actual attempt and cleanup](../reviews/2026-10-30-t9-screen-reader-attempt.md).
 
 30 October controlled continuation: the executable SQL/orchestration runner passes 90 local repeats, the durable campaign guard passes concurrency/restart checks, and four supported synthetic audio files pass conversion. Both AI gates remain off and all 90 live slots remain not run. Manual accessibility/device, blocked sign in, actual provider and hosted gates remain open. [Local execution evidence](../reviews/2026-10-30-t9-local-execution.md).

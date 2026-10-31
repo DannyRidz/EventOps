@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "event": {
+    "name": "Synthetic EventOps rehearsal",
+    "date": "2026-11-02",
+    "timezone": "Asia/Brunei",
+    "start": "09:00",
+    "end": "17:00",
+    "locations": [
+      "Main hall",
+      "Side hall"
+    ],
+    "start_offset": "+08:00",
+    "end_offset": "+08:00",
+    "starts_at": "2026-11-02T01:00:00Z",
+    "ends_at": "2026-11-02T09:00:00Z"
+  },
+  "rooms": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "external_id": "hall",
+      "name": "Room 1",
+      "location": "Main hall",
+      "capacity": 40,
+      "feature_tags": [
+        "projector"
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000002",
+      "external_id": "side",
+      "name": "Room 2",
+      "location": "Side hall",
+      "capacity": 40,
+      "feature_tags": [
+        "projector"
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "external_id": "opening",
+      "title": "Opening",
+      "start": "12:00",
+      "end": "13:00",
+      "start_offset": "+08:00",
+      "end_offset": "+08:00",
+      "starts_at": "2026-11-02T04:00:00Z",
+      "ends_at": "2026-11-02T05:00:00Z",
+      "room_id": "00000000-0000-4000-8000-000000000002",
+      "required_volunteers": 1,
+      "expected_attendance": 30,
+      "required_role_tag": "usher",
+      "required_feature_tags": [
+        "projector"
+      ],
+      "setup_minutes": 0,
+      "teardown_minutes": 0
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000004",
+      "external_id": "workshop",
+      "title": "Workshop",
+      "start": "10:00",
+      "end": "11:00",
+      "start_offset": "+08:00",
+      "end_offset": "+08:00",
+      "starts_at": "2026-11-02T02:00:00Z",
+      "ends_at": "2026-11-02T03:00:00Z",
+      "room_id": "00000000-0000-4000-8000-000000000002",
+      "required_volunteers": 1,
+      "expected_attendance": 10,
+      "required_role_tag": "usher",
+      "required_feature_tags": [],
+      "setup_minutes": 0,
+      "teardown_minutes": 0
+    }
+  ],
+  "volunteers": [
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "external_id": "alex",
+      "display_name": "Synthetic Alex",
+      "role_tags": [
+        "usher"
+      ],
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000006",
+      "external_id": "sam",
+      "display_name": "Synthetic Sam",
+      "role_tags": [
+        "usher"
+      ],
+      "active": true
+    }
+  ],
+  "availability": [
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "external_id": "alex-available",
+      "volunteer_id": "00000000-0000-4000-8000-000000000005",
+      "start": "09:00",
+      "end": "17:00",
+      "start_offset": "+08:00",
+      "end_offset": "+08:00",
+      "starts_at": "2026-11-02T01:00:00Z",
+      "ends_at": "2026-11-02T09:00:00Z",
+      "status": "available"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000008",
+      "external_id": "sam-available",
+      "volunteer_id": "00000000-0000-4000-8000-000000000006",
+      "start": "09:00",
+      "end": "17:00",
+      "start_offset": "+08:00",
+      "end_offset": "+08:00",
+      "starts_at": "2026-11-02T01:00:00Z",
+      "ends_at": "2026-11-02T09:00:00Z",
+      "status": "available"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000012",
+      "external_id": "alex-absence",
+      "volunteer_id": "00000000-0000-4000-8000-000000000005",
+      "start": "10:00",
+      "end": "13:00",
+      "start_offset": "+08:00",
+      "end_offset": "+08:00",
+      "starts_at": "2026-11-02T02:00:00Z",
+      "ends_at": "2026-11-02T05:00:00Z",
+      "status": "unavailable"
+    }
+  ],
+  "assignments": [
+    {
+      "id": "00000000-0000-4000-8000-000000000009",
+      "external_id": "opening-alex",
+      "volunteer_id": "00000000-0000-4000-8000-000000000006",
+      "session_id": "00000000-0000-4000-8000-000000000003",
+      "role_tag": "usher",
+      "start": "12:00",
+      "end": "13:00",
+      "start_offset": "+08:00",
+      "end_offset": "+08:00",
+      "starts_at": "2026-11-02T04:00:00Z",
+      "ends_at": "2026-11-02T05:00:00Z"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000010",
+      "external_id": "workshop-alex",
+      "volunteer_id": "00000000-0000-4000-8000-000000000006",
+      "session_id": "00000000-0000-4000-8000-000000000004",
+      "role_tag": "usher",
+      "start": "10:00",
+      "end": "11:00",
+      "start_offset": "+08:00",
+      "end_offset": "+08:00",
+      "starts_at": "2026-11-02T02:00:00Z",
+      "ends_at": "2026-11-02T03:00:00Z"
+    }
+  ],
+  "dependencies": [],
+  "provenance": []
+}

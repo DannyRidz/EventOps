@@ -1,0 +1,15 @@
+{
+  "name": "Synthetic EventOps rehearsal",
+  "date": "2026-11-02",
+  "timezone": "Asia/Brunei",
+  "start": "09:00",
+  "end": "17:00",
+  "locations": [
+    "Main hall",
+    "Side hall"
+  ],
+  "start_offset": "+08:00",
+  "end_offset": "+08:00",
+  "starts_at": "2026-11-02T01:00:00Z",
+  "ends_at": "2026-11-02T09:00:00Z"
+}
