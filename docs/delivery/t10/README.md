@@ -1,9 +1,17 @@
 # EventOps local T10 preparation
 
+3 November update: bounded real Meta text and synthetic voice smoke tests now
+have evidence. Text passed the restricted worker, confirmation, approval and
+briefing path. Voice passed with a clearer synthetic clip, while an Albert clip
+lost words. General provider processing is still disabled. The authenticated
+browser rehearsal currently stops at the personal sign in and terms boundary.
+No recording, deployment or submission has occurred. See [live text results](../../reviews/2026-11-03-live-text-workflow.md)
+and [voice and rehearsal results](../../reviews/2026-11-03-live-voice-and-rehearsal.md).
+
 Prepared: 31 October 2026, Asia/Brunei. Status: local drafts, not submitted.
 
-This package prepares materials while T9 remains incomplete and live AI stays
-disabled. It authorizes no publication, deployment, paid resource, legal acceptance
+This package prepares materials while T9 remains incomplete. General live AI stays
+disabled outside authorized bounded tests. It authorizes no publication, deployment, paid resource, legal acceptance
 or submission. Nothing here is a released product or a completed video.
 
 ## Reviewable materials
@@ -13,6 +21,7 @@ or submission. Nothing here is a released product or a completed video.
 | [Submission draft](submission-draft.md) | Accurate description, architecture, Meta integration status and contributor fields |
 | [Current three minute script](demo-current.md) | Local synthetic rehearsal using the manual proposal path |
 | [Conditional live script](demo-live-conditional.md) | Replacement outline only after live prerequisites and evaluation pass |
+| [Verified text rehearsal script](demo-verified-text.md) | Updated narration grounded in the bounded live worker evidence, with the actual browser take still pending |
 | [Recording and delivery checklist](recording-checklist.md) | Rehearsal setup, capture, factual review and external authorization gates |
 | [Synthetic fixture instructions](fixtures/README.md) | Small importable CSV set and exact blocked/corrected candidate references |
 
@@ -37,11 +46,10 @@ establish reliable announcements. Preparing a human test page did not supply
 human observations. Hosted recovery, alerts, operator notices and deployment
 checks also remain open. T10 preparation does not close those T9 gates.
 
-Meta support's latest observed response escalated the payment issue. This pass
-does not establish current account readiness or a new support reply. Access, a
-working private key, provider compatibility, geographic prerequisites, actual
-usage and a specifically authorized live budget still need verification before
-any provider call. No alternative provider is silently substituted.
+Earlier payment blockers were superseded by the 3 November live smoke evidence
+linked above. A private key and authenticated model responses are now verified
+within that scope. This does not establish general production account readiness
+or a new support reply. No alternative provider was substituted.
 
 ## Requirements provenance
 

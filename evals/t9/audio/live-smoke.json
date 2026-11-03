@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "human_audio_review": null,
+  "files": [
+    {
+      "file": "speech-samantha.webm",
+      "mime": "audio/webm",
+      "bytes": 49424,
+      "sha256": "e7aadac416a0b14405c1f7c864029809f251778104956c5e3892bf0caa2cd58f",
+      "authored_transcript": "Move Opening to Room Two from twelve to thirteen. Synthetic Sam will cover Opening.",
+      "voice": "installed macOS Samantha at 145 words per minute"
+    }
+  ]
+}

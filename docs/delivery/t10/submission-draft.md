@@ -1,6 +1,6 @@
 # Submission copy, current truthful draft
 
-Status: review draft dated 31 October 2026. Do not submit unchanged if the actual
+Status: review draft updated 3 November 2026. Do not submit unchanged if the actual
 implementation, provider access or final form requirements change.
 
 ## Project name
@@ -33,10 +33,12 @@ Private exports, retention settings and archive/trash controls are implemented
 locally. Public production operations and the full accessibility/device matrix
 are still unverified.
 
-This is a local prototype verified with synthetic records. The Meta interpretation
-and transcription adapters are implemented and tested with controlled responses,
-but live Meta access remains disabled pending resolution of an account payment
-restriction. No real model quality result or production readiness is claimed.
+This is a local prototype verified with synthetic records. Bounded live Meta tests
+passed the text worker, organizer confirmation, transactional approval and briefing
+path. A live synthetic voice test also passed transcription, correction, original
+transcript preservation, text confirmation and cleanup. These limited smoke tests
+do not establish broad model quality or production readiness. Background live
+processing remains disabled outside explicitly authorized tests.
 
 ## Meta product use and why it matters
 
@@ -52,9 +54,10 @@ model has no approval, messaging, shell or external write tool. Model output
 requires organizer confirmation; deterministic constraints and transactional
 approval remain the authority.
 
-Current status: **adapters tested with controlled responses; zero live evaluation
-runs; live gates disabled**. The current manual rehearsal demonstrates the
-deterministic and approval path. It must not be labeled a live Meta demo.
+Current status: **live text and synthetic speech smoke tests passed; the full 90
+run evaluation remains unexecuted; general live gates remain disabled**. The
+current manual rehearsal demonstrates the deterministic and approval path. Only
+a recording that actually uses the provider may be labeled a live Meta demo.
 
 ## Engineering and validation
 
@@ -64,7 +67,7 @@ and retention. Database functions scope owner writes and recompute approval.
 Private source receipts, generation checks and immutable revisions preserve the
 record of what was confirmed.
 
-The latest recorded repository check passed 158 tests in 26 files. The T9
+The 3 November repository check passed 159 tests in 26 files. The T9
 controlled runner applied 42 migrations and passed the implemented checks for
 30 scenarios, three repeats each, in isolated temporary databases. Those 90 local
 repeats are not the required 90 real model runs. Codec conversion, controlled
@@ -74,13 +77,18 @@ have evidence. Results, boundaries and source hashes are linked from the
 
 ## Genuine provider feedback
 
-Payment method setup returned a payment system error and prevented API key
-creation during the observed readiness checks, despite confirmed hackathon
-credits. Support requested device/card metadata and an error screenshot, then
-escalated the issue. This blocked real interpretation/transcription evaluation.
-We cannot yet give measured feedback about model accuracy, speed, billing or
-production reliability. No private support correspondence, card metadata or
-account identifiers should appear in the public submission or video.
+Initial account setup delayed testing, but live requests later succeeded despite
+a remaining dashboard warning. The first text responses exceeded our ten second
+header timeout. Allowing the existing 35 second request bound exposed a further
+output budget issue: default reasoning consumed the 4,000 token cap. Explicit
+minimal reasoning then produced valid confirmed options within that cap.
+
+A legacy synthetic Albert voice clip lost important words. A clearer Samantha
+clip preserved the room, times and volunteer, with a duplicated word. Organizer
+transcript review and correction therefore remain essential. These observations
+come from small synthetic smoke tests, not a representative quality benchmark.
+No private support correspondence, payment metadata or account identifiers should
+appear in the public submission or video.
 
 ## Track, theme and contributions
 

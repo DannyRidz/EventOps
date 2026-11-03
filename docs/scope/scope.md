@@ -1,5 +1,7 @@
 # Scope: EventOps
 
+3 November voice continuation: three actual ASR requests using two synthetic clips returned HTTP 200. The clearer Samantha clip passed transcription, original preservation, correction, text confirmation and cleanup; the Albert clip lost important words and remains a quality failure. Campaign reservations total USD 0.618 of the authorized USD 1. Browser rehearsal reaches personal sign in and terms; no authenticated take or recording is claimed. [Voice and rehearsal evidence](../reviews/2026-11-03-live-voice-and-rehearsal.md), [updated text demo script](../delivery/t10/demo-verified-text.md).
+
 3 November live text update: an authorized USD 1 bounded campaign produced six HTTP 200 responses and two valid synthetic analysis results. The final restricted worker run passed interpretation confirmation, transactional approval, receipt replay and briefing. Timeout and reasoning fixes are covered by 159 passing tests and a production build. Temporary gates were restored; general live processing, voice and the 90 run release evaluation remain open. [Actual results](../reviews/2026-11-03-live-text-workflow.md).
 
 EventOps helps you keep a small event's schedule, rooms, volunteer assignments, and briefing consistent when plans change. You review evidence and approve each official revision.
