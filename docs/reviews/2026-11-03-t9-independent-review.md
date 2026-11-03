@@ -1,7 +1,7 @@
 # Review, main, 2026-11-03
 
 **Reviewed by**: Codex, fresh independent review agent (the implementation author's model identity was not supplied)
-**Scope**: 30 changed files, `cad6f1c..7ad4ca861019f477d5b9fd2c24109c391e9b7cb3`, plus nine follow-up uncommitted files and relevant unchanged worker, allowance and SQL approval/access boundaries
+**Scope**: 30 changed files, `cad6f1c..7ad4ca861019f477d5b9fd2c24109c391e9b7cb3`, plus eleven follow-up uncommitted files and relevant unchanged worker, allowance and SQL approval/access boundaries
 **Verdict**: Approve following the resolution review below (original verdict: Approve with nits)
 
 ## Summary
@@ -89,3 +89,13 @@ The null-claim branch now explicitly rolls back and returns its result; only a n
 The confirmation heading receives programmatic focus when the review step opens, remains outside normal sequential tab order, and places subsequent keyboard navigation at the approval controls. Returning restores focus to the newly rendered Review approval button. The effect does not steal focus on initial mount. The shared button's native element props now include the ref and continue passing it through to the actual button; default button type, disabled behavior and visual variants remain unchanged. The existing separate approval action and receipt-key handling are preserved.
 
 Independently ran `npm test -- src/features/plans/proposal-actions.test.tsx` on Node 24.15.0: all three tests passed. The new test exercises keyboard opening, heading focus, both confirmation controls, return focus and absence of a request during review/back navigation. Existing tests retain blocked/stale approval and lost-response receipt-key coverage. No live calls or browser actions were performed by this reviewer. The main agent's reported full check/build and actual browser approval are separate evidence and were not counted as independently reproduced here.
+
+## Privacy keyboard-focus follow-up
+
+**Scope**: Only the new changes in `src/features/privacy/settings-form.tsx` and `src/features/privacy/settings-form.test.tsx`. Read the review prompt/rubric, root and privacy guidance, the privacy/retention/recovery specification and its operations runbook.
+
+**Verdict**: Approve. No new findings.
+
+The event-trash and account-deletion confirmations now focus explanatory text on opening. That text is programmatically focusable without adding an extra sequential tab stop. Cancel restores focus to the matching event or account trigger through a keyed element map; account trigger remounting is handled by its callback ref. A single confirmation value keeps the shared prompt ref attached to one prompt at a time, and initial mount does not move focus. The diff changes no request payload, lifecycle authority, deletion timing or confirmation requirement.
+
+Independently ran `npm test -- src/features/privacy/settings-form.test.tsx` on Node 24.15.0: all five tests passed. Both new keyboard cases exercise opening, explanatory-text focus, sequential confirm/cancel navigation, return to the correct trigger, dismissal and zero network requests. Existing tests cover retention preview, explicit confirmation, failed-save status and the scheduled-deletion recovery surface. No live provider calls, browser actions or lifecycle mutations were performed by this reviewer. The main agent's browser reproduction and broader check/build are separate evidence; this approval is limited to the two-file focus fix.

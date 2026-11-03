@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Temporal } from "@js-temporal/polyfill";
@@ -17,6 +17,19 @@ export function PrivacySettings({ initial }: { initial: Settings }) {
     [busy, setBusy] = useState(false);
   const [days, setDays] = useState<Record<string, number>>({}),
     [confirm, setConfirm] = useState("");
+  const confirmationPrompt = useRef<HTMLParagraphElement>(null);
+  const confirmationTriggers = useRef(new Map<string, HTMLButtonElement>());
+  const previousConfirmation = useRef("");
+  function rememberTrigger(id: string, node: HTMLButtonElement | null) {
+    if (node) confirmationTriggers.current.set(id, node);
+    else confirmationTriggers.current.delete(id);
+  }
+  useEffect(() => {
+    if (confirm) confirmationPrompt.current?.focus();
+    else if (previousConfirmation.current)
+      confirmationTriggers.current.get(previousConfirmation.current)?.focus();
+    previousConfirmation.current = confirm;
+  }, [confirm]);
   async function change(body: Record<string, unknown>) {
     setBusy(true);
     setMessage("");
@@ -238,6 +251,7 @@ export function PrivacySettings({ initial }: { initial: Settings }) {
                       <Button
                         variant="secondary"
                         disabled={busy}
+                        ref={(node) => rememberTrigger(event.id, node)}
                         onClick={() => setConfirm(event.id)}
                       >
                         Move to trash
@@ -247,7 +261,7 @@ export function PrivacySettings({ initial }: { initial: Settings }) {
                 </div>
                 {confirm === event.id && (
                   <div className="stack">
-                    <p>
+                    <p ref={confirmationPrompt} tabIndex={-1}>
                       Hide this event and cancel pending processing? You can
                       restore it for seven days, unless retention expires
                       sooner.
@@ -289,7 +303,9 @@ export function PrivacySettings({ initial }: { initial: Settings }) {
             </p>
             {confirm === "account" ? (
               <>
-                <p>Schedule deletion of your entire account?</p>
+                <p ref={confirmationPrompt} tabIndex={-1}>
+                  Schedule deletion of your entire account?
+                </p>
                 <Button
                   variant="secondary"
                   disabled={busy}
@@ -312,6 +328,7 @@ export function PrivacySettings({ initial }: { initial: Settings }) {
               <Button
                 variant="secondary"
                 disabled={busy}
+                ref={(node) => rememberTrigger("account", node)}
                 onClick={() => setConfirm("account")}
               >
                 Request account deletion

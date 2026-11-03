@@ -27,6 +27,42 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 describe("privacy settings controls", () => {
+  it.each([
+    [
+      "Move to trash",
+      "Hide this event and cancel pending processing?",
+      "Confirm move to trash",
+      "Keep event",
+    ],
+    [
+      "Request account deletion",
+      "Schedule deletion of your entire account?",
+      "Confirm account deletion",
+      "Keep account",
+    ],
+  ])(
+    "preserves keyboard focus when cancelling %s",
+    async (triggerName, prompt, confirmName, cancelName) => {
+      const user = userEvent.setup(),
+        fetcher = vi.fn();
+      vi.stubGlobal("fetch", fetcher);
+      render(<PrivacySettings initial={initial} />);
+      const trigger = screen.getByRole("button", { name: triggerName });
+      trigger.focus();
+      await user.keyboard("{Enter}");
+      expect(screen.getByText(prompt, { exact: false })).toHaveFocus();
+      await user.tab();
+      expect(screen.getByRole("button", { name: confirmName })).toHaveFocus();
+      await user.tab();
+      expect(screen.getByRole("button", { name: cancelName })).toHaveFocus();
+      await user.keyboard("{Enter}");
+      expect(screen.getByRole("button", { name: triggerName })).toHaveFocus();
+      expect(
+        screen.queryByRole("button", { name: confirmName }),
+      ).not.toBeInTheDocument();
+      expect(fetcher).not.toHaveBeenCalled();
+    },
+  );
   it("previews retention and asks before hiding an event", async () => {
     const user = userEvent.setup(),
       fetcher = vi.fn();

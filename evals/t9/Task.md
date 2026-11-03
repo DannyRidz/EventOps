@@ -135,3 +135,7 @@ independent semantic review, authorized live aggregate allowance and integration
 of the tested guard into a future live harness remain open. Existing shared
 workspace/global/lifetime budgets must remain enforced. No spending authority,
 provider enablement, hosted deployment or Harbor installation is implied.
+
+## Readiness update, 3 November 2026
+
+Bounded synthetic text and speech provider calls and the authenticated browser text approval path now have [actual evidence](../../docs/reviews/2026-11-03-t9-browser-verification.md). Provider entitlement and a private key are no longer blanket blockers for those tested calls. They do not supply the full corpus evaluation or independent semantic review. The controlled corpus runner above still has no live mode; a corpus live harness and sufficient authorized aggregate allowance remain required. The existing USD 1 journal retains USD 0.768, leaving USD 0.232. Do not reset reservations or treat controlled runs as live quality results.
