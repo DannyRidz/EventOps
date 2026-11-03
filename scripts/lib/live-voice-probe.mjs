@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import pg from "pg";
 import { campaignCall } from "./t9-allowance.mjs";
+import { responseDiagnostic } from "./live-evidence.mjs";
 
 export async function verifyLiveVoice({
   admin,
@@ -140,11 +141,7 @@ export async function verifyLiveVoice({
           receipt.latency_ms = Date.now() - started;
           receipt.request_id = response.headers.get("x-request-id");
           if (!response.ok) {
-            try {
-              receipt.provider_error = (await response.clone().json()).error;
-            } catch {
-              /* Shape is untrusted. */
-            }
+            Object.assign(receipt, await responseDiagnostic(response));
           }
           await save();
           return response;

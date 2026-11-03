@@ -2,10 +2,11 @@
 import "./register-app-modules.mjs";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import pg from "pg";
 import { campaignCall } from "./lib/t9-allowance.mjs";
+import { createReceipt, responseDiagnostic } from "./lib/live-evidence.mjs";
 const { runOne } = await import("../src/features/analysis/worker.ts");
 const { createMetaTransport, liveModelEnabled } =
   await import("../src/features/analysis/provider.ts");
@@ -36,6 +37,10 @@ const report = {
   allowance_usd: 1,
   outcome: "not_run",
 };
+const updateReceipt = await createReceipt(
+  resolve(folder, `${attempt}-receipt.json`),
+  report,
+);
 const status = JSON.parse(
   await readFile("/private/tmp/eventops-local-status.json", "utf8"),
 );
@@ -252,30 +257,7 @@ try {
           receipt.status = response.status;
           receipt.latency_ms = Date.now() - started;
           receipt.request_id = response.headers.get("x-request-id");
-          if (response.ok) {
-            const envelope = await response.clone().json();
-            receipt.response = {
-              model: envelope.model,
-              finish_reason: envelope.choices?.[0]?.finish_reason,
-              content_length:
-                envelope.choices?.[0]?.message?.content?.length ?? 0,
-              refusal: Boolean(envelope.choices?.[0]?.message?.refusal),
-              usage: envelope.usage,
-            };
-          }
-          if (!response.ok) {
-            const raw = await response.clone().text();
-            try {
-              const error = JSON.parse(raw).error;
-              receipt.error = {
-                code: error?.code,
-                type: error?.type,
-                message: error?.message?.slice(0, 700),
-              };
-            } catch {
-              receipt.error = { code: "NON_JSON_PROVIDER_ERROR" };
-            }
-          }
+          Object.assign(receipt, await responseDiagnostic(response));
           await save();
           return response;
         },
@@ -424,9 +406,5 @@ try {
   );
 }
 async function save() {
-  await writeFile(
-    resolve(folder, `${attempt}-receipt.json`),
-    JSON.stringify(report, null, 2) + "\n",
-    { mode: 0o600 },
-  );
+  await updateReceipt(report);
 }

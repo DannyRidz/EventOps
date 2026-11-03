@@ -1,7 +1,7 @@
 # Three minute local rehearsal, live AI disabled
 
 Status: script only. No video or rehearsal timing result is claimed. Use this
-version while provider access is blocked. Record only a new disposable synthetic
+version when this take uses the manual path with general live processing disabled. Record only a new disposable synthetic
 event prepared from [these inputs](fixtures/README.md), never a real roster.
 
 The spoken lines below are the current version. Operator directions are not
@@ -56,7 +56,7 @@ print preview consuming the whole recording.
 On screen: remain on history or briefing. Use a narration/title overlay in the
 recording, not a new product banner or a fake model result screen.
 
-> The Meta adapters are designed to interpret confirmed updates and produce reviewed transcripts. They have been tested with controlled responses, but real model evaluation is still blocked by account access. This rehearsal proves the local manual path; it does not establish live AI quality, complete accessibility verification or production readiness.
+> Separate bounded Meta tests passed the text and reviewed voice workflows. This take demonstrates the local manual path. The full model evaluation, complete accessibility verification and production readiness remain open.
 
 ## Recording rule
 

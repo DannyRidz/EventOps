@@ -89,3 +89,7 @@ comfortable pace that leaves room for navigation within the three minute target,
 but actual duration still needs a recorded rehearsal. No video timing is measured.
 Local document links and whitespace were checked. No application source changed,
 so the full application suite/build was not rerun or counted as a fresh T10 pass.
+
+## Authenticated rehearsal evidence, 3 November
+
+The [current T9 browser record](../../reviews/2026-11-03-t9-browser-verification.md) now proves the local synthetic CSV, real text clarification, organizer confirmation, revision approval, history, briefing and export path. It includes a repaired approval keyboard focus transition, 200% briefing zoom and a visually inspected two-page print. This supports a truthful local rehearsal; the full real evaluation, human/device acceptance and hosted operations still prevent claiming full T9 or T10 delivery completion.

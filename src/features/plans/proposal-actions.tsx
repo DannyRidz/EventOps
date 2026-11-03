@@ -1,6 +1,6 @@
 "use client";
 import { operationKey } from "./request-key";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { planRequest } from "./editor";
@@ -26,6 +26,17 @@ export function ProposalActions({
     [pending, setPending] = useState(false),
     [error, setError] = useState("");
   const [reason, setReason] = useState("");
+  const confirmationHeading = useRef<HTMLHeadingElement>(null);
+  const reviewButton = useRef<HTMLButtonElement>(null);
+  const reviewed = useRef(false);
+  useEffect(() => {
+    if (review) {
+      reviewed.current = true;
+      confirmationHeading.current?.focus();
+    } else if (reviewed.current) {
+      reviewButton.current?.focus();
+    }
+  }, [review]);
   const [key] = useState(() =>
     operationKey(`approve:${eventId}:${proposalId}:${generation}`),
   );
@@ -66,7 +77,9 @@ export function ProposalActions({
       </label>
       {review ? (
         <>
-          <h2>Confirm approval</h2>
+          <h2 ref={confirmationHeading} tabIndex={-1}>
+            Confirm approval
+          </h2>
           <p>
             Save these changes as revision {next}. This updates your event plan
             and briefing. No messages will be sent.
@@ -93,6 +106,7 @@ export function ProposalActions({
       ) : (
         <div className="actions">
           <Button
+            ref={reviewButton}
             disabled={!allowed || pending}
             onClick={() => setReview(true)}
           >

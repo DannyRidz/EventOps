@@ -38,3 +38,27 @@ it("disables approval when stale or blocked", () => {
     screen.getByRole("button", { name: "Review approval" }),
   ).toBeDisabled();
 });
+it("moves keyboard focus into confirmation and restores it when returning", async () => {
+  const user = userEvent.setup();
+  const fetch = vi.fn();
+  vi.stubGlobal("fetch", fetch);
+  render(<ProposalActions {...props} />);
+  await user.tab();
+  await user.tab();
+  expect(screen.getByRole("button", { name: "Review approval" })).toHaveFocus();
+  await user.keyboard("{Enter}");
+  expect(
+    screen.getByRole("heading", { name: "Confirm approval" }),
+  ).toHaveFocus();
+  await user.tab();
+  expect(
+    screen.getByRole("button", { name: "Approve revision 2" }),
+  ).toHaveFocus();
+  await user.tab();
+  expect(
+    screen.getByRole("button", { name: "Back to proposal" }),
+  ).toHaveFocus();
+  await user.keyboard("{Enter}");
+  expect(screen.getByRole("button", { name: "Review approval" })).toHaveFocus();
+  expect(fetch).not.toHaveBeenCalled();
+});
