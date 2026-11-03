@@ -77,7 +77,7 @@ export function createMetaTransport({
       const headerController = new AbortController();
       const headerTimer = setTimeout(
         () => headerController.abort(),
-        Math.min(10000, Math.max(1, deadline - now())),
+        Math.min(35000, Math.max(1, deadline - now())),
       );
       try {
         response = await fetcher("https://api.meta.ai/v1/chat/completions", {
@@ -91,6 +91,7 @@ export function createMetaTransport({
             messages,
             store: false,
             max_completion_tokens: 4000,
+            reasoning_effort: "minimal",
             response_format: {
               type: "json_schema",
               json_schema: {

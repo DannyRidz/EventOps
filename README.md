@@ -1,5 +1,7 @@
 # EventOps
 
+3 November update: [bounded live text verification](docs/reviews/2026-11-03-live-text-workflow.md) passed the synthetic restricted worker, organizer confirmation, approval and briefing path using real Meta responses. General live processing remains off. Older provider blocker notes below are historical. The dedicated `scripts/verify-live-analysis.mjs` runner requires explicit synthetic test authorization, temporary process gates, a private key and local Supabase status; it uses an isolated database and a persistent USD 1 campaign ledger. It is not a production worker launcher or the full T9 evaluation.
+
 Event operations with reviewed changes to schedules, rooms, and volunteer assignments.
 
 ## Local setup

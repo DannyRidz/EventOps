@@ -1,5 +1,7 @@
 # Scope: EventOps
 
+3 November live text update: an authorized USD 1 bounded campaign produced six HTTP 200 responses and two valid synthetic analysis results. The final restricted worker run passed interpretation confirmation, transactional approval, receipt replay and briefing. Timeout and reasoning fixes are covered by 159 passing tests and a production build. Temporary gates were restored; general live processing, voice and the 90 run release evaluation remain open. [Actual results](../reviews/2026-11-03-live-text-workflow.md).
+
 EventOps helps you keep a small event's schedule, rooms, volunteer assignments, and briefing consistent when plans change. You review evidence and approve each official revision.
 
 **Build approach:** Tracer Bullet (prove one real path through sign in, records, analysis, approval, and briefing, then broaden it).  

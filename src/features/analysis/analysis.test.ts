@@ -267,6 +267,42 @@ const response = (content: unknown) =>
     usage: { prompt_tokens: 100, completion_tokens: 20 },
   });
 describe("Meta HTTP boundary", () => {
+  it("allows a reasoning response to start after ten seconds within its bounded deadline", async () => {
+    vi.useFakeTimers();
+    try {
+      const fetcher = vi.fn(
+        (_url, options) =>
+          new Promise<Response>((resolve, reject) => {
+            const timer = setTimeout(
+              () => resolve(response({ ok: true })),
+              11000,
+            );
+            options.signal.addEventListener(
+              "abort",
+              () => {
+                clearTimeout(timer);
+                reject(new DOMException("Aborted", "AbortError"));
+              },
+              { once: true },
+            );
+          }),
+      );
+      const u = usage();
+      const pending = createMetaTransport({
+        key: "synthetic-test-key",
+        usage: u,
+        deadline: Date.now() + 90000,
+        fetcher,
+      })("Result", z.strictObject({ ok: z.boolean() }), "Policy", {});
+      const result = expect(pending).resolves.toEqual({ ok: true });
+      await vi.advanceTimersByTimeAsync(35000);
+      await result;
+      expect(fetcher).toHaveBeenCalledTimes(1);
+      expect(u.reported).toBe(true);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
   it("uses only the fixed Standard model endpoint and strict schema, never tools or provider state", async () => {
     const fetcher = vi.fn().mockResolvedValue(response({ ok: true }));
     const u = usage();
@@ -285,6 +321,7 @@ describe("Meta HTTP boundary", () => {
     expect(body.model).toBe(MODEL_ID);
     expect(body.response_format.json_schema.strict).toBe(true);
     expect(body.max_completion_tokens).toBe(4000);
+    expect(body.reasoning_effort).toBe("minimal");
     expect(body.store).toBe(false);
     expect(body).not.toHaveProperty("tools");
     expect(u).toEqual({
