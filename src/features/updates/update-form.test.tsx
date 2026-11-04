@@ -93,3 +93,64 @@ describe("confirmed text boundary", () => {
     expect(screen.getByText(/No analysis has run/)).toBeInTheDocument();
   });
 });
+
+describe("optional sample suggestion", () => {
+  it("fills an empty field only after a click and does not save or send it", async () => {
+    const user = userEvent.setup();
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    render(
+      <UpdateForm
+        eventId="event"
+        baseId="revision"
+        suggestedText="Clearly fictional sample update"
+      />,
+    );
+    expect(screen.getByLabelText("Organizer update")).toHaveValue("");
+    await user.click(screen.getByRole("button", { name: "Use sample update" }));
+    expect(screen.getByLabelText("Organizer update")).toHaveValue(
+      "Clearly fictional sample update",
+    );
+    expect(fetch).not.toHaveBeenCalled();
+    expect(
+      screen.getByRole("button", { name: "Use sample update" }),
+    ).toBeDisabled();
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument();
+  });
+  it("preserves typed and saved updates", async () => {
+    const user = userEvent.setup();
+    const { unmount } = render(
+      <UpdateForm eventId="event" baseId="revision" suggestedText="Sample" />,
+    );
+    await user.type(
+      screen.getByLabelText("Organizer update"),
+      "Keep my update",
+    );
+    expect(
+      screen.getByRole("button", { name: "Use sample update" }),
+    ).toBeDisabled();
+    expect(screen.getByLabelText("Organizer update")).toHaveValue(
+      "Keep my update",
+    );
+    unmount();
+    render(
+      <UpdateForm
+        eventId="event"
+        baseId="revision"
+        suggestedText="Sample"
+        initial={{
+          id: "draft",
+          generation: 1,
+          raw_text: "Original",
+          corrected_text: "Saved correction",
+        }}
+      />,
+    );
+    expect(
+      screen.queryByRole("button", { name: "Use sample update" }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Organizer update")).toHaveValue(
+      "Saved correction",
+    );
+  });
+});

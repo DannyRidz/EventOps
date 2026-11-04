@@ -15,12 +15,14 @@ export function UpdateForm({
   initial,
   analysisEnabled = false,
   transcript = false,
+  suggestedText,
 }: {
   eventId: string;
   baseId: string;
   initial?: TextDraft | null;
   analysisEnabled?: boolean;
   transcript?: boolean;
+  suggestedText?: string;
 }) {
   const [draft, setDraft] = useState(initial ?? null);
   const [text, setText] = useState(initial?.corrected_text ?? "");
@@ -102,6 +104,28 @@ export function UpdateForm({
           ? "Confirm saved text before analysis. Event records and your confirmed text are processed by Meta. New facts and interpreted requests require your review before a proposal can be approved."
           : "Analysis is unavailable while model access is being verified. You can save and confirm your text, then prepare exact manual changes with the same plan checks and approval review. Text is not sent to a provider."}
       </p>
+      {suggestedText && !draft && (
+        <div className="state-panel stack">
+          <h3>Try the sample update</h3>
+          <p>{suggestedText}</p>
+          <p>
+            Only fills an empty field. Review it before saving. Check the
+            current sample records if you have changed them.
+          </p>
+          <Button
+            variant="secondary"
+            disabled={pending || text.length > 0}
+            onClick={() => {
+              if (pending || text.length > 0 || draft) return;
+              setText(suggestedText);
+              setConfirmed(false);
+              setKey(crypto.randomUUID());
+            }}
+          >
+            Use sample update
+          </Button>
+        </div>
+      )}
       <div className="field">
         <label htmlFor="update-text">Organizer update</label>
         <p id="update-hint">

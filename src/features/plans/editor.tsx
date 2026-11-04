@@ -176,6 +176,11 @@ export function PlanEditor({
   }
   return (
     <div className="stack">
+      {saved && !dirty && !base && (
+        <a className="button button-secondary" href="#starting-plan-review">
+          Review loaded starting plan
+        </a>
+      )}
       <p>
         {base
           ? `Manual proposal against approved revision ${base.number}. Confirm the exact field changes below. A reason is context, not an interpreted request.`
@@ -381,7 +386,7 @@ export function PlanEditor({
         </p>
       )}
       {saved && !dirty && !base && (
-        <section className="stack">
+        <section className="stack" id="starting-plan-review" tabIndex={-1}>
           <h2>Review starting plan</h2>
           <ValidationReport issues={saved.validation_report} />
           <PlanRecords plan={saved.snapshot} />

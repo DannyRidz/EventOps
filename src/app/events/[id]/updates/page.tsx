@@ -1,3 +1,5 @@
+import { isSampleEvent } from "@/features/samples/data";
+import { sampleUpdate } from "@/features/samples/sample";
 import { VoiceRecorder } from "@/features/voice/voice-recorder";
 import { listVoice } from "@/features/voice/data";
 import { voiceEnabled } from "@/features/voice/contracts";
@@ -15,6 +17,7 @@ export default async function Updates({
   const { id } = await params;
   const { approved_revision: revision } = await pageOfficialPlan(id);
   const data = await updateData(id);
+  const sample = await isSampleEvent(id);
   const recordings = await listVoice(id);
   const answers = await savedAnswers(id);
   return (
@@ -37,6 +40,7 @@ export default async function Updates({
             eventId={id}
             baseId={revision.id}
             analysisEnabled={data.enabled}
+            suggestedText={sample ? sampleUpdate : undefined}
           />
         </>
       ) : (
@@ -65,7 +69,7 @@ export default async function Updates({
           <p>No text updates saved.</p>
         )}
       </section>
-      <section>
+      <section id="analysis-requests">
         <h2>Analysis requests</h2>
         {data.jobs.length ? (
           <ul>
@@ -81,7 +85,7 @@ export default async function Updates({
           <p>No analysis requests.</p>
         )}
       </section>
-      <section>
+      <section id="saved-proposals">
         <h2>Saved proposals</h2>
         {data.proposals.length ? (
           <ul>

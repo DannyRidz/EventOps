@@ -73,3 +73,5 @@ _Drafted by /audit from the repo, worth a quick human pass. Edit freely: once a 
 - [src/features/imports/AGENTS.md](src/features/imports/AGENTS.md): CSV parsing, saved corrections, source integrity and verification boundaries. T5 is locally verified; [completion evidence](docs/reviews/2026-10-28-t5-imports-completion.md).
 
 - [src/features/privacy/AGENTS.md](src/features/privacy/AGENTS.md): owner lifecycle functions, bounded private exports, restricted retention and independent deletion replay. [T8 evidence](docs/reviews/2026-10-29-t8-completion.md).
+
+- [src/features/samples/AGENTS.md](src/features/samples/AGENTS.md): fictional sample drafts, durable retries, workflow guidance and explicit suggestion insertion.

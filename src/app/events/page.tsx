@@ -12,6 +12,16 @@ export default async function Events() {
         </Link>
       </div>
       <p>Open a saved event to review or continue its setup.</p>
+      <section className="state-panel stack" aria-labelledby="sample-heading">
+        <h2 id="sample-heading">Try the workflow with fictional records</h2>
+        <p>
+          Load a private sample draft, confirm its starting plan, then follow a
+          suggested update through review, approval and briefing.
+        </p>
+        <Link className="button button-secondary" href="/events/sample">
+          Try a sample event
+        </Link>
+      </section>
       {events.length === 0 ? (
         <div className="state-panel">
           <h2>Your first event starts here.</h2>
