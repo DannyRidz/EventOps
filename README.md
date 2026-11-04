@@ -1,157 +1,153 @@
 # EventOps
 
-3 November voice continuation: [actual voice and rehearsal evidence](docs/reviews/2026-11-03-live-voice-and-rehearsal.md) records a successful clearer synthetic ASR clip, a failed legacy speech clip, transcript correction and cleanup. `scripts/verify-live-analysis.mjs --voice` uses the same authorized campaign journal, with `--clear-speech` selecting the separately hashed Samantha fixture. General live processing remains disabled and authenticated browser rehearsal is pending personal sign in.
+Keep a small event’s schedule, rooms, volunteer assignments and briefing consistent when plans change. Describe a change, review its evidence and approve the exact revision that becomes official.
 
-3 November update: [bounded live text verification](docs/reviews/2026-11-03-live-text-workflow.md) passed the synthetic restricted worker, organizer confirmation, approval and briefing path using real Meta responses. General live processing remains off. Older provider blocker notes below are historical. The dedicated `scripts/verify-live-analysis.mjs` runner requires explicit synthetic test authorization, temporary process gates, a private key and local Supabase status; it uses an isolated database and a persistent USD 1 campaign ledger. It is not a production worker launcher or the full T9 evaluation.
+**[Watch the demo, about 2 minutes 55 seconds](https://drive.google.com/file/d/1uRFZMs3qVcsGUfl1h9QGJ6daKRtYy5dJ/view)** · [Verification evidence](docs/reviews/2026-11-05-t9-local-analysis-fixes.md) · [Architecture](docs/specs/0001-eventops/0002-architecture.md)
 
-Event operations with reviewed changes to schedules, rooms, and volunteer assignments.
+## For judges
 
-## Local setup
+EventOps is a working **local prototype**, demonstrated with fictional event records. There is no hosted application URL or shared judge login. The video is an edited walkthrough of actual application screens and a previously completed live Meta workflow, with labeled synthetic narration. It does not represent a new continuous model run.
 
-Use Node 24.15.0 (`nvm use`) and npm 11.12.1. Run `npm ci`, then `npm run dev` and open http://localhost:3000.
+The core workflow is **Describe, Review, Confirm, Approve, Briefing**:
 
-`npm run check` runs lint, formatting, strict type checking and tests. `npm run build` creates the production build; `npm start` serves it from the repository root and loads the existing private `.env.local` if present. Host-provided environment values take precedence; private environment files are not copied into the standalone build. `GET /api/health` checks process liveness only.
+1. Enter records or import the six CSV collections: rooms, sessions, volunteers, availability, assignments and dependencies. Review and explicitly confirm the starting plan.
+2. Save and confirm an update. Meta can interpret the request or produce a draft voice transcript. Missing facts remain questions, and transcripts require correction and confirmation.
+3. Review affected records, exact before and proposed values, source evidence and deterministic plan checks.
+4. Confirm the interpretation and new facts, then separately approve the proposed revision. Stale or invalid changes cannot replace the current plan.
+5. Open the approved briefing, compare history, or export text and CSV. Print briefing also supports the browser’s Save as PDF.
 
-## Current milestone
+**You can review the application without enabling AI or supplying a model key.** Local sign-in, the guided sample, manual changes, evidence review, approval, history and briefing work with the provider gates disabled. A confirmed text update remains awaiting model access until processing is deliberately configured.
 
-T1 provides the runnable foundation, preparation page, shared accessible controls and states, development verification surface, repository guidance and CI configuration. T2 now adds authentication and event setup as described below. AI providers are not connected. No external credentials are needed for T1.
+### Quick walkthrough after setup
 
-To inspect isolated states, run `EVENTOPS_INTERNAL_UI=1 npm run dev` and visit `/internal/foundation`. Production always responds with 404 for that route, even if the flag is set. Keep `.env.local` private. `.env.example` documents the local flags.
+1. Sign in at `/sign-in` using the code in the local test inbox described below. Review any personal attestation and terms yourself.
+2. From **My events**, choose the fictional sample, or open `/events/sample`. Review its records, select the explicit review checkbox and load the draft. Its fixed example date is 4 November 2026, in Asia/Brunei.
+3. Review the starting plan and confirm revision 1. Loading a sample never approves records automatically.
+4. Open **Guide** for the five workflow steps. With AI disabled, use **Propose manual changes** to exercise the review path. For a small example, change Room 2 capacity from 40 to 41 and enter a reason for the change.
+5. Save for checks, inspect the evidence, choose **Review approval**, then approve only after reviewing the exact change. Open **Briefing** and **History** to inspect the resulting revision.
 
-The complete [plan](docs/specs/0001-eventops/index.md), [delivery order](docs/specs/0001-eventops/0007-delivery.md), and [scope](docs/scope/scope.md) are durable project records. The first complete operational loop follows event setup.
+The sample also offers an optional text update moving Opening to Room 2 at 12:00–13:00, recording Alex unavailable at 10:00–13:00 and replacing Alex with Sam. Inserting that suggestion does not save, confirm or send it. The video shows the earlier completed live text path; new live processing is off by default.
 
-The [T1 verification record](docs/specs/0001-eventops/0008-foundation.md) documents the local build, 17 tests, real browser checks, recovery exercise, review and remaining limitations. `/internal/recovery` is an additional development only server-error exercise; production rejects it.
+## Meta integration
 
-## T2 accounts and event setup
+| Meta model                  | Role                                                                                                 | Authority                                                                     |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `muse-spark-1.3`            | Interpret confirmed logistics updates and select among supplied, deterministically validated options | Cannot approve an official plan or execute external actions                   |
+| `muse-voice-transcribe-1.0` | Produce a draft transcript from an explicitly uploaded recording                                     | Cannot turn a transcript into confirmed facts or start analysis automatically |
 
-T2 adds email code sign in, one private workspace per organizer, event setup drafts and authenticated draft reads. PostgreSQL policies and transactional functions enforce ownership, a ten event limit, retry receipts and stale edit rejection. An event setup draft is not an approved operational plan.
+Both adapters call Meta Model API directly from separate restricted workers. Confirmed text and a minimized relevant plan are sent for interpretation; source data is treated as untrusted content. Deterministic code constructs options and checks occupancy, buffers, capacity, equipment, volunteer roles, availability and dependencies. PostgreSQL recomputes candidate integrity, evidence and request coverage inside the approval transaction.
 
-For local verification, use synthetic email addresses ending in `@example.test`. Mail is captured locally and never sent to an external inbox. PostgreSQL client tools (`psql`) are needed for the expiry fixture in the live verification script.
+Bounded real Meta tests have exercised text clarification, organizer confirmation, candidate adoption, approval and briefing, plus transcription, correction and cleanup. Those observations are distinct from controlled tests. Some saved text repeats ask unnecessary questions, and synthetic speech transcripts can omit important details. Organizer review is essential.
 
-1. Copy `.env.example` to `.env.local`. Keep it private.
-2. Run `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase start --runtime native --exclude studio,realtime,functions,analytics,pooler --eager`. The first start downloads the pinned local services. The experimental native runtime supports macOS 14 or later on Apple silicon and supported Linux environments. Docker can also run the stack.
-3. Read local endpoints with `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase status --output-format json`. Set `NEXT_PUBLIC_SUPABASE_URL` to its API_URL and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` to its PUBLISHABLE_KEY. Set APP_URL to `http://localhost:3000`. Do not copy secret or service role keys into the application.
-4. Run `npm run dev`. In another terminal, run `SUPABASE_HOME=/private/tmp/eventops-supabase node scripts/local-supabase.mjs`. This development adapter adds GoTrue template URL environment variables to the downloaded Auth shell launcher in that dedicated temporary cache, then restarts local services. CLI 2.122 cannot serve `content_path` templates in its native runtime. The adapter retains real email delivery, OTP verification, expiry and throttling. Keep EventOps running at port 3000 so Auth can fetch the static code template.
-5. Open `/sign-in`. Find the delivered code in the local Mailpit URL printed by status (normally `http://127.0.0.1:54324`). Sign in, create an event, reload its draft and continue editing.
+**General live AI is currently disabled.** New model calls and paid hosting are paused. The private API key belongs only in the relevant worker environment, never in the browser, README or web process. Live use requires the operator’s own authorized access, verified billing and privacy prerequisites, both application flags and database gates, and an approved spending limit. A key alone does not enable processing.
 
-To repeat the live checks, save `supabase status --output-format json` to a private file, then run `T2_STATUS_FILE=/path/to/status.json node scripts/verify-t2.mjs` while EventOps is running. The harness requires loopback services, creates only synthetic records and moves one synthetic account's OTP timestamp to test expiry. It covers real sign in, resend limits, ownership, direct database policies, concurrent saves, quotas and sign out. Its default status path is `/private/tmp/eventops-local-status.json`. Never commit status output, captured mail or session cookies.
+## Run locally
 
-For a production build, stop the dev server, run `npm run build`, then `HOSTNAME=127.0.0.1 node --env-file=.env.local .next/standalone/server.js`. Stop local services with `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase stop`. A database reset deletes local records; use it only deliberately.
+The verified development path uses **Node 24.15.0**, **npm 11.12.1** and the lockfile’s **Supabase CLI 2.122.0**. The native service instructions below use a dedicated macOS temporary directory; the native runtime is experimental. The repository also supports local Supabase through Docker, but the native Auth template adapter below is specific to the native runtime. Docker image execution is not yet verified.
 
-Hosted readiness remains open: operator identity and complete legal notices, a mail domain, Resend SMTP, Supabase configuration and real delivery checks. Configure email confirmations, six digit codes, 600 second expiry and a 60 second resend minimum. Both signup confirmation and magic link email templates must use `supabase/templates/code.html`. No provider account was created or terms accepted. Meta model access has not been tested. The local notice permits synthetic evaluation only. Deployment remains a separate authorization.
-
-## T3 plan integrity
-
-T3 adds the backend for operational plans. Authenticated APIs can stage all six record types, capture immutable manual evidence, confirm revision 1, create a checked manual proposal and approve it transactionally. The server and PostgreSQL both validate the whole plan. Replays return immutable receipts, while stale generations, conflicting heads, invalid constraints and bad evidence cannot commit. Setup edits preserve staged records and require fresh staging before confirmation. Approved event pages and lists read the current revision.
-
-T4 now adds the local manual editor, proposal review and briefing screens described below. Live Meta access remains disabled pending provider prerequisites.
-
-Apply migrations locally with `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase migration up --local`. Start the local services and application using the T2 instructions. Run `node scripts/verify-t3.mjs` for real Auth, database, source, approval race and fault checks. It requires local `psql`, creates synthetic records, inserts deliberately damaged test candidates with administrative local SQL, temporarily injects a receipt failure scoped to a synthetic event, and restores test lifecycle flags. It never targets hosted services. Use `T3_APP_URL` and `T3_STATUS_FILE` to override the loopback defaults.
-
-`node scripts/verify-t3-migrations.mjs` rehearses every migration in a temporary local database, supplies only the referenced managed Auth schema contract, and drops that temporary database afterward. It does not reset the running project. The real-service harness separately verifies managed Auth and row policies in the running Supabase database.
-
-The immutable v1 plan contract lives in `src/features/plans/schema.ts`. Its JSON Schema is embedded in the migration and checked for drift by tests. Supabase's pg_jsonschema extension enforces the same field shape in PostgreSQL. Future schema changes need a new version and migration; do not rewrite already applied migrations. The [T3 specification](docs/specs/0001-eventops/0010-plan-integrity.md) records input and patch formats. The [verification record](docs/reviews/2026-10-27-t3-plan-integrity.md) records the actual checks and remaining boundaries.
-
-## T4 local operations loop
-
-Open an event and choose **Enter starting plan**. Add rooms, sessions, volunteers, availability, assignments and dependencies as needed. New record references use their entered identifiers. Save for checks, inspect the whole starting plan and frozen field evidence, then explicitly confirm revision 1. For approved events, **Propose manual changes** creates a checked candidate. Review before/proposed/evidence rows and use **Review approval** before saving a new official revision. Invalid and stale candidates remain blocked. Rejection preserves the official plan.
-
-**Updates** saves text before it can be confirmed. Original text and corrections remain distinct. Confirming exact saved text records a durable **Awaiting model access** job. No analysis runs and no text goes to a provider. You can reload acknowledged text, or prepare exact manual changes. **Briefing** uses only the selected approved revision; older briefings are explicitly historical.
-
-Apply all additive T4 migrations with the same local migration command above. `node scripts/verify-t4.mjs` runs loopback only synthetic service checks, including a temporary scoped SQL failure trigger removed afterward. It requires local `psql`. Use `T4_APP_URL` and `T4_STATUS_FILE` to override the application and private status file defaults. Keep sessions and mail out of source control. The browser keeps only retry operation UUIDs in tab scoped session storage, never private plan text.
-
-T4 implementation is complete locally, including typed Meta interpretation, deterministic options, a restricted durable worker, retries, cancellation and cost controls. The model path is verified with controlled responses only. Live provider execution remains disabled and unverified. Required terms, account/model/billing/retention access, hosted mail, operator notices and deployment readiness remain external gates. See the [T4 completion record](docs/reviews/2026-10-28-t4-worker-completion.md) for evidence and the acceptance boundary. No deployment, terms acceptance, live model call or paid resource creation occurred.
-
-## Analysis worker
-
-The [29 October live readiness check](docs/reviews/2026-10-29-live-ai-readiness.md) confirms USD 150 active free credits, with a product improvement notice, but payment remains required and key creation is disabled. No live request or spend occurred. The record supersedes earlier unconfirmed credit statements, gives private key storage instructions and lists the remaining gates for the authorized USD 1 synthetic verification.
-
-`npm run worker` starts the separate Node worker when its environment is already supplied. You can also use `node --env-file=.env.worker.local scripts/analysis-worker.mjs`. Copy `worker.env.example` to that ignored private file when configuring it deliberately. Keep `MODEL_API_KEY` and `WORKER_DATABASE_URL` only in the worker environment, never the web or browser configuration. The worker uses the same pinned Node runtime and source checkout.
-
-The database login must have only `eventops_worker` membership. The worker sets that restricted role and invokes only its claim, stage and finish functions. It cannot approve, read arbitrary application tables or use an owner JWT. An operator can prepare the login using administrative SQL, then set its password privately with psql's `\password` command:
-
-```sql
-create role eventops_worker_login login noinherit;
-grant eventops_worker to eventops_worker_login;
-\password eventops_worker_login
-```
-
-Do not enable live processing until the user has handled required provider terms and the operator has verified authorized access, Standard model availability, billing bounds and privacy/retention behavior. The three `EVENTOPS_MODEL_ENABLED`, `EVENTOPS_META_ACCESS_VERIFIED` and `EVENTOPS_META_BILLING_BOUND_VERIFIED` flags default to `0` in the examples. Web and worker must receive the verified flags deliberately, and an administrator must separately enable `eventops_private.analysis_budget_lock.enabled`. These settings are attestations, not an automatic legal acceptance or proof of access. They remain disabled in this implementation session.
-
-When enabled, confirming text queues a reserved analysis. You can close the browser, return to **Updates**, open the saved analysis and review the original text, every interpreted request, affected records and validated choices. Confirm that the interpretation covers the complete update and confirms any new facts before creating a proposal. Approval remains a separate action. Corrected text or a changed head blocks the older result. Questions and unsupported requests remain unresolved and offer correction or the manual editor. Queued or running work can be cancelled.
-
-Each attempt reserves USD 0.15. Limits are one active job per event, two per workspace, ten per workspace/hour, ten across all generations of an update, USD 2 per workspace/UTC day, USD 10 globally/UTC day and USD 50 lifetime development allowance. Unknown and abandoned attempts retain their reservation; only known usage or queued work that never started is reconciled. Provider retries and repair share a three call, 90 second envelope. A failed job offers explicit retry within those quotas. Operator/provider notices and actual hosted measurements remain required before launch.
-
-`node scripts/verify-t4-worker.mjs` runs the real local database/worker path with controlled responses, not Meta. It requires loopback services and local PostgreSQL client tools, creates only synthetic accounts/records, uses a disposable restricted login, temporarily adjusts synthetic ledger/attempt fixtures and restores the local database gate afterward. Use `T4_WORKER_APP_URL` and `T4_WORKER_STATUS_FILE` for overrides. It tests lease fences, exact SQL/TypeScript request parity, schema drift, UTC budgets and concurrent reservation limits, generation limits, cancellation, safe telemetry, organizer confirmation and approval. No live provider key is needed.
-
-## T5 CSV imports and correction
-
-Open an unapproved event and choose **Imports**. Download the six header templates, upload UTF 8 CSV files, map source columns and review every included row. Files are limited to 2 MiB each and 10 MiB per batch. Quoted commas, escaped quotes, LF, CRLF and a UTF 8 BOM are supported. A malformed file fails before a batch is saved.
-
-Originals are stored in the private `event-imports` Supabase Storage bucket. PostgreSQL independently parses the uploaded bytes and retains a bounded immutable verification receipt. Downloads verify hashes and recover from that receipt if the Storage copy is missing or mismatched. Referenced originals have no authenticated overwrite or delete policy. Cleanup may remove only unreferenced objects in an owned draft event. Retention and purge across both copies remain T8 work.
-
-Mappings, cell corrections, exclusions, explicit Keep one decisions and repeated-time offsets save as immutable correction versions. Invalid corrections can be saved and resumed. Conflicting IDs block staging. Equal names never merge records. Exact repeated files open their earlier batch. Review all defaults before replacing the starting draft. Whole plan checks and optional manual coverage precede the separate revision 1 confirmation. Later bulk replacement is rejected; use a reviewed manual proposal for subsequent changes.
-
-The native local stack must include Storage, as in the updated startup command above. Apply all migrations with `SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase migration up --local`. No reset is needed. `node scripts/verify-t5.mjs` runs synthetic loopback Auth, database and private Storage checks. Its default app URL is `http://localhost:3001`; set `T5_APP_URL` and `T5_STATUS_FILE` to override the loopback defaults. `T5_BOUNDARIES=1 node scripts/verify-t5.mjs` also stages and confirms all six maximum collection counts with a near 2 MiB file. It requires local `psql`; a scoped synthetic failure trigger is removed in a finally block. Private fixture sessions stay under `/private/tmp`.
-
-The completion and browser evidence are recorded in [T5 local completion](docs/reviews/2026-10-28-t5-imports-completion.md). Live Meta execution remains disabled. No provider key, credit balance or live model behavior is inferred from local import tests.
-
-## T6 voice recording and transcript review
-
-Updates now includes local recording, stop, playback and discard. The typed update stays available throughout. Supported input is WebM with Opus or MP4 with AAC, limited to 120 seconds and 10 MiB. Recording requires a secure browser context (HTTPS or loopback), permission and a supported MediaRecorder codec. Audio is sent to Meta only after an explicit upload, with the processing notice shown before recording. Original transcript text is immutable, corrections save as new draft generations, and exact text confirmation remains separate from analysis and plan approval.
-
-Live transcription is disabled. `EVENTOPS_VOICE_ENABLED=0` is the default in both environments. Future activation also requires the existing verified access and billing flags, a worker only model key, and deliberate activation of the private `eventops_private.voice_gate`. No credential alone enables work. Provider terms, payment setup and API key provisioning remain external blockers. Submitted credit and billing support requests do not establish an available credit balance.
-
-`npm run worker:voice` runs the separate restricted worker. It needs `WORKER_DATABASE_URL` with only `eventops_worker` membership, private Storage URL/publishable configuration, and `EVENTOPS_AUDIO_STORAGE_TOKEN`, a separately scoped signed JWT whose role is `eventops_worker`. It must never receive an owner token or service role key. Provisioning that credential and verifying hosted Storage JWT support remain operator prerequisites, not actions performed here. The role can read only registered `event-audio` objects, delete them only when due, and cannot upload or overwrite objects or read other buckets. An additional restrictive row policy prevents other permissive policies from broadening that boundary.
-
-Cleanup runs without a model key, ffmpeg, provider access flags or the database transcription gate. Keep the cleanup worker running with its restricted database and Storage configuration even while transcription is disabled. Deletion failures stay pending and retry every sweep. Stop ingestion if cleanup is unavailable; a stopped process cannot enforce a wall clock retention promise. Hosted scheduling, credential rotation, monitoring and outage escalation require operational verification before enabling uploads.
-
-Provider execution additionally needs an absolute `EVENTOPS_FFMPEG_PATH` in the private worker environment. The reviewed executable belongs in the approved restricted worker container with no network, secrets, unrelated file access or privileges available to the conversion process. The child receives only fixed arguments, a minimal environment, a private temporary directory, local file protocols, allowed demuxers/codecs, one thread and a 20 second deadline. It outputs mono 16 bit PCM WAV at 24 kHz, checks decoded duration and removes temporary files on success or failure. Local verification used an already installed ffmpeg, without installing a package or changing system software. Production container isolation is still an operator gate.
-
-Uploads create durable leased jobs. The browser may close after the server acknowledges the job. Incomplete uploads can retry the same local recording and key, or retry an already uploaded object after returning to the page. A missing incomplete object must be discarded before recording again. The worker checks the byte receipt before decoding, saves only a transcript draft, and rejects stale leases and discarded jobs. Silence or unusable responses fail explicitly; no confidence scores or invented transcript are shown. Failed transcription preserves existing text and permits a new recording or typing. Each recording reserves USD 0.018 conservatively for at most three possible calls across process restarts, sharing the USD 50 development, USD 10 global/day and USD 2 workspace/day bounds with text analysis. Recording attempts are capped at twenty per workspace/UTC day, two active per workspace and one active per event.
-
-Raw audio becomes due for deletion immediately on confirmed text or discard, otherwise within 24 hours of success/final failure, with a seven day absolute ceiling from creation. Incomplete uploads expire after ten minutes. Original transcript sources and byte/hash metadata remain distinct from the removable recording. Confirmation attempts immediate Storage deletion and the independent worker sweeps pending deletion. A physical object must be absent before the cleanup receipt is acknowledged. Audio cleanup does not delete the transcript draft or change the official plan. Broader T8 account retention and purge must include these records.
-
-Apply additive migrations with the existing local command, then run:
+### 1. Install the application dependencies
 
 ```sh
-EVENTOPS_FFMPEG_PATH=/absolute/path/to/ffmpeg node scripts/verify-t6.mjs
+nvm use
+npm ci
+cp -n .env.example .env.local
 ```
 
-This harness uses loopback Auth, mail, Storage and PostgreSQL, a disposable restricted database login, real conversion and controlled transcription responses. It reads the local native stack JWT signing fixture only to mint a ten minute test Storage identity in memory, never a provider key. Override `T6_APP_URL`, `T6_STATUS_FILE` and `T6_LOCAL_STATE_FILE` for another loopback setup. Synthetic quota rows and the database voice gate are restored in finally blocks. Browser fixtures are private files under `/private/tmp`; captures stay in ignored `output/playwright/`. Native Safari, physical mobile microphones and real service acceptance remain separate release checks.
+`cp -n` preserves an existing private environment file. Use only synthetic records for this local evaluation.
 
-## T7 review, history and briefing
+### 2. Start local Supabase
 
-Updates and analysis review retain saved questions and organizer answers. Saving an answer appends immutable evidence and a clarified text generation; confirm its exact text before another budgeted analysis. Candidate edits create a new generation. Replacing an interpreted candidate requires explicit withdrawal of its original requests. Optional rejection reasons remain inspectable.
+```sh
+SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase start --runtime native --exclude studio,realtime,functions,analytics,pooler --eager
+SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase status --output-format json
+```
 
-History compares approved revisions and prepares restoration as a new checked proposal. Explicitly reconfirm historical availability and reinstated sessions after reviewing all pending statements. Changes to that context block approval until reviewed again. Approval remains separate and retains the current parent plus historical origin.
+The first start downloads the pinned local services. Keep Auth, PostgreSQL, mail and Storage enabled. Copy these values into the private `.env.local`:
 
-Briefing downloads text and CSV for the selected approved revision, and Print briefing opens the browser print surface (including Save as PDF). Drafts and pending updates are excluded. All six CSV collections carry date, timezone and revision labels and escape formula triggers.
+```dotenv
+APP_URL=http://localhost:3000
+NEXT_PUBLIC_SUPABASE_URL=<API_URL from local status>
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<PUBLISHABLE_KEY from local status>
+```
 
-Apply the additive migrations with the existing local migration command. `node scripts/verify-t7.mjs` uses synthetic loopback Auth/database flows and controlled analysis results, temporarily injects a scoped final write failure, and removes that trigger in a finally block. It defaults to port 3001; override `T7_APP_URL`, `T7_STATUS_FILE` or `T7_PSQL` for another loopback setup. Private browser fixtures stay under `/private/tmp`. Live provider gates remain disabled. [T7 evidence](docs/reviews/2026-10-29-t7-completion.md).
+Keep the provider flags in `.env.example` at `0`. Do not use a service role or secret key for browser configuration. Status output can contain credentials; do not commit it, captured mail or session files.
 
-## T8 privacy, retention and recovery
+Apply any pending additive migrations without resetting the database:
 
-`/events/settings` provides event retention previews, archive/reopen, seven day trash recovery, private workspace ZIP export and account deletion/recovery. Deletion and recovery require an actual sign in within ten minutes. Default event retention is 90 days after the current event date, with 30/365 day options; unconfirmed setup also expires after 30 inactive days. File downloads show deletion honestly. CSV deletion denies access immediately and schedules removal of Storage and database byte copies while keeping frozen cells until event purge.
+```sh
+SUPABASE_HOME=/private/tmp/eventops-supabase npx supabase migration up --local
+```
 
-Apply migrations 202610290004 through 202610290009. Run `node scripts/verify-t8.mjs` against a loopback app (default 3001, `T8_APP_URL` overrides). It creates and purges only synthetic fixtures, verifies actual Auth/HTTP/Storage/SQL and saves a private temporary ZIP for `T8_PG_DUMP=/absolute/path/to/matching/pg_dump node scripts/verify-t8-recovery.mjs`. The recovery drill creates and removes two isolated databases. Use PostgreSQL tools matching the server major version. The current local server is 17; the default host pg_dump may be 16.
+### 3. Start EventOps and configure local code delivery
 
-`npm run worker:retention` is a separate restricted process. Its private environment needs `WORKER_DATABASE_URL` selecting `eventops_worker`, `EVENTOPS_RETENTION_STORAGE_TOKEN` for that role, the Supabase URL/publishable key and `EVENTOPS_DELETION_LEDGER` on independent durable storage. `EVENTOPS_RETENTION_ONCE=1` runs one sweep. No live AI or model credential is needed. Do not place worker credentials in the browser environment. `/api/ready` checks database access only.
+```sh
+npm run dev
+```
 
-The ZIP includes retained JSON records, approved revision CSV tables and verified available originals. Expired originals and raw files in trash are identified in its omission manifest. Large exports fail explicitly, with a 32 MiB serialized database record preflight and 64 MiB ZIP bound. Concurrent export protection is per process; hosted rate limiting remains open.
+Keep the application running at `http://localhost:3000`. In another terminal:
 
-[Completion evidence](docs/reviews/2026-10-29-t8-completion.md), [review](docs/reviews/2026-10-29-t8-review.md) and [operations runbook](docs/reviews/2026-10-29-t8-runbook.md) record actual local results and production gates. Hosted backup/retention schedules, independent ledger durability and rotation, complete deletion-history reconciliation before recovery, provider object restoration, monitoring/alerts, geographic restrictions and complete operator notices are not certified. Public release remains blocked. No paid resource, deployment or live provider call is introduced.
+```sh
+SUPABASE_HOME=/private/tmp/eventops-supabase LOCAL_TEMPLATE_ORIGIN=http://localhost:3000 node scripts/local-supabase.mjs
+```
 
-## T9 local release verification
+The native CLI does not serve the configured Auth template paths. This development adapter updates the Auth launcher inside the dedicated temporary service cache and restarts local services so confirmation and magic-link emails contain the six-digit code. It uses real local Auth verification, expiry and throttling; it is not a sign-in bypass.
 
-[Final T9 evidence](docs/reviews/2026-10-29-t9-followup.md) records the actual release regression run, local fixes and remaining gates. With a loopback production app and synthetic fixtures from `verify-t4.mjs`, run `T9_APP_URL=http://localhost:3005 node scripts/verify-t9.mjs` for readiness, anonymous denial, hidden internal routes and 100 approved plan reads at concurrency five. Set APP_URL to the same origin when starting the app. The harness requires both database provider gates disabled and never logs private plan bodies.
+Open `/sign-in`. Read the code in the Mailpit inbox URL printed by Supabase status, normally **http://127.0.0.1:54324**. Local messages appear there, **not in Gmail**. If the app is already running on another origin, use that same origin for APP_URL and LOCAL_TEMPLATE_ORIGIN.
 
-Maximum CSV staging and confirmation now pass with unchanged limits and the eight second database timeout. `T9_APP_URL=http://localhost:3005 node scripts/verify-t9-csv-max.mjs` repeats the exact maxima using an existing synthetic session only, with no code request, sign in or terms action. Set `T9_SYNTHETIC_STATE` for a private saved synthetic browser state; `T9_MAX_EVENT_ID` performs only a saved approved count read. Production build caching is disabled to reduce disk use on constrained runners; development caching is unchanged.
+### Production build on your machine
 
-T9 remains incomplete for browser sign in revalidation under the no terms boundary, live model evaluations, complete native device/screen reader/zoom and hosted operational gates. AI stays disabled. No deployment or publication is included.
+Stop the development server before switching to the production server:
 
-The [native readiness update](docs/reviews/2026-10-29-t9-native-readiness.md) records actual desktop Safari/Chrome microphone checks, Safari keyboard/zoom, fresh isolated recovery and current Meta account blockers. The [offline evaluation ledger](docs/reviews/2026-10-29-live-evaluation-preflight.json) contains 90 explicitly unexecuted run slots and source hashes; it is not a live evaluation result or runner.
+```sh
+npm run build
+HOSTNAME=127.0.0.1 npm start
+```
 
-Offline T9 evaluation preparation: `node scripts/prepare-t9-evaluation.mjs --self-test` checks the [draft corpus](evals/t9/Task.md) without network or provider access. It does not run or score the 90 live evaluations. [Local preparation evidence](docs/reviews/2026-10-29-t9-local-preparation.md).
+`npm start` loads the existing private `.env.local` when present; host-supplied values take precedence. `/api/health` checks process liveness. `/api/ready` checks database access, not email, AI, backups or full release readiness. Production rejects `/internal/foundation` and `/internal/recovery`.
 
-Controlled T9 execution: `node scripts/verify-t9-allowance.mjs` verifies the durable test allowance. With the installed `EVENTOPS_FFMPEG_PATH`, `node scripts/prepare-t9-audio.mjs` checks synthetic codec files and `node scripts/verify-t9-evaluation.mjs` runs controlled SQL/orchestration checks. The latter requires local PostgreSQL and the existing private T8 export; stable journal keys refuse replay. Read [runner instructions](evals/t9/Task.md) and [actual local results](docs/reviews/2026-10-30-t9-local-execution.md). No command enables live AI.
+## Worker and operations notes
+
+Normal application writes use owner-scoped database functions. Workers use restricted `eventops_worker` functions and cannot approve plans. New analysis workers declare prompt v2 in the same transaction as their lease claim; legacy v1 runs and saved evaluation evidence are retained separately.
+
+| Process                 | Command                    | Required private configuration                                                                                                       |
+| ----------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Analysis                | `npm run worker`           | Dedicated restricted database login, model key and explicitly verified access flags; processing remains disabled by default          |
+| Voice and audio cleanup | `npm run worker:voice`     | Restricted database and Storage identity; live conversion additionally needs a reviewed ffmpeg executable and enabled provider gates |
+| Retention               | `npm run worker:retention` | Restricted database and Storage identity plus `EVENTOPS_DELETION_LEDGER` on independent durable storage                              |
+
+Use [worker.env.example](worker.env.example) for the separate worker environment. Retention additionally needs `EVENTOPS_RETENTION_STORAGE_TOKEN`; `EVENTOPS_RETENTION_ONCE=1` runs one sweep. Cleanup must operate independently of model enablement. Do not use an owner or service role credential as a normal worker identity.
+
+The prepared container files default AI off and exclude private environment files. The worker image does not include ffmpeg and is not a verified live voice image. Hosted database, mail, backup, monitoring, deletion-ledger durability and rollback checks remain open. See the [operations runbook](docs/reviews/2026-10-29-t8-runbook.md) and [hosting preparation](docs/reviews/2026-11-04-hosting-preparation.md) before any hosted release.
+
+## Verification and known limits
+
+Latest recorded local results, 5 November 2026:
+
+| Check                       | Recorded result                                                                                                                         |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run check`             | Lint, formatting, generated route types, strict TypeScript and **216 tests across 36 files** pass                                       |
+| `npm run build`             | Production compilation and standalone packaging pass                                                                                    |
+| Migration rehearsal         | All **43 migrations** apply to an isolated empty schema                                                                                 |
+| Controlled worker rehearsal | Known conflict and clarification are persisted together; no candidate is exposed, official head unchanged, zero provider calls          |
+| Real model campaign         | **24 of 90 v1 slots collected**; saved traces have preliminary AI review, not independent human acceptance or an aggregate quality pass |
+| Revised prompt v2           | Locally verified with controlled responses; **no live v2 quality result**                                                               |
+
+The demo and original submission precede the latest local fixes. Historical test counts and statuses in dated evidence describe those earlier runs. The retained v1 campaign intentionally refuses source or migration drift; do not repin it or reset reservations to replay completed slots under v2.
+
+Human audible screen-reader acceptance, the full protected Safari and physical mobile matrix, independent speech review, container execution and hosted operational recovery remain unverified. This prototype is not certified production-ready. The successful local backup drill does not establish hosted recovery objectives.
+
+Useful records and commands:
+
+- [Latest local fixes and verification](docs/reviews/2026-11-05-t9-local-analysis-fixes.md)
+- [Saved trace review and observed quality issues](docs/reviews/2026-11-04-t9-saved-trace-review.md)
+- [Actual authenticated browser workflow](docs/reviews/2026-11-03-t9-browser-verification.md)
+- [Guided sample verification](docs/reviews/2026-11-04-guided-sample-completion.md)
+- [Evaluation instructions and version boundaries](evals/t9/Task.md)
+- `node scripts/verify-t9-prompt-version.mjs`: isolated controlled claim/version/rollback and worker persistence checks; requires local services and an existing private synthetic T8 export.
+- `node scripts/verify-t3-migrations.mjs`: isolated schema rehearsal; requires local services and matching PostgreSQL client tools.
+
+Recorded runs use synthetic fixtures and private exports that are not committed. A fresh clone needs its own local fixtures before integration scripts can run. Unit and component checks do not need a model key. The full delivery and release contract is tracked in the [living scope](docs/scope/scope.md).
+
+## Contributions
+
+Built for the Meta Global AI Developer Hackathon, Indie Developer track, Build for Your World. AI coding assistance supported implementation, debugging, tests and documentation, with human direction and separate review. Third-party dependencies retain their respective licenses.
