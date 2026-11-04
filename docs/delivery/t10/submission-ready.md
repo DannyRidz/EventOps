@@ -22,17 +22,17 @@ A room move or cancellation can affect several records at once. EventOps turns a
 
 Deterministic checks cover room occupancy and buffers, capacity, equipment, volunteer roles, availability and dependencies. Approval recomputes the complete candidate, evidence and request coverage inside a PostgreSQL transaction. The model has no approval or official write tool. Saved generations, immutable revisions and approval receipts protect against stale or repeated requests.
 
-Organizers can enter records or import six supported CSV collections, correct imports, review sources, inspect history, propose restoration and produce approved briefings with text, CSV and print outputs. Muse Voice Transcribe produces an editable transcript that requires organizer confirmation.
+Organizers can enter records or import six supported CSV collections, correct imports, review sources, inspect history, propose restoration and produce approved briefings with text, CSV and print outputs. A guided fictional sample loads a private draft, explains each workflow step and offers a suggested update without replacing existing text. Starting-plan confirmation and later change approval remain separate. Muse Voice Transcribe produces an editable transcript that requires organizer confirmation.
 
 Built during 27 October to 4 November 2026 with TypeScript, Next.js, React and Supabase Auth, PostgreSQL and private Storage. Codex assisted with implementation, debugging, tests and documentation; third party dependencies retain their own licenses.
 
-This submission is a working local prototype demonstrated with synthetic records and an earlier completed live Meta workflow. Automated checks pass 184 tests and the production build passes. Fourteen of 90 real evaluation slots are collected, with quality review pending. Full accessibility, physical device and hosted operational checks remain incomplete. General live processing remains disabled outside authorized bounded tests. We do not claim production readiness or a completed 90-run evaluation.
+This submission is a working local prototype demonstrated with synthetic records and an earlier completed live Meta workflow. Automated checks pass 201 tests and the production build passes. Fourteen of 90 real evaluation slots are collected, with quality review pending. Full accessibility, physical device and hosted operational checks remain incomplete. General live processing remains disabled outside authorized bounded tests. We do not claim production readiness or a completed 90-run evaluation.
 
 ## Public GitHub Repository
 
 https://github.com/DannyRidz/EventOps
 
-Verified public through an unauthenticated GitHub request on 4 November. Public main matches local source commit `b4914545e4247587d3ee02e613802d29334f65b5`. New delivery documents in this preparation remain local unless the owner publishes them.
+Verified public through an unauthenticated GitHub request on 4 November. Public main now matches local source commit `f0f5460b9f15f479ae78f6043906eedf00c0f226`, including the guided sample feature. This was observed through an unauthenticated read; the assistant did not commit or push. Further draft edits in this final review remain local.
 
 ## 3-Minute Demo Video
 
@@ -62,6 +62,6 @@ A synthetic voice clip lost important words, while a clearer clip preserved the 
 
 ## Personal survey and consent fields
 
-The form also asks about future use, overall opinion, recommendation ratings, biggest obstacle, model comparison, selection priorities, switching barriers and production blockers. These are personal survey answers, not engineering facts. They are intentionally not fabricated here. The factual obstacle is account setup, and no controlled comparison with another provider was conducted.
+The form also asks about future use, overall opinion, recommendation ratings, biggest obstacle, model comparison, selection priorities, switching barriers and production blockers. These are personal survey answers, not engineering facts. The user explicitly delegated the two required opinion answers during final review. Recommendations selected: **Somewhat likely** for future Meta Model API use and **Somewhat favorable** for overall opinion. The factual obstacle selected is account setup. The project did not use another model provider for the logistics task, so the matching no-other-model-use option was selected. Optional recommendation scores and other personal preferences remain blank.
 
-The marketing permission checkbox remains unchecked. It grants Meta and Cerebral Valley permission to use, publish, share and promote submitted materials. The owner must review and accept it personally under the standing no-terms instruction. Final Submit is outside this preparation request.
+The marketing permission checkbox remains unchecked. It grants Meta and Cerebral Valley permission to use, publish, share and promote submitted materials. The owner must review and accept it personally under the standing no-terms instruction. The user has now requested final submission. The two required survey answers have been selected as delegated by the user. The standing no-terms instruction leaves consent unchecked. Final entry is handed to the user under the browser confirmation policy for prize based transactions. Submit was not clicked and no submission receipt is claimed.
