@@ -1,0 +1,21 @@
+# Only application build inputs enter a container build context.
+**
+!package.json
+!package-lock.json
+!next.config.ts
+!tsconfig.json
+!src/
+!src/**
+!public/
+!public/**
+!scripts/
+!scripts/prepare-standalone.mjs
+!scripts/register-app-modules.mjs
+!scripts/analysis-worker.mjs
+!scripts/voice-worker.mjs
+!scripts/retention-worker.mjs
+**/*.test.*
+**/AGENTS.md
+**/.env*
+**/*.pem
+**/*.key

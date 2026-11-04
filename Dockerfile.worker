@@ -1,0 +1,18 @@
+FROM node:24.15.0-bookworm-slim AS dependencies
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+FROM node:24.15.0-bookworm-slim AS worker
+WORKDIR /app
+ENV NODE_ENV=production
+ENV EVENTOPS_MODEL_ENABLED=0
+ENV EVENTOPS_VOICE_ENABLED=0
+ENV EVENTOPS_META_ACCESS_VERIFIED=0
+ENV EVENTOPS_META_BILLING_BOUND_VERIFIED=0
+COPY --from=dependencies --chown=node:node /app/node_modules ./node_modules
+COPY --chown=node:node package.json ./package.json
+COPY --chown=node:node src ./src
+COPY --chown=node:node scripts/register-app-modules.mjs scripts/analysis-worker.mjs scripts/voice-worker.mjs scripts/retention-worker.mjs ./scripts/
+USER node
+CMD ["node", "scripts/retention-worker.mjs"]

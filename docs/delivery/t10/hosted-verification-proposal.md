@@ -1,5 +1,7 @@
 # Hosted verification proposal
 
+4 November update: the participant first approved this proposal, then withdrew paid setup authorization after Supabase required payment. Paid setup is stopped. Only a separate Free organization was created; no database, subscription or web service was provisioned. [Actual preparation and limits](../../reviews/2026-11-04-hosting-preparation.md).
+
 Prepared 4 November 2026. This is a reviewable deployment proposal, not a deployment or authorization to incur charges. It follows the already approved architecture and preserves the submitted code and video.
 
 ## Proposed target
