@@ -1,3 +1,5 @@
+4 November confirmed submission: the participant submitted EventOps at 9:07 PM Brunei, team 1834. Public code and the exact demo download were checked again; private version archives and judge Q&A are prepared. Full T9 remains incomplete. [Submission handoff](2026-11-04-post-submission.md), [judge Q&A](judge-qa.md). Earlier dated preparation notes below describe their historical state.
+
 4 November submission preparation: the authenticated form and guide were inspected, a 2:55 edited actual-app walkthrough with synthetic narration was uploaded, public video download and repository access were verified, and factual form fields were populated without submitting. Personal survey answers and consent remain yours. A local privacy correction is prepared; an older payment reference remains in public Git history. [Actual preparation results](2026-11-04-preparation-results.md), [final form copy](submission-ready.md).
 
 # EventOps local T10 preparation
