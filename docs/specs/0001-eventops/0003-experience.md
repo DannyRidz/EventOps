@@ -10,7 +10,7 @@ Use the installed frontend design skill's Swiss anchor. White `#FFFFFF` and neut
 
 This direction is deliberate restraint for a busy workflow. No gradients, grain, serif headings, fabricated charts, mascot, generated imagery, or decorative status strips. Blue marks the primary next action. Status color always accompanies a word and symbol from a real icon set. No Unicode characters used as substitute icons.
 
-**Implementation skills**: `frontend-design` at `/Users/asmasalleh/.codex/skills/frontend-design/SKILL.md`. No existing design file or reference screen was supplied. This document is the planning source; implementation can create `design.md` from it after approval without creating a second design authority.
+**Implementation skills**: the installed `frontend-design` skill. No existing design file or reference screen was supplied. This document is the planning source; implementation can create `design.md` from it after approval without creating a second design authority.
 
 ## Journey
 

@@ -44,6 +44,7 @@ Tracer Bullet (prove one real path through sign in, records, analysis, approval,
 - The worker uses only `eventops_worker` claim/stage/finish functions, never owner or service role credentials. Model output requires organizer interpretation/fact confirmation before proposal creation; approval recomputes that contract. Keep live access gates disabled until operator prerequisites are verified.
 - CSV originals use private Storage plus immutable database byte receipts. Download only hash verified bytes; preserve exact original cell and correction generation links. Import corrections must fence earlier staged confirmation.
 - No broad reformatting of planning documents. Preserve existing work.
+- Keep development guidance vendor neutral in AGENTS.md. Do not generate vendor specific companion instruction files. Preserve accurate AI assistance and license attribution.
 - Read relevant version matched Next.js guides in `node_modules/next/dist/docs/` before changing framework behavior. `agentRules: false` keeps dev startup from rewriting repository guidance.
 
 ## Git
@@ -60,7 +61,7 @@ ESLint, Prettier, strict TypeScript, Vitest and Testing Library. CI runs equival
 
 ## Agent skills
 
-- [frontend-design](/Users/asmasalleh/.codex/skills/frontend-design/SKILL.md): approved visual system and content discipline.
+- frontend-design (see [design.md](design.md)): approved visual system and content discipline.
 
 _Drafted by /audit from the repo, worth a quick human pass. Edit freely: once a line stops matching this draft, later runs treat it as curated and will flag rather than overwrite it._
 

@@ -1,6 +1,6 @@
 # Review, main, 2026-11-04
 
-**Reviewed by**: Codex, fresh independent review agent (implementation author's model identity not supplied)
+**Reviewed by**: Separate AI review agent (implementation author's model identity not supplied)
 **Scope**: Seven uncommitted files: collection runner, campaign planner, SQL fixture helper, database-lab export parameter, optional claim SQL fence, campaign-plan tests and subsequent campaign-entry tests
 **Verdict**: Approve after the resolution review below (initial verdict: Changes requested)
 

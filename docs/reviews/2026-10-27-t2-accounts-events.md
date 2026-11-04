@@ -46,7 +46,7 @@ Production browser: email and attestation, actual delivered code, empty private 
 
 ## Fresh review
 
-A fresh gpt-6-astra reviewer read the diff, specification and tests without authoring code. The author model was not reliably detectable, so a different model family is not guaranteed. Initial findings covered unverified email signup, SQL null validation, mutable creation receipts, resend limits, UTC ordering, consumed code recovery and explicit offset validation. Each was fixed, and live or component regressions were added. The final read returned **Approve for the T2 slice**, no outstanding blockers or majors. The reviewer inspected code but did not independently run the commands above.
+A separate AI reviewer read the diff, specification and tests without authoring code. The author model was not reliably detectable, so a different model family is not guaranteed. Initial findings covered unverified email signup, SQL null validation, mutable creation receipts, resend limits, UTC ordering, consumed code recovery and explicit offset validation. Each was fixed, and live or component regressions were added. The final read returned **Approve for the T2 slice**, no outstanding blockers or majors. The reviewer inspected code but did not independently run the commands above.
 
 ## Acceptance boundary
 

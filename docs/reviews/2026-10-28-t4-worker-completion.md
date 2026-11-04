@@ -40,7 +40,7 @@ Private logs use `/private/tmp/eventops-t4-worker-*.log`; browser sessions and f
 
 ## Review and corrections
 
-The fresh gpt-6.1-terra reviewer found unknown usage undercharging, incomplete masking and a TypeScript/SQL disagreement on contradictory requests. Those findings were corrected and covered. Further review of cancellation, generation limits, stale proposal handling, metrics and timeouts found no remaining blocking or major findings. The author model could not be reliably identified, so a different model family is not guaranteed. The reviewer inspected code but did not independently run the commands.
+The separate AI reviewer found unknown usage undercharging, incomplete masking and a TypeScript/SQL disagreement on contradictory requests. Those findings were corrected and covered. Further review of cancellation, generation limits, stale proposal handling, metrics and timeouts found no remaining blocking or major findings. The author model could not be reliably identified, so a different model family is not guaranteed. The reviewer inspected code but did not independently run the commands.
 
 Local execution also found a blocked error column that could not become null on queueing, a controlled test response using original rather than masked spans, and a metrics migration quoting error. Corrections were applied additively; the interrupted local metrics DDL was recovered using matching existing columns and successful rehearsal. No reset or official data deletion was performed. Timezone checks also led to explicit elapsed assignment preservation across repeated local clock times.
 

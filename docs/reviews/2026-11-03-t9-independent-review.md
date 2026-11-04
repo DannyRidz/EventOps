@@ -1,6 +1,6 @@
 # Review, main, 2026-11-03
 
-**Reviewed by**: Codex, fresh independent review agent (the implementation author's model identity was not supplied)
+**Reviewed by**: Separate AI review agent (the implementation author's model identity was not supplied)
 **Scope**: 30 changed files, `cad6f1c..7ad4ca861019f477d5b9fd2c24109c391e9b7cb3`, plus eleven follow-up uncommitted files and relevant unchanged worker, allowance and SQL approval/access boundaries
 **Verdict**: Approve following the resolution review below (original verdict: Approve with nits)
 

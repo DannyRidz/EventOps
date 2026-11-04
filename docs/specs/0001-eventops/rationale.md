@@ -2,7 +2,7 @@
 
 ## Context
 
-Inspection on 27 October 2026 found only a tracked `README.md` containing the working name and Git metadata. There was no application source, package manifest, scope, specification, AGENTS.md, or CLAUDE.md in this project. No parent AGENTS.md was found along its directory ancestry. The branch was `main`, with local `origin/main` tracking, and a clean working tree before this assignment. Remote freshness was not independently fetched; no repository metadata was changed.
+Inspection on 27 October 2026 found only a tracked `README.md` containing the working name and Git metadata. There was no application source, package manifest, scope, specification, or AGENTS.md in this project. No parent AGENTS.md was found along its directory ancestry. The branch was `main`, with local `origin/main` tracking, and a clean working tree before this assignment. Remote freshness was not independently fetched; no repository metadata was changed.
 
 This is a greenfield planning assignment. Audit is deferred until an approved runnable scaffold exists. Existing README content is preserved. Planning creates only Markdown under `docs/scope/` and `docs/specs/`. No dependency was installed, application scaffold created, model API called with user data, repository published, resource purchased, or deployment initiated.
 
@@ -14,9 +14,9 @@ Read the installed instructions before applying them:
 
 | Skill | Actual file and usage |
 |---|---|
-| scope | `/Users/asmasalleh/.codex/skills/scope/SKILL.md`; read plan, greenfield, template and Tracer Bullet references; owns the living scope |
-| architect | `/Users/asmasalleh/.codex/skills/architect/SKILL.md`; read design conversation, writing guide, template, architecture mode, tool discovery and completion guidance; owns this umbrella and child specs |
-| frontend-design | `/Users/asmasalleh/.codex/skills/frontend-design/SKILL.md`; Swiss anchor and content discipline inform the proposed visual system |
+| scope | the installed `scope` skill; read plan, greenfield, template and Tracer Bullet references; owns the living scope |
+| architect | the installed `architect` skill; read design conversation, writing guide, template, architecture mode, tool discovery and completion guidance; owns this umbrella and child specs |
+| frontend-design | the installed `frontend-design` skill; Swiss anchor and content discipline inform the proposed visual system |
 | audit, develop, check, test, debug, document, sync | Installed `SKILL.md` presence and metadata checked under the same root; future responsibilities explained, implementation stages not executed |
 
 All explicitly named workflow skills are installed. No missing requested skill blocked planning. The [JS Mastery repository](https://github.com/jsmastery-pro/skills) confirms the workflow family and ownership boundaries; actual local instructions, rather than assumed online behavior, governed this pass.

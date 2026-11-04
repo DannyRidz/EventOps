@@ -1,6 +1,6 @@
 # Review, main, 2026-10-27
 
-**Reviewed by**: fresh gpt-6-astra reviewer (author model not authoritatively detected; no verified cross-model family guarantee)
+**Reviewed by**: separate AI reviewer (author model not authoritatively detected; no verified cross-model family guarantee)
 **Scope**: 46 files, uncommitted; base main. Lockfile and generated output excluded from source review.
 **Verdict**: Approve
 

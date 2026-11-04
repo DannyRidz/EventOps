@@ -1,6 +1,6 @@
 # Review, main, 2026-11-04
 
-**Reviewed by**: Codex, fresh independent review agent (implementation author's model identity not supplied)
+**Reviewed by**: Separate AI review agent (implementation author's model identity not supplied)
 **Scope**: Current uncommitted campaign allowance amendment, retained database/anchor, collector/resume wiring, fixture and workflow drivers, controlled rehearsals and related tests
 **Verdict**: Approve
 

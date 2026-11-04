@@ -8,7 +8,7 @@ EventOps
 
 ## Team Members
 
-The form currently lists Daniel Mohamad (DannyRidz). No additional human contributor has been verified in this preparation. Confirm the list before submission. Codex coding assistance is disclosed below, not entered as a human team member.
+The form currently lists Daniel Mohamad (DannyRidz). No additional human contributor has been verified in this preparation. Confirm the list before submission. AI coding assistance is disclosed below, not entered as a human team member.
 
 ## Track and problem statement
 
@@ -24,7 +24,7 @@ Deterministic checks cover room occupancy and buffers, capacity, equipment, volu
 
 Organizers can enter records or import six supported CSV collections, correct imports, review sources, inspect history, propose restoration and produce approved briefings with text, CSV and print outputs. A guided fictional sample loads a private draft, explains each workflow step and offers a suggested update without replacing existing text. Starting-plan confirmation and later change approval remain separate. Muse Voice Transcribe produces an editable transcript that requires organizer confirmation.
 
-Built during 27 October to 4 November 2026 with TypeScript, Next.js, React and Supabase Auth, PostgreSQL and private Storage. Codex assisted with implementation, debugging, tests and documentation; third party dependencies retain their own licenses.
+Built during 27 October to 4 November 2026 with TypeScript, Next.js, React and Supabase Auth, PostgreSQL and private Storage. AI coding assistance supported implementation, debugging, tests and documentation; third party dependencies retain their own licenses.
 
 This submission is a working local prototype demonstrated with synthetic records and an earlier completed live Meta workflow. Automated checks pass 201 tests and the production build passes. Fourteen of 90 real evaluation slots are collected, with quality review pending. Full accessibility, physical device and hosted operational checks remain incomplete. General live processing remains disabled outside authorized bounded tests. We do not claim production readiness or a completed 90-run evaluation.
 
@@ -46,7 +46,7 @@ EventOps directly uses the Meta Model API with pinned `muse-spark-1.3` for logis
 
 Separate restricted workers claim durable jobs, use bounded requests and save results. Confirmed event text and the relevant synthetic plan pass through the normal context packer. Model output must be interpreted and confirmed by the organizer before proposal creation. Deterministic validation and transactional approval remain authoritative.
 
-Actual bounded live tests passed text clarification, organizer confirmation, proposal adoption, approval and briefing, plus transcription, correction and cleanup. The broader real evaluation has started but remains incomplete. Controlled failure tests are recorded separately and are not counted as live quality scores. We did not substitute another model provider or use Muse Code as the coding assistant; development assistance came from Codex.
+Actual bounded live tests passed text clarification, organizer confirmation, proposal adoption, approval and briefing, plus transcription, correction and cleanup. The broader real evaluation has started but remains incomplete. Controlled failure tests are recorded separately and are not counted as live quality scores. We did not substitute another model provider or use Muse Code as the coding assistant; development assistance came from an AI coding assistant.
 
 ## Why are Meta's models important to your solution?
 

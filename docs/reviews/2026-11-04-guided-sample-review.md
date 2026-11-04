@@ -1,6 +1,6 @@
 # Review, main, 2026-11-04
 
-**Reviewed by**: gpt-6-astra (author on GPT-6)
+**Reviewed by**: separate AI review agent (implementation by an AI coding assistant)
 **Scope**: 17 source and test files, uncommitted
 **Verdict**: Approve
 

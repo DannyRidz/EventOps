@@ -37,7 +37,7 @@ The update and proposal screens passed axe WCAG A, AA and 2.1 AA scans with zero
 
 ## Fresh review
 
-A fresh gpt-6.1-terra reviewer inspected the UI, API and database changes without authoring them. Findings addressed missing session feature requirements in initial review, tab reload recovery after lost approval responses, creation receipt comparison against a mutable draft, historical briefing labels and stale warnings on already approved proposals. The final review reported no remaining blocking or major findings. The author model could not be reliably identified, so a different model family is not guaranteed. The reviewer did not independently execute the commands above.
+A separate AI reviewer inspected the UI, API and database changes without authoring them. Findings addressed missing session feature requirements in initial review, tab reload recovery after lost approval responses, creation receipt comparison against a mutable draft, historical briefing labels and stale warnings on already approved proposals. The final review reported no remaining blocking or major findings. The author model could not be reliably identified, so a different model family is not guaranteed. The reviewer did not independently execute the commands above.
 
 ## Acceptance and blockers
 

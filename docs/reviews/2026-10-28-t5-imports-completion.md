@@ -35,7 +35,7 @@ The boundary exercise includes 20 rooms, 100 sessions, 100 volunteers, 1,000 ava
 
 Browser verification uploaded all six files, made a keyboard Keep one decision, corrected a title, saved, refreshed and resumed it, inspected full plan review, and deliberately confirmed revision 1 briefing. Desktop and mobile captures are in ignored `output/playwright/t5-*`. The editable correction screen has zero reported axe WCAG A, AA and 2.1 AA violations. Reflow checks at 320 CSS pixels find no horizontal overflow. The approved Swiss visual system and shared controls are retained.
 
-Fresh gpt-6.1-terra review ends at Approve, with no outstanding blocker or major finding. The initial raw byte attribution, exact source tracing and Storage recovery findings were fixed and covered. The reviewer inspected code but did not independently run the reported commands. Author identity is not reliable, so a different model family is not guaranteed. See [review](2026-10-28-t5-review.md).
+separate AI review ends at Approve, with no outstanding blocker or major finding. The initial raw byte attribution, exact source tracing and Storage recovery findings were fixed and covered. The reviewer inspected code but did not independently run the reported commands. Author identity is not reliable, so a different model family is not guaranteed. See [review](2026-10-28-t5-review.md).
 
 ## Boundaries and handoff
 

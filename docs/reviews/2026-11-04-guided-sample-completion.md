@@ -38,4 +38,4 @@ The existing video remains an earlier actual workflow demonstration and does not
 
 ## Durable context reconciliation
 
-The new sample area has its own AGENTS.md and CLAUDE.md pointer. Root AGENTS.md gains one context link, with curated paragraphs preserved. The living scope records this local enhancement without marking the overall release complete. No existing spec decision was superseded.
+The new sample area has its own AGENTS.md guidance. Root AGENTS.md gains one context link, with curated paragraphs preserved. The living scope records this local enhancement without marking the overall release complete. No existing spec decision was superseded.
