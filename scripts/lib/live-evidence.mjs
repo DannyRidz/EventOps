@@ -2,11 +2,14 @@ import { constants } from "node:fs";
 import { open, rename, unlink } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 
-export function fencedWorker(worker, expectedJob) {
+export function fencedWorker(
+  worker,
+  expectedJob,
+  claimSql = "select eventops_worker_api.claim() as job",
+) {
   return {
     async query(sql, values) {
-      if (sql !== "select eventops_worker_api.claim() as job")
-        return worker.query(sql, values);
+      if (sql !== claimSql) return worker.query(sql, values);
       await worker.query("begin");
       try {
         const result = await worker.query(sql, values);

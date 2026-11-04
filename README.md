@@ -10,7 +10,7 @@ Event operations with reviewed changes to schedules, rooms, and volunteer assign
 
 Use Node 24.15.0 (`nvm use`) and npm 11.12.1. Run `npm ci`, then `npm run dev` and open http://localhost:3000.
 
-`npm run check` runs lint, formatting, strict type checking and tests. `npm run build` creates the production build; `npm start` serves it. `GET /api/health` checks process liveness only.
+`npm run check` runs lint, formatting, strict type checking and tests. `npm run build` creates the production build; `npm start` serves it from the repository root and loads the existing private `.env.local` if present. Host-provided environment values take precedence; private environment files are not copied into the standalone build. `GET /api/health` checks process liveness only.
 
 ## Current milestone
 

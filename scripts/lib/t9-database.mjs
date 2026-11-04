@@ -5,7 +5,9 @@ import { randomUUID } from "node:crypto";
 import { readFile, readdir } from "node:fs/promises";
 import pg from "pg";
 
-export async function databaseLab() {
+export async function databaseLab({
+  profileExport = "/private/tmp/eventops-t8-export.zip",
+} = {}) {
   const status = JSON.parse(
     await readFile("/private/tmp/eventops-local-status.json", "utf8"),
   );
@@ -44,11 +46,10 @@ export async function databaseLab() {
           "commit;",
       );
     const exported = JSON.parse(
-      execFileSync(
-        "unzip",
-        ["-p", "/private/tmp/eventops-t8-export.zip", "workspace.json"],
-        { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
-      ),
+      execFileSync("unzip", ["-p", profileExport, "workspace.json"], {
+        encoding: "utf8",
+        maxBuffer: 64 * 1024 * 1024,
+      }),
     );
     // Existing synthetic identity snapshot, not a new legal attestation or login mechanism.
     const owner = exported.profile.user_id;

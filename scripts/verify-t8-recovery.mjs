@@ -201,14 +201,24 @@ try {
     exported.revisions.find((r) => r.id === retained.current_revision_id)
       .snapshot.event.name,
   );
+  const expectedRevisions = (
+    await src.query(
+      "select to_jsonb(r) as revision from public.revisions r where event_id=$1 order by id",
+      [retained.id],
+    )
+  ).rows;
+  assert.ok(expectedRevisions.length > 0);
   await dst.query("set role authenticated");
   await dst.query("select set_config('request.jwt.claim.sub',$1,false)", [
     owner,
   ]);
-  assert.equal(
-    (await dst.query("select count(*)::integer as n from public.revisions"))
-      .rows[0].n,
-    1,
+  assert.deepEqual(
+    (
+      await dst.query(
+        "select to_jsonb(r) as revision from public.revisions r order by id",
+      )
+    ).rows,
+    expectedRevisions,
   );
   await dst.query("select set_config('request.jwt.claim.sub',$1,false)", [
     randomUUID(),

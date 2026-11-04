@@ -139,3 +139,7 @@ provider enablement, hosted deployment or Harbor installation is implied.
 ## Readiness update, 3 November 2026
 
 Bounded synthetic text and speech provider calls and the authenticated browser text approval path now have [actual evidence](../../docs/reviews/2026-11-03-t9-browser-verification.md). Provider entitlement and a private key are no longer blanket blockers for those tested calls. They do not supply the full corpus evaluation or independent semantic review. The controlled corpus runner above still has no live mode; a corpus live harness and sufficient authorized aggregate allowance remain required. The existing USD 1 journal retains USD 0.768, leaving USD 0.232. Do not reset reservations or treat controlled runs as live quality results.
+
+## Collection preparation, 4 November 2026
+
+The separate `scripts/run-t9-live-evaluation.mjs` now supports safe `--prepare` and controlled `--rehearse` modes, with reviewed guarded collection code. It does not add a live mode to the controlled runner above. See [collection scope, budget proposal and remaining workflow engineering](LIVE-CAMPAIGN.md). Ninety prepared collection slots are not ninety complete case workflows or accepted evaluations. The USD 1 live allowance is unchanged and no new provider requests were made.
