@@ -6,7 +6,7 @@ Date: 3 November 2026, Asia/Brunei.
 
 The user authorized creation of a dedicated key and requested live AI enablement. Meta confirmed creation of `EventOps local worker`; its value was saved only to the ignored `.env.worker.local` `MODEL_API_KEY` setting using the private editor. A read without printing the secret confirmed a nonblank setting and file permissions 0600. The key was not placed in web configuration, source control or this report. The clipboard was cleared and the secret display closed.
 
-Fresh billing navigation confirmed a saved default Visa ending 1145 and USD 150 free credits. Both billing and API key pages still explicitly report that the account is restricted because Meta could not place a temporary payment hold. Saved payment details and key creation therefore do not establish successful API access.
+Fresh billing navigation confirmed a saved default payment method and promotional credits. Both billing and API key pages still explicitly report that the account is restricted because Meta could not place a temporary payment hold. Saved payment details and key creation therefore do not establish successful API access.
 
 Live execution remains blocked. Existing model/access/billing environment gates remain 0; voice is absent and defaults off. No database gate was changed, worker started or provider request sent. Actual provider spend in this session is USD 0. This does not claim a fresh database-gate inspection.
 
