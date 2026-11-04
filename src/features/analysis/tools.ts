@@ -346,22 +346,17 @@ export function findAlternatives(
   issues: ReturnType<typeof validatePlan>;
 } {
   const conflicts = requestConflicts(plan, value.intents);
-  if (
-    conflicts.length ||
-    value.questions.length ||
-    value.unsupported_requests.length ||
-    !value.intents.length
-  )
+  if (conflicts.length || !value.intents.length)
     return {
       options: [],
-      questions: [
+      questions: boundedQuestions([
         ...conflicts,
         ...value.questions,
         ...value.unsupported_requests,
         ...(!value.intents.length
           ? ["Confirm the exact changes you need, or use the manual editor."]
           : []),
-      ].slice(0, 20),
+      ]),
       issues: [],
     };
   let combinations: Intent[][] = [[]];
@@ -384,12 +379,21 @@ export function findAlternatives(
   }
   const options: AnalysisOption[] = [];
   const issues: ReturnType<typeof validatePlan> = [];
-  for (const requests of combinations) {
+  const feedback: string[] = [];
+  for (const [choice, requests] of combinations.entries()) {
     try {
       const candidate = applyIntents(plan, requests, seed),
         report = checkCandidate(candidate);
       if (report.length) {
         issues.push(...report);
+        feedback.push(
+          ...report.map((issue) =>
+            `For the proposed changes in checked choice ${choice + 1}: ${describeIssue(plan, candidate, issue)}`.slice(
+              0,
+              1000,
+            ),
+          ),
+        );
         continue;
       }
       const changed = comparePlans(plan, candidate);
@@ -414,6 +418,7 @@ export function findAlternatives(
         displacement_minutes: displacement,
       });
     } catch {
+      feedback.push("Check request identifiers and explicit times.");
       issues.push({
         rule: "SHAPE",
         record_ids: [],
@@ -427,16 +432,94 @@ export function findAlternatives(
       a.displacement_minutes - b.displacement_minutes ||
       JSON.stringify(a.requests).localeCompare(JSON.stringify(b.requests)),
   );
+  const clarification = [...value.questions, ...value.unsupported_requests];
+  const questions = [
+    ...new Set([
+      ...(options.length ? [] : feedback),
+      ...clarification,
+      ...(!options.length && !feedback.length
+        ? [
+            "No valid option found within these choices. Confirm missing facts, room requirements and permitted times, or edit manually.",
+          ]
+        : []),
+    ]),
+  ];
   return {
-    options: options
+    options: (clarification.length ? [] : options)
       .slice(0, 3)
       .map((o, i) => ({ ...o, id: `option-${i + 1}` })),
-    questions: options.length
-      ? []
-      : [
-          "No valid option found within these choices. Confirm missing facts, room requirements and permitted times, or edit manually.",
-          ...Array.from(new Set(issues.map((i) => i.message))).slice(0, 8),
-        ],
+    questions:
+      options.length && !clarification.length
+        ? []
+        : boundedQuestions(questions),
     issues,
   };
+}
+
+function describeIssue(
+  original: Plan,
+  plan: Plan,
+  issue: ReturnType<typeof validatePlan>[number],
+): string {
+  const sessions = plan.sessions.filter((s) => issue.record_ids.includes(s.id));
+  const localTime = (instant: string) =>
+    Temporal.Instant.from(instant)
+      .toZonedDateTimeISO(plan.event.timezone)
+      .toPlainTime()
+      .toString({ smallestUnit: "minute" });
+  let message = issue.message;
+  if (
+    issue.rule === "ROOM_OVERLAP" &&
+    sessions.length === 2 &&
+    issue.interval
+  ) {
+    const room = plan.rooms.find((r) => r.id === sessions[0]!.room_id);
+    message = `${sessions[0]!.title} and ${sessions[1]!.title} overlap in ${room?.name ?? "the room"} from ${localTime(issue.interval.start)} to ${localTime(issue.interval.end)} on ${plan.event.date} (${plan.event.timezone}), including buffers. Confirm a nonconflicting room or permitted time.`;
+  } else if (issue.rule === "CAPACITY") {
+    const room = plan.rooms.find((r) => issue.record_ids.includes(r.id));
+    if (room)
+      message =
+        room.capacity === null
+          ? `Confirm the missing capacity for ${room.name} before moving ${sessions[0]?.title ?? "the session"}. Capacity must meet recorded attendance.`
+          : `${room.name} has capacity ${room.capacity}, which does not meet recorded attendance for ${sessions[0]?.title ?? "the session"}. Choose a suitable room or correct the recorded facts.`;
+  } else if (issue.rule === "AVAILABILITY") {
+    const assignment = plan.assignments.find((a) =>
+      issue.record_ids.includes(a.id),
+    );
+    const volunteer = plan.volunteers.find(
+      (v) => v.id === assignment?.volunteer_id,
+    );
+    if (assignment && volunteer) {
+      const unavailable = plan.availability.some(
+        (a) =>
+          a.volunteer_id === volunteer.id &&
+          a.status === "unavailable" &&
+          Date.parse(a.starts_at) < Date.parse(assignment.ends_at) &&
+          Date.parse(assignment.starts_at) < Date.parse(a.ends_at),
+      );
+      const recorded = original.availability.some(
+        (a) =>
+          a.volunteer_id === volunteer.id &&
+          a.status === "unavailable" &&
+          Date.parse(a.starts_at) < Date.parse(assignment.ends_at) &&
+          Date.parse(assignment.starts_at) < Date.parse(a.ends_at),
+      );
+      message = unavailable
+        ? `${volunteer.display_name} has ${recorded ? "recorded" : "proposed"} unavailability during the assignment from ${assignment.start} to ${assignment.end} (${plan.event.timezone}). Choose an available replacement or correct the ${recorded ? "recorded" : "proposed"} facts.`
+        : `Confirm availability for ${volunteer.display_name} covering the assignment from ${assignment.start} to ${assignment.end} (${plan.event.timezone}). Roster membership alone does not prove availability.`;
+    }
+  } else if (issue.rule === "COVERAGE" && sessions[0]) {
+    message = `${sessions[0].title} has incomplete mandatory volunteer coverage. Confirm a qualified replacement with recorded availability.`;
+  }
+  return message.slice(0, 1000);
+}
+
+function boundedQuestions(questions: string[]): string[] {
+  const unique = [...new Set(questions)];
+  return unique.length > 20
+    ? [
+        ...unique.slice(0, 19),
+        "Additional questions remain unresolved. Use manual editing to review all changes.",
+      ]
+    : unique;
 }

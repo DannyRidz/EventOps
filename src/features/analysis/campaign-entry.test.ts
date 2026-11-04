@@ -7,6 +7,7 @@ import {
   existsSync,
   readdirSync,
   rmSync,
+  readFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -22,11 +23,32 @@ function launch(
   overrides: Record<string, string>,
   args: string[] = [],
   expectDatabaseTrap = false,
+  corruptSourcePin = false,
 ) {
   const root = mkdtempSync(join(tmpdir(), "eventops-campaign-gate-"));
   dirs.push(root);
-  for (const folder of ["src", "scripts", "evals", "docs"])
+  for (const folder of ["src", "scripts", "docs"])
     symlinkSync(resolve(folder), join(root, folder), "dir");
+  // Repin only this disposable gate fixture, never the retained live campaign.
+  mkdirSync(join(root, "evals", "t9"), { recursive: true });
+  const corpus = JSON.parse(readFileSync("evals/t9/corpus.json", "utf8"));
+  for (const path of Object.keys(corpus.source_sha256))
+    corpus.source_sha256[path] = createHash("sha256")
+      .update(readFileSync(path))
+      .digest("hex");
+  if (corruptSourcePin)
+    corpus.source_sha256["src/features/analysis/orchestrate.ts"] = "0".repeat(
+      64,
+    );
+  writeFileSync(
+    join(root, "evals", "t9", "corpus.json"),
+    JSON.stringify(corpus),
+  );
+  symlinkSync(
+    resolve("evals/t9/audio"),
+    join(root, "evals", "t9", "audio"),
+    "dir",
+  );
   const output = join(root, "output", "live-analysis-private");
   mkdirSync(output, { recursive: true, mode: 0o700 });
   const header = JSON.stringify({ version: 1, limit_microusd: 1000000 });
@@ -93,6 +115,13 @@ function launch(
   return result;
 }
 describe("live collector entry gates", () => {
+  it("rejects a changed source pin before receipts, database or provider access", () => {
+    const r = launch({}, [], false, true);
+    expect(r.status).toBe(1);
+    expect(r.stderr).toContain(
+      "Source drift: src/features/analysis/orchestrate.ts",
+    );
+  });
   it("rejects missing approval before database or provider access", () => {
     const r = launch({ EVENTOPS_T9_LIVE_APPROVED: "" });
     expect(r.status).toBe(1);

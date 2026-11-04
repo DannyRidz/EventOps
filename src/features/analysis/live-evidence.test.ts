@@ -19,6 +19,63 @@ const { createReceipt, responseDiagnostic, fencedWorker } = await import(
 );
 
 describe("live verification evidence boundaries", () => {
+  it("fences a versioned worker claim and preserves the declared policy parameter", async () => {
+    const query = vi.fn(async (sql: string) => ({
+      rows: sql.includes("claim(") ? [{ job: { id: "expected-job" } }] : [],
+    }));
+    await fencedWorker({ query }, "expected-job").query(
+      "select eventops_worker_api.claim($1::text) as job",
+      ["eventops-text-v2"],
+    );
+    expect(query.mock.calls.map(([sql]) => sql)).toEqual([
+      "begin",
+      "select eventops_worker_api.claim($1::text) as job",
+      "commit",
+    ]);
+    expect(query).toHaveBeenNthCalledWith(
+      2,
+      "select eventops_worker_api.claim($1::text) as job",
+      ["eventops-text-v2"],
+    );
+  });
+  it("summarizes transcription without logging its text or inventing usage", async () => {
+    const response = Response.json({
+      transcript: "Synthetic private transcript",
+    });
+    const result = await responseDiagnostic(response);
+    expect(result.response).toMatchObject({
+      response_kind: "transcription",
+      content_length: 28,
+      usage_reported: false,
+    });
+    expect(result.response.usage).toBeUndefined();
+    expect(JSON.stringify(result)).not.toContain(
+      "Synthetic private transcript",
+    );
+    expect(await response.json()).toEqual({
+      transcript: "Synthetic private transcript",
+    });
+  });
+  it("keeps unknown content distinct from an empty transcript", async () => {
+    expect(
+      (await responseDiagnostic(Response.json({}))).response.content_length,
+    ).toBeNull();
+    expect(
+      (await responseDiagnostic(Response.json({ transcript: "" }))).response
+        .content_length,
+    ).toBe(0);
+  });
+  it("retains actual usage when a transcription response supplies it", async () => {
+    const result = await responseDiagnostic(
+      Response.json({
+        transcript: "Reviewed text",
+        usage: { audio_seconds: 2 },
+      }),
+    );
+    expect(result.response.usage_reported).toBe(true);
+    expect(result.response.usage).toEqual({ audio_seconds: 2 });
+    expect(result.response.content_length).toBe(13);
+  });
   it("rolls back null claims so unrelated stale-job maintenance cannot persist", async () => {
     const query = vi.fn(async (sql: string) => {
       expect(typeof sql).toBe("string");

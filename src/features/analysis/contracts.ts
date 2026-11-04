@@ -95,7 +95,7 @@ export type AnalysisResult = {
   questions: string[];
   impacted_records: string[];
 };
-export const PROMPT_VERSION = "eventops-text-v1";
+export const PROMPT_VERSION = "eventops-text-v2";
 export const analysisResultSchema = z.strictObject({
   status: z.enum(["ready_for_confirmation", "unresolved"]),
   interpretation: interpretationSchema,

@@ -1,3 +1,7 @@
+5 November version boundary: local prompt v2 and deterministic feedback fixes are verified with controlled responses. The 24 saved v1 slots and journal remain unchanged; the retained campaign refuses current source drift. No v2 live quality acceptance or new calls. [Actual results](../../docs/reviews/2026-11-05-t9-local-analysis-fixes.md).
+
+4 November saved trace review: all 24 collected slots now have a separate preliminary AI assessment, with human acceptance fields preserved. No aggregate acceptance score or new calls. [Findings](../../docs/reviews/2026-11-04-t9-saved-trace-review.md). New spending remains stopped.
+
 # T9 collection preparation and budget proposal
 
 Updated 4 November 2026, Asia/Brunei. Status: full workflow code independently approved; USD 15 total synthetic evaluation ceiling explicitly approved. Live collection has started; acceptance remains unscored.

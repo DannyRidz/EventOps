@@ -1,7 +1,7 @@
 import pg from "pg";
 import { z } from "zod";
 import { planSchema } from "@/features/plans/schema";
-import { analysisResultSchema } from "./contracts";
+import { analysisResultSchema, PROMPT_VERSION } from "./contracts";
 import { analyzeUpdate } from "./orchestrate";
 import {
   AnalysisError,
@@ -23,7 +23,10 @@ export async function runOne(
   db: WorkerDatabase,
   makeCall: (usage: Usage, deadline: number) => ModelCall,
 ) {
-  const claimed = await db.query("select eventops_worker_api.claim() as job");
+  const claimed = await db.query(
+    "select eventops_worker_api.claim($1::text) as job",
+    [PROMPT_VERSION],
+  );
   const raw = claimed.rows[0]?.job;
   if (!raw) return false;
   const job = claimSchema.parse(raw);

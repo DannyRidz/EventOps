@@ -5,11 +5,17 @@ import { randomUUID } from "node:crypto";
 export function fencedWorker(
   worker,
   expectedJob,
-  claimSql = "select eventops_worker_api.claim() as job",
+  claimSql = [
+    "select eventops_worker_api.claim() as job",
+    "select eventops_worker_api.claim($1::text) as job",
+  ],
 ) {
   return {
     async query(sql, values) {
-      if (sql !== claimSql) return worker.query(sql, values);
+      if (
+        !(Array.isArray(claimSql) ? claimSql.includes(sql) : sql === claimSql)
+      )
+        return worker.query(sql, values);
       await worker.query("begin");
       try {
         const result = await worker.query(sql, values);
@@ -91,14 +97,20 @@ export async function responseDiagnostic(response) {
                   : undefined,
             },
           };
+        const transcript = typeof envelope?.transcript === "string";
+        const content = transcript
+          ? envelope.transcript
+          : envelope?.choices?.[0]?.message?.content;
         return {
           response: {
+            response_kind: transcript ? "transcription" : "chat_or_unknown",
             model: envelope?.model,
             finish_reason: envelope?.choices?.[0]?.finish_reason,
-            content_length:
-              envelope?.choices?.[0]?.message?.content?.length ?? 0,
+            content_length: typeof content === "string" ? content.length : null,
             refusal: Boolean(envelope?.choices?.[0]?.message?.refusal),
             usage: envelope?.usage,
+            usage_reported:
+              !!envelope?.usage && typeof envelope.usage === "object",
           },
         };
       } catch {
