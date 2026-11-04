@@ -39,7 +39,7 @@ check passed 158 tests; the controlled SQL suite passed 90 local repeats. These
 are historical verified results with their recorded scope, not new T10 test runs.
 See [T9 execution evidence](../../reviews/2026-10-30-t9-local-execution.md).
 
-All 90 real model evaluation slots remain unexecuted. Manual screen reader,
+The 90-slot real model campaign has started under the explicitly approved USD 15 total ceiling; results remain unscored and full completion is not claimed. See [campaign status](../../../evals/t9/LIVE-CAMPAIGN.md). Manual screen reader,
 physical mobile and full protected native checks are not complete. The prior
 [VoiceOver attempt](../../reviews/2026-10-30-t9-screen-reader-attempt.md) did not
 establish reliable announcements. Preparing a human test page did not supply

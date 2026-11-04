@@ -1,39 +1,20 @@
 import assert from "node:assert/strict";
+import { parseCampaignLedger } from "./t9-allowance.mjs";
 import { createHash } from "node:crypto";
 export const sha256 = (value) =>
   createHash("sha256").update(value).digest("hex");
 export function inspectJournal(raw) {
-  assert.ok(raw.endsWith("\n"), "Incomplete journal");
-  const [first, ...lines] = raw.trimEnd().split("\n");
-  const header = JSON.parse(first);
-  assert.equal(header.version, 1);
+  const parsed = parseCampaignLedger(raw);
   assert.equal(
-    header.limit_microusd,
+    parsed.header.limit_microusd,
     1000000,
-    "Existing USD 1 allowance required",
+    "Original USD 1 allowance required",
   );
-  let prior = sha256(first),
-    total = 0;
-  const seen = new Set();
-  for (const line of lines) {
-    const row = JSON.parse(line),
-      { sha256: hash, ...payload } = row;
-    assert.match(row.key, /^[A-Za-z0-9_-]{1,100}$/);
-    assert.ok(!seen.has(row.key));
-    seen.add(row.key);
-    assert.ok(
-      Number.isSafeInteger(row.amount_microusd) && row.amount_microusd > 0,
-    );
-    assert.equal(row.previous, prior);
-    assert.equal(hash, sha256(JSON.stringify(payload)));
-    prior = hash;
-    total += row.amount_microusd;
-  }
-  assert.ok(total <= header.limit_microusd);
+  assert.ok(parsed.limitMicrousd <= 15000000, "Beyond approved USD 15 ceiling");
   return {
-    limit_microusd: header.limit_microusd,
-    reserved_microusd: total,
-    remaining_microusd: header.limit_microusd - total,
+    limit_microusd: parsed.limitMicrousd,
+    reserved_microusd: parsed.total,
+    remaining_microusd: parsed.limitMicrousd - parsed.total,
   };
 }
 export function campaignPlan(corpus, audio) {

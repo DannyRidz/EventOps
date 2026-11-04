@@ -6,7 +6,7 @@ import {
   planInput,
   manualPatch,
 } from "../../src/features/plans/editor-model.ts";
-function inputRecords(p) {
+export function inputRecords(p) {
   const aliases = new Map();
   for (const c of [
     "rooms",
@@ -64,10 +64,6 @@ export async function seedLiveFixture(lab, c) {
         r.id,
         stage.snapshot[key].find((v) => v.external_id === r.external_id).id,
       );
-  const mapped = (value) =>
-    JSON.parse(JSON.stringify(value), (_, v) =>
-      typeof v === "string" ? (map.get(v) ?? v) : v,
-    );
   const base = stage.snapshot;
   assert.ok(base.provenance.length > 0);
   const text =
@@ -89,6 +85,26 @@ export async function seedLiveFixture(lab, c) {
       [event, job.update_id],
     )
   ).rows[0].id;
+  return restoreLiveFixture(lab, {
+    event,
+    base,
+    baseId: receipt.revision_id,
+    mapEntries: [...map],
+    source,
+    draft,
+    job,
+    text,
+  });
+}
+export function restoreLiveFixture(lab, payload) {
+  const { event } = payload;
+  const map = new Map(payload.mapEntries);
+  const mapped = (value) =>
+    JSON.parse(JSON.stringify(value), (_, v) =>
+      typeof v === "string" ? (map.get(v) ?? v) : v,
+    );
+  const one = async (sql, values) =>
+    (await lab.ownerQuery(sql, values)).rows[0].value;
   const head = async () =>
     (
       await lab.ownerQuery(
@@ -97,16 +113,24 @@ export async function seedLiveFixture(lab, c) {
       )
     ).rows[0].current_revision_id;
   const proposal = async (target) => {
+    const currentHead = await head();
+    const currentBase = (
+      await lab.ownerQuery(
+        "select snapshot from public.revisions where id=$1",
+        [currentHead],
+      )
+    ).rows[0].snapshot;
     const records = editableRecords(target);
     for (const [collection, rows] of Object.entries(records))
       for (const row of rows)
-        if (!base[collection].some((r) => r.id === row.id)) delete row.id;
+        if (!currentBase[collection].some((r) => r.id === row.id))
+          delete row.id;
     return one(
       "select public.create_manual_proposal($1,$2,$3::jsonb,true,$4,$5) value",
       [
         event,
-        await head(),
-        JSON.stringify(manualPatch(base, records)),
+        currentHead,
+        JSON.stringify(manualPatch(currentBase, records)),
         "Synthetic T9 exact candidate review",
         randomUUID(),
       ],
@@ -121,18 +145,5 @@ export async function seedLiveFixture(lab, c) {
       p.candidate_digest,
       key,
     ]);
-  return {
-    event,
-    base,
-    baseId: receipt.revision_id,
-    mapped,
-    one,
-    head,
-    proposal,
-    approve,
-    source,
-    draft,
-    job,
-    text,
-  };
+  return { ...payload, mapped, one, head, proposal, approve };
 }

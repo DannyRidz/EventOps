@@ -78,11 +78,18 @@ function launch(
   );
   expect(result.error).toBeUndefined();
   expect(existsSync(marker)).toBe(expectDatabaseTrap);
-  expect(readdirSync(output).sort()).toEqual(
-    expectDatabaseTrap
-      ? ["corpus-E02-1-receipt.json", "usd1-reservations.jsonl"]
-      : ["usd1-reservations.jsonl"],
-  );
+  const files = readdirSync(output).sort();
+  if (expectDatabaseTrap) {
+    expect(files).toHaveLength(3);
+    expect(files).toContain("campaign-state-anchor.json");
+    expect(
+      files.some((name) =>
+        /^corpus-E02-1-[a-f0-9-]+-receipt\.json$/.test(name),
+      ),
+    ).toBe(true);
+    expect(files).toContain("usd1-reservations.jsonl");
+  } else expect(files).toEqual(["usd1-reservations.jsonl"]);
+
   return result;
 }
 describe("live collector entry gates", () => {

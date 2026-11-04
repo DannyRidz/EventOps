@@ -15,6 +15,152 @@ async function syncDirectory(path) {
     await fd.close();
   }
 }
+export function parseCampaignLedger(raw) {
+  assert.ok(raw.endsWith("\n"), "Incomplete journal, fail closed");
+  const [head, ...lines] = raw.trimEnd().split("\n");
+  const header = JSON.parse(head);
+  assert.ok(integer(header.limit_microusd));
+  assert.deepEqual(header, {
+    version: 1,
+    limit_microusd: header.limit_microusd,
+  });
+  let limitMicrousd = header.limit_microusd,
+    total = 0,
+    prior = digest(head);
+  const seen = new Map(),
+    amendments = [];
+  for (const line of lines) {
+    const row = JSON.parse(line),
+      { sha256, ...payload } = row;
+    assert.match(row.key, /^[A-Za-z0-9_-]{1,100}$/);
+    assert.ok(!seen.has(row.key), "Duplicate journal key");
+    assert.equal(row.previous, prior);
+    assert.equal(sha256, digest(JSON.stringify(payload)));
+    if (row.kind === "allowance_amendment") {
+      assert.deepEqual(
+        Object.keys(payload).sort(),
+        [
+          "approval",
+          "key",
+          "kind",
+          "new_limit_microusd",
+          "previous",
+          "previous_limit_microusd",
+          "recorded_at",
+        ].sort(),
+      );
+      assert.equal(row.previous_limit_microusd, limitMicrousd);
+      assert.ok(
+        integer(row.new_limit_microusd) &&
+          row.new_limit_microusd > limitMicrousd,
+      );
+      assert.ok(
+        typeof row.approval === "string" &&
+          row.approval.length > 0 &&
+          row.approval.length <= 2000,
+      );
+      assert.ok(
+        typeof row.recorded_at === "string" &&
+          Number.isFinite(Date.parse(row.recorded_at)),
+      );
+      limitMicrousd = row.new_limit_microusd;
+      amendments.push(row);
+      seen.set(row.key, null);
+    } else {
+      assert.deepEqual(
+        Object.keys(payload).sort(),
+        ["key", "amount_microusd", "previous"].sort(),
+      );
+      assert.ok(integer(row.amount_microusd));
+      total += row.amount_microusd;
+      seen.set(row.key, row.amount_microusd);
+    }
+    assert.ok(total <= limitMicrousd, "Corrupt overdrawn journal");
+    prior = sha256;
+  }
+  return { header, limitMicrousd, total, prior, seen, amendments };
+}
+export async function amendCampaignAllowance({
+  path,
+  previousLimitMicrousd,
+  newLimitMicrousd,
+  key,
+  approval,
+}) {
+  assert.ok(
+    isAbsolute(path) &&
+      integer(previousLimitMicrousd) &&
+      integer(newLimitMicrousd) &&
+      newLimitMicrousd > previousLimitMicrousd,
+  );
+  assert.match(key, /^[A-Za-z0-9_-]{1,100}$/);
+  assert.ok(
+    typeof approval === "string" &&
+      approval.length > 0 &&
+      approval.length <= 2000,
+  );
+  const parent = await lstat(dirname(path));
+  assert.ok(
+    parent.isDirectory() &&
+      !parent.isSymbolicLink() &&
+      (parent.mode & 0o077) === 0,
+  );
+  const lock = path + ".lock";
+  await mkdir(lock, { mode: 0o700 });
+  try {
+    const info = await lstat(path);
+    assert.ok(
+      info.isFile() &&
+        !info.isSymbolicLink() &&
+        (info.mode & 0o077) === 0 &&
+        info.size <= 1048576,
+    );
+    const parsed = parseCampaignLedger(await readFile(path, "utf8"));
+    if (parsed.seen.has(key)) {
+      const prior = parsed.amendments.find((a) => a.key === key);
+      assert.ok(
+        prior &&
+          prior.previous_limit_microusd === previousLimitMicrousd &&
+          prior.new_limit_microusd === newLimitMicrousd &&
+          prior.approval === approval,
+      );
+      return {
+        alreadyRecorded: true,
+        limitMicrousd: parsed.limitMicrousd,
+        reservedMicrousd: parsed.total,
+      };
+    }
+    assert.equal(parsed.limitMicrousd, previousLimitMicrousd);
+    const payload = {
+      kind: "allowance_amendment",
+      key,
+      previous_limit_microusd: previousLimitMicrousd,
+      new_limit_microusd: newLimitMicrousd,
+      approval,
+      recorded_at: new Date().toISOString(),
+      previous: parsed.prior,
+    };
+    const row = { ...payload, sha256: digest(JSON.stringify(payload)) };
+    const fd = await open(
+      path,
+      constants.O_WRONLY | constants.O_APPEND | constants.O_NOFOLLOW,
+    );
+    try {
+      await fd.writeFile(JSON.stringify(row) + "\n");
+      await fd.sync();
+    } finally {
+      await fd.close();
+    }
+    return {
+      alreadyRecorded: false,
+      limitMicrousd: newLimitMicrousd,
+      reservedMicrousd: parsed.total,
+    };
+  } finally {
+    await rmdir(lock);
+  }
+}
+
 export async function reserveCampaign({
   path,
   limitMicrousd,
@@ -78,29 +224,13 @@ export async function reserveCampaign({
       "Invalid private ledger",
     );
     const raw = await readFile(path, "utf8");
-    assert.ok(raw.endsWith("\n"), "Incomplete journal, fail closed");
-    const [head, ...lines] = raw.trimEnd().split("\n");
-    const header = JSON.parse(head);
-    assert.deepEqual(
-      header,
-      { version: 1, limit_microusd: limitMicrousd },
-      "Allowance cannot change on restart",
+    const parsed = parseCampaignLedger(raw);
+    assert.equal(
+      parsed.limitMicrousd,
+      limitMicrousd,
+      "Allowance cannot change without an authorized journal amendment",
     );
-    let total = 0,
-      prior = digest(head);
-    const seen = new Map();
-    for (const line of lines) {
-      const row = JSON.parse(line);
-      assert.match(row.key, /^[A-Za-z0-9_-]{1,100}$/);
-      assert.ok(integer(row.amount_microusd) && !seen.has(row.key));
-      assert.equal(row.previous, prior);
-      const { sha256, ...payload } = row;
-      assert.equal(sha256, digest(JSON.stringify(payload)));
-      total += row.amount_microusd;
-      seen.set(row.key, row.amount_microusd);
-      prior = sha256;
-    }
-    assert.ok(total <= limitMicrousd, "Corrupt overdrawn journal");
+    const { total, prior, seen } = parsed;
     if (seen.has(key)) {
       assert.equal(
         seen.get(key),
