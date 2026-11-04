@@ -2,7 +2,7 @@
 
 Updated 4 November 2026, Asia/Brunei. Status: full workflow code independently approved; USD 15 total synthetic evaluation ceiling explicitly approved. Live collection has started; acceptance remains unscored.
 
-Latest execution: 14/90 slots collected; text paused at the normal hourly SQL guard. All E28 repeats collected. USD 1.734 retained, USD 13.266 remaining. No quality acceptance claimed. [Actual batch evidence](../../docs/reviews/2026-11-04-t9-live-batch.md).
+Latest execution: 24/90 slots collected, E01 through E07 and E28, three repeats each. Text paused at the normal hourly SQL guard before E08 repeat 1. USD 2.234 retained, USD 12.766 remaining. No quality acceptance claimed. [Latest continuation](../../docs/reviews/2026-11-04-t9-post-submission-continuation.md). Earlier [batch evidence](../../docs/reviews/2026-11-04-t9-live-batch.md) remains historical.
 
 ## Safe commands
 
