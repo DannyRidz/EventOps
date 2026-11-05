@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="EventOps helps organizers review schedule, room and volunteer changes before approving an official event plan. Watch the working prototype."
+    />
+    <meta name="theme-color" content="#002fa7" />
+    <title>EventOps — Demo and workflow</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/tokens.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="EventOps home"
+        >EventOps<span>.</span></a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#demo">Watch demo</a>
+        <a href="#workflow">Workflow</a>
+        <a href="https://github.com/DannyRidz/EventOps">Code and setup</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="intro-title">
+        <div>
+          <p class="eyebrow">For the people behind the event</p>
+          <h1 id="intro-title">
+            Keep your event plan consistent when things change.
+          </h1>
+          <p class="lead">
+            Schedules, rooms and volunteer assignments belong together. Review
+            each change and its evidence before it becomes official.
+          </p>
+          <div class="actions">
+            <a class="button" href="#demo">Watch the working prototype</a>
+            <a
+              class="text-link"
+              href="https://github.com/DannyRidz/EventOps#run-locally"
+              >Run it locally</a
+            >
+          </div>
+        </div>
+        <aside class="overview" aria-labelledby="overview-title">
+          <h2 id="overview-title">From update to approved plan</h2>
+          <ol>
+            <li>
+              <span class="number">01</span>
+              <div>
+                <h3>Starting plan</h3>
+                <p>The records you have checked and confirmed.</p>
+              </div>
+            </li>
+            <li>
+              <span class="number">02</span>
+              <div>
+                <h3>Proposed change</h3>
+                <p>Exact differences, constraints and source evidence.</p>
+              </div>
+            </li>
+            <li>
+              <span class="number">03</span>
+              <div>
+                <h3>Approved revision</h3>
+                <p>
+                  A deliberate decision, a clear briefing and retained history.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </aside>
+      </section>
+      <section class="demo-section" id="demo" aria-labelledby="demo-title">
+        <div class="section-intro">
+          <p class="eyebrow">See the workflow</p>
+          <h2 id="demo-title">An event update, reviewed end to end.</h2>
+          <p>
+            About 2 minutes 55 seconds. Actual application screens and a
+            previously completed live Meta workflow, using fictional event
+            records. The edited video includes labeled synthetic narration.
+          </p>
+        </div>
+        <video
+          class="video"
+          controls
+          playsinline
+          preload="metadata"
+          aria-label="EventOps recorded application walkthrough"
+        >
+          <source src="/demo.mp4" type="video/mp4" />
+          Your browser cannot play this video. Use the direct video link below.
+        </video>
+        <p class="video-link">
+          If the player does not load,
+          <a
+            href="https://drive.google.com/file/d/1uRFZMs3qVcsGUfl1h9QGJ6daKRtYy5dJ/view"
+            >open the video directly</a
+          >.
+        </p>
+        <div class="notice">
+          <h3>About this page</h3>
+          <p>
+            This is a public demo overview. The full application runs locally
+            using the repository setup instructions. This page has no sign-in,
+            editable event workspace or live model processing.
+          </p>
+        </div>
+      </section>
+      <section id="workflow" aria-labelledby="workflow-title">
+        <div class="section-intro">
+          <p class="eyebrow">How EventOps works</p>
+          <h2 id="workflow-title">The organizer stays in control.</h2>
+        </div>
+        <ol class="workflow">
+          <li>
+            <span class="number">01</span>
+            <h3>Describe</h3>
+            <p>
+              Save a specific update by text or upload a voice recording for a
+              draft transcript.
+            </p>
+          </li>
+          <li>
+            <span class="number">02</span>
+            <h3>Review</h3>
+            <p>
+              Inspect affected records, room conflicts, volunteer coverage and
+              missing facts.
+            </p>
+          </li>
+          <li>
+            <span class="number">03</span>
+            <h3>Confirm</h3>
+            <p>
+              Correct the interpretation and explicitly confirm new facts before
+              a proposal is created.
+            </p>
+          </li>
+          <li>
+            <span class="number">04</span>
+            <h3>Approve</h3>
+            <p>
+              Compare the exact change. Transactional checks reject stale or
+              invalid proposals.
+            </p>
+          </li>
+          <li>
+            <span class="number">05</span>
+            <h3>Briefing</h3>
+            <p>Read or export the approved revision and inspect its history.</p>
+          </li>
+        </ol>
+      </section>
+      <section class="details" aria-labelledby="meta-title">
+        <div>
+          <p class="eyebrow">Meta integration</p>
+          <h2 id="meta-title">Interpretation with clear boundaries.</h2>
+          <p>
+            <strong>Muse Spark</strong> interprets confirmed updates and selects
+            among deterministically validated options.
+            <strong>Muse Voice Transcribe</strong> produces a draft transcript
+            for organizer review.
+          </p>
+          <p>
+            The models cannot approve an official event plan. Deterministic code
+            checks constraints, and the database checks the full proposal again
+            during approval.
+          </p>
+        </div>
+        <div class="status">
+          <h3>Current prototype status</h3>
+          <p>
+            Local manual review, approval, history and briefing work without a
+            model key. General live AI is disabled, and new model calls are
+            paused.
+          </p>
+          <p>
+            Full live quality evaluation, human accessibility acceptance, the
+            device matrix and hosted operations checks remain open.
+          </p>
+          <a
+            href="https://github.com/DannyRidz/EventOps#verification-and-known-limits"
+            >Read verification and known limits</a
+          >
+        </div>
+      </section>
+      <section class="get-started" aria-labelledby="setup-title">
+        <p class="eyebrow">Explore the implementation</p>
+        <h2 id="setup-title">Try a fictional event on your machine.</h2>
+        <p>
+          The repository includes setup instructions, a guided sample, source
+          code and recorded verification evidence. Local sign-in uses a test
+          inbox; no model key is needed for the manual workflow.
+        </p>
+        <a
+          class="button"
+          href="https://github.com/DannyRidz/EventOps#run-locally"
+          >Open setup instructions</a
+        >
+      </section>
+    </main>
+    <footer>
+      <span class="brand">EventOps<span>.</span></span>
+      <p>Demo overview · Fictional records · No live AI on this page</p>
+      <a href="https://github.com/DannyRidz/EventOps">GitHub repository</a>
+    </footer>
+  </body>
+</html>

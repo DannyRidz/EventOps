@@ -2,11 +2,11 @@
 
 Keep a small event’s schedule, rooms, volunteer assignments and briefing consistent when plans change. Describe a change, review its evidence and approve the exact revision that becomes official.
 
-**[Watch the demo, about 2 minutes 55 seconds](https://drive.google.com/file/d/1uRFZMs3qVcsGUfl1h9QGJ6daKRtYy5dJ/view)** · [Verification evidence](docs/reviews/2026-11-05-t9-local-analysis-fixes.md) · [Architecture](docs/specs/0001-eventops/0002-architecture.md)
+**[Open the public demo overview](https://eventops-demo.pages.dev/)** · [Watch the video, about 2 minutes 55 seconds](https://drive.google.com/file/d/1uRFZMs3qVcsGUfl1h9QGJ6daKRtYy5dJ/view) · [Verification evidence](docs/reviews/2026-11-05-t9-local-analysis-fixes.md) · [Architecture](docs/specs/0001-eventops/0002-architecture.md)
 
 ## For judges
 
-EventOps is a working **local prototype**, demonstrated with fictional event records. There is no hosted application URL or shared judge login. The video is an edited walkthrough of actual application screens and a previously completed live Meta workflow, with labeled synthetic narration. It does not represent a new continuous model run.
+EventOps is a working **local prototype**, demonstrated with fictional event records. The free Cloudflare Pages demo overview embeds the video and explains the workflow; it has no sign-in, editable workspace or live model processing. The full application runs locally, with no hosted workspace or shared judge login. The video is an edited walkthrough of actual application screens and a previously completed live Meta workflow, with labeled synthetic narration. It does not represent a new continuous model run.
 
 The core workflow is **Describe, Review, Confirm, Approve, Briefing**:
 
