@@ -24,3 +24,13 @@ The initial Python HTTPS asset check failed because that local Python installati
 ## Limits
 
 This is a static overview, not a hosted EventOps workspace. No new live AI evaluation or hosted application operation was tested. The physical mobile, Safari and human screen-reader matrix was not rerun for this page. Deployment does not complete T9 or change the existing no-spending instruction. No commit, push or hackathon submission edit was performed.
+
+## Product wording follow-up, 5 November, 8:14 AM Brunei
+
+At the participant's request, public copy, title, metadata, navigation, section identifiers and media filenames now use EventOps overview and walkthrough wording. Scans of non-test application source and public assets found no demo/prototype/alpha/beta/MVP/coming-soon labels. The three existing home-page tests pass; Prettier, script ESLint and whitespace checks pass. Historical engineering records and language assertions in tests are retained.
+
+The canonical free Pages project is now `eventops-plan`, at https://eventops-plan.pages.dev/. The original address returns HTTP 302 to it; following that redirect anonymously returns the exact final HTML. The original project was retained with a reversible redirect rather than deleted. The README points to the canonical address and still states that the workspace runs locally and live AI is disabled.
+
+The overview recording ends at approximately 151.7 seconds, after the workflow and before the closing recap containing the old label. The original submitted recording and Drive file are unchanged. The shortened version was made by stream-copy trimming the preserved original with the previously reviewed ffmpeg binary, without model calls or synthesized replacement claims. It contains 4,313,252 bytes, SHA256 `19cf548b25631339e597a12792a0994c73ce1380e977915b3032bc8ee196c0a3`. An anonymous download of `/walkthrough.mp4` matches these bytes. The overview preparation script now pins this shortened version and documents reproduction. The root README's separate original submission video remains the preserved full recording.
+
+No new live evaluation, payment, paid resource, account agreement, commit, push or submission edit was performed. This wording change does not change the existing T9 or hosting verification limits.
